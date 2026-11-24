@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1: Campo Gravitatorio - Física</title>
+    <!-- Tailwind CSS vía CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax 3 configurado para $ y $$ -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .formula-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #0284c7;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+            overflow-x: auto;
+        }
+        .concept-card {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .media-placeholder {
+            border: 2px dashed #94a3b8;
+            background-color: #f1f5f9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            transition: all 0.2s;
+        }
+        .media-placeholder:hover {
+            border-color: #0284c7;
+            background-color: #e0f2fe;
+        }
+        canvas {
+            background: #0f172a;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 700px;
+            display: block;
+            margin: 0 auto;
+        }
+        @media print {
+            aside, input, button { display: none !important; }
+            main { width: 100% !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Cabecera Principal -->
+    <header class="bg-gradient-to-r from-sky-900 to-indigo-900 text-white py-10 px-6 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-sky-300 text-sm font-semibold uppercase tracking-wider mb-2">Curso de Física para 2º Bachillerato</div>
+            <h1 class="text-3xl md:text-5xl font-bold mb-3">Tema 1: Campo Gravitatorio</h1>
+            <p class="text-sky-100 text-lg max-w-2xl">Leyes de Kepler, gravitación universal, energía potencial, mecánica orbital y física del espacio-tiempo.</p>
+            <div class="mt-4 text-xs text-sky-300">
+                Autor original: José Rodríguez Pérez · Licencia CC BY-NC-SA 4.0 · Versión Web Interactiva
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal con Navegación Lateral -->
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Índice Lateral (Sticky en escritorio) -->
+        <aside class="lg:w-1/4">
+            <nav class="sticky top-6 bg-white p-5 rounded-xl shadow-sm border border-slate-200 max-h-[85vh] overflow-y-auto">
+                <h2 class="font-bold text-slate-900 uppercase text-xs tracking-wider mb-3 border-b pb-2">Índice de Contenidos</h2>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#sec1" class="text-sky-700 hover:text-sky-900 font-medium block">1. Introducción histórica</a></li>
+                    <li><a href="#sec2" class="text-sky-700 hover:text-sky-900 font-medium block">2. Leyes de Kepler</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#kepler-1" class="hover:text-sky-700">Primera ley de Kepler</a></li>
+                            <li><a href="#kepler-2" class="hover:text-sky-700">Segunda ley de Kepler</a></li>
+                            <li><a href="#kepler-3" class="hover:text-sky-700">Tercera ley de Kepler</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec3" class="text-sky-700 hover:text-sky-900 font-medium block">3. Ley de la gravitación universal</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#expresion-vectorial" class="hover:text-sky-700">Expresión vectorial de la fuerza</a></li>
+                            <li><a href="#determinacion-g" class="hover:text-sky-700">Determinación de $G$</a></li>
+                            <li><a href="#superposicion-fuerza" class="hover:text-sky-700">Principio de superposición</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec4" class="text-sky-700 hover:text-sky-900 font-medium block">4. El campo gravitatorio</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#intensidad-campo" class="hover:text-sky-700">Intensidad del campo gravitatorio</a></li>
+                            <li><a href="#superposicion-campo" class="hover:text-sky-700">Principio de superposición</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec5" class="text-sky-700 hover:text-sky-900 font-medium block">5. Trabajo y energía gravitatoria</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#energia-potencial" class="hover:text-sky-700">Energía potencial gravitatoria</a></li>
+                            <li><a href="#conservacion-energia" class="hover:text-sky-700">Conservación de la energía mecánica</a></li>
+                            <li><a href="#potencial-gravitatorio" class="hover:text-sky-700">Potencial gravitatorio</a></li>
+                            <li><a href="#representacion-campo" class="hover:text-sky-700">Representación del campo</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec6" class="text-sky-700 hover:text-sky-900 font-medium block">6. El campo gravitatorio terrestre</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#fuerza-peso" class="hover:text-sky-700">La fuerza peso</a></li>
+                            <li><a href="#gravedad-superficie" class="hover:text-sky-700">Gravedad en la superficie terrestre</a></li>
+                            <li><a href="#gravedad-altura" class="hover:text-sky-700">Gravedad a una altura $h$</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec7" class="text-sky-700 hover:text-sky-900 font-medium block">7. Aplicaciones de la gravitación</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#masa-planeta" class="hover:text-sky-700">Cálculo de la masa de un planeta</a></li>
+                            <li><a href="#deduccion-kepler" class="hover:text-sky-700">Deducción de la 3ª ley de Kepler</a></li>
+                            <li><a href="#dinamica-planetas" class="hover:text-sky-700">La dinámica de los planetas</a></li>
+                            <li><a href="#velocidad-orbital" class="hover:text-sky-700">Velocidad orbital</a></li>
+                            <li><a href="#satelites-geoestacionarios" class="hover:text-sky-700">Satélites geoestacionarios</a></li>
+                            <li><a href="#energia-satelite" class="hover:text-sky-700">Energía de un satélite en su órbita</a></li>
+                            <li><a href="#velocidad-puesta-orbita" class="hover:text-sky-700">Velocidad de puesta en órbita</a></li>
+                            <li><a href="#cambio-orbita" class="hover:text-sky-700">Energía para pasar de una órbita a otra</a></li>
+                            <li><a href="#velocidad-escape" class="hover:text-sky-700">Velocidad de escape</a></li>
+                            <li><a href="#clasificacion-satelites" class="hover:text-sky-700">Clasificación de satélites por altura</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec8" class="text-sky-700 hover:text-sky-900 font-medium block">8. Caos determinista</a></li>
+                    <li><a href="#sec9" class="text-sky-700 hover:text-sky-900 font-medium block">9. La materia oscura</a></li>
+                    <li><a href="#sec10" class="text-sky-700 hover:text-sky-900 font-medium block">10. El tejido espaciotemporal</a></li>
+
+
+<li><a href="#ejercicios" class="text-indigo-700 hover:text-indigo-900 font-bold block pt-2 border-t">Ejercicios de Clase</a></li>
+                    <li><a href="#anexo1" class="text-indigo-700 hover:text-indigo-900 font-bold block">Anexo I: Ejercicios para reforzar</a></li>
+                    <li><a href="#anexo2" class="text-indigo-700 hover:text-indigo-900 font-bold block">Anexo II: Momento angular</a></li>
+                    <li><a href="#anexo3" class="text-indigo-700 hover:text-indigo-900 font-bold block">Anexo III: Teorema de Gauss</a></li>
+
+
+
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido de los Apuntes (Bloques listos para ir rellenando) -->
+        <main class="lg:w-3/4 space-y-12">
+
+           <!-- SECCIÓN 1 -->
+            <section id="sec1" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">1. Introducción histórica</h2>
+                
+                <p class="mb-4">La concepción del universo ha ido cambiando conforme se conocen mejor los fenómenos astronómicos. Las primeras teorías acerca del universo eran <strong>geocéntricas</strong>: con la Tierra en el centro, el resto de cuerpos giraban en torno a esta. Salvo excepciones, como el griego <strong>Aristarco de Samos</strong>, estas teorías se mantuvieron hasta el siglo XVI, cuando el modelo pasó a ser <strong>heliocéntrico</strong>: con el Sol en el centro y todos los objetos orbitando en torno suya.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900">Ptolomeo (s. II)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-medium">Geocéntrico</span>
+                        </div>
+                        <p class="text-sm text-slate-600">Con su complejo modelo de <strong>epiciclos y deferentes</strong> consiguió explicar de manera ajustada los movimientos de casi todos los astros.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900">Copérnico (s. XVI)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">Heliocéntrico</span>
+                        </div>
+                        <p class="text-sm text-slate-600">Ideó un modelo mucho más simple colocando el Sol en el centro del universo y las estrellas fijas en una esfera. Poco preciso (órbitas circulares) pero muy sencillo.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900">Tycho Brahe y Kepler (s. XVI)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-medium">Órbitas Elípticas</span>
+                        </div>
+                        <p class="text-sm text-slate-600">Brahe recogió datos muy precisos sobre posiciones de astros. Kepler los usó para enunciar sus leyes demostrando que las órbitas son <strong>elípticas</strong>.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-blue-300 transition">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-slate-900">Galileo Galilei (s. XVII)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">Observación</span>
+                        </div>
+                        <p class="text-sm text-slate-600">Confirmó las ideas de Copérnico mediante sus observaciones con el telescopio (fases de Venus, lunas de Júpiter).</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-200 md:col-span-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-blue-900">Isaac Newton (1687)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-600 text-white font-medium">Síntesis Final</span>
+                        </div>
+                        <p class="text-sm text-slate-700">El modelo heliocéntrico se impuso finalmente cuando Newton estableció su <strong>Teoría de la Gravitación Universal</strong>, unificando la física terrestre y celeste.</p>
+                    </div>
+                </div>               
+            </section>
+
+
+<!-- SECCIÓN 2 -->
+            <section id="sec2" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">2. Leyes de Kepler</h2>
+
+                <!-- Primera ley de Kepler -->
+                <h3 id="kepler-1" class="text-xl font-semibold text-slate-800 mt-6 mb-3">Primera ley de Kepler</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">La <strong>primera ley de Kepler</strong> establece que los planetas se mueven en <strong>órbitas elípticas</strong> alrededor del Sol, que ocupa uno de los focos de la elipse.</p>
+                </div>
+
+                <!-- Segunda ley de Kepler -->
+                <h3 id="kepler-2" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Segunda ley de Kepler</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700"><strong>Enunciado:</strong> La línea imaginaria que une un planeta con el foco en el que se encuentra el Sol barre <strong>áreas iguales en intervalos de tiempo iguales</strong> (la velocidad areolar es constante).</p>
+                </div>
+
+                <p class="mb-3">Se definen:</p>
+                <ul class="list-disc pl-6 mb-4 space-y-1">
+                    <li><strong>Perihelio:</strong> Punto de la órbita planetaria más próximo al Sol.</li>
+                    <li><strong>Afelio:</strong> Punto de la órbita planetaria más alejado del Sol.</li>
+                </ul>
+
+                <p class="mb-2">De la segunda ley de Kepler se deduce:</p>
+                <div class="formula-box">
+                    $$v_{\text{perihelio}} > v_{\text{afelio}}$$
+                </div>
+
+                <!-- Animación: Segunda Ley de Kepler -->
+                <div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+                    <h4 class="font-bold text-amber-400 mb-3">🪐 Animación: Segunda Ley de Kepler (Ley de las áreas)</h4>
+                    <canvas id="kepler2Canvas" width="700" height="320"></canvas>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Los sectores barridos en el mismo intervalo de tiempo $\Delta t$ cerca del <strong>perihelio</strong> (amarillo) y del <strong>afelio</strong> (cian) tienen exactamente la misma área ($A_1 = A_2$), por lo que el planeta acelera al acercarse al Sol.</p>
+                </div>
+
+                <!-- Tercera ley de Kepler -->
+                <h3 id="kepler-3" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Tercera ley de Kepler</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Para un planeta dado, el <strong>cuadrado de su periodo orbital</strong> es proporcional al <strong>cubo de su distancia media al Sol</strong>.</p>
+                </div>
+
+                <div class="formula-box">
+                    $$\frac{T^2_{\text{planeta } 1}}{r^3_{\text{planeta } 1}} = \frac{T^2_{\text{planeta } 2}}{r^3_{\text{planeta } 2}} = \dots = k \Longrightarrow T^2 = k \cdot r^3$$
+                </div>
+
+                <p class="mb-4">El valor de la constante $k$ es diferente para cada sistema planetario. Tiene un valor determinado para todos los planetas del Sistema Solar.</p>
+
+                <!-- Bloque desplegable: Practicar -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Europa es un satélite de Júpiter que tarda $3,55\text{ días}$ en recorrer su órbita de $6,7\cdot 10^8\text{ m}$ de radio medio, en torno a dicho planeta. Otro satélite de Júpiter, Ganímedes, tiene un periodo orbital de $7,15\text{ días}$. Calcula el radio medio de la órbita.</p>
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700">
+                                <p class="mb-2">Aplicando la tercera ley de Kepler a los satélites:</p>
+                                <div class="formula-box">
+                                    $$\frac{T^2_{E}}{r^3_{E}} = \frac{T^2_{G}}{r^3_{G}} \Rightarrow r_G = \sqrt[3]{\frac{r_E^3 T_G^2}{T_E^2}} \Rightarrow \text{Sustituyendo} \Rightarrow r_G = 1,07 \cdot 10^9\text{ m}$$
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+            </section>
+
+
+
+<!-- SECCIÓN 3 -->
+            <section id="sec3" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">3. Ley de la gravitación universal</h2>
+                
+                <p class="mb-4">Newton, a partir de las observaciones de Tycho Brahe, Kepler y otros, unifica la gravedad terrestre y celeste y enuncia la <strong>ley de la gravitación universal</strong>: dos masas $M$ y $m$ separadas una distancia $r$ se atraen con una fuerza cuyo módulo es proporcional al producto de sus masas e inversamente proporcional al cuadrado de la distancia que las separa. Matemáticamente se escribe:</p>
+
+                <div class="formula-box">
+                    $$\boxed{F = \frac{G M m}{r^2}}$$
+                </div>
+
+                <p class="mb-4">Donde $r$ es la distancia entre los centros de gravedad de las masas consideradas y $G$ es la <strong>constante de gravitación universal</strong>, que tiene un valor de:</p>
+
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700 font-medium text-center">
+                        $$G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$$
+                    </p>
+                </div>
+
+                <!-- Expresión vectorial de la fuerza gravitatoria -->
+                <h3 id="expresion-vectorial" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Expresión vectorial de la fuerza gravitatoria</h3>
+                <p class="mb-3">Tomando como origen de coordenadas el punto en el que se encuentra la masa que produce la atracción ($M$), la fuerza gravitatoria se puede escribir de la siguiente forma:</p>
+
+                <div class="formula-box">
+                    $$\boxed{\vec F = - \frac{G M m}{r^2} \cdot \vec u_r}$$
+                </div>
+
+                <!-- Imagen vectorial de la fuerza gravitatoria -->
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_g1.svg" alt="Representación vectorial de la fuerza gravitatoria entre dos masas M y m" class="mx-auto rounded-lg shadow-sm max-h-40">
+                    <figcaption class="text-xs text-slate-500 mt-2">Representación vectorial de la fuerza gravitatoria $\vec{F}$ ejercida por la masa $M$ sobre la masa $m$, junto con el vector de posición $\vec{r}$ y el vector unitario $\vec{u}_r$.</figcaption>
+                </figure>
+
+                <p class="mb-3">Siendo $\vec{u}_r$ el vector unitario que va en la dirección de la recta que une las dos masas y sentido saliente de la masa que ejerce la fuerza. Teniendo en cuenta que un vector unitario se define como:</p>
+
+                <div class="formula-box">
+                    $$\vec{u}_r = \frac{\vec{r}}{r}$$
+                </div>
+
+                <p class="mb-3">La expresión de la fuerza gravitatoria quedaría como:</p>
+
+                <div class="formula-box">
+                    $$\vec F = - \frac{G M m}{r^3} \cdot \vec r$$
+                </div>
+
+                <p class="mt-5 mb-3">Las fuerzas que se ejercen mutuamente las masas $M$ y $m$ son iguales y opuestas (tercera ley de Newton). La fuerza de la gravedad es:</p>
+                <ul class="list-disc pl-6 space-y-1.5 text-slate-700">
+                    <li><strong>Siempre atractiva.</strong></li>
+                    <li><strong>De gran alcance.</strong></li>
+                    <li><strong>Independiente del medio.</strong></li>
+                    <li><strong>Es radial y central</strong> (siempre está dirigida hacia el mismo punto y su módulo en un punto depende solo de la distancia).</li>
+                    <li><strong>Actúa en la línea de acción entre las masas.</strong></li>
+                    <li><strong>Es conservativa.</strong></li>
+                </ul>
+
+                <!-- Determinación de G -->
+                <h3 id="determinacion-g" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Determinación de $G$</h3>
+                <p class="mb-4">Cavendish determinó experimentalmente el valor de $G$ usando una balanza de torsión, como se indica en la figura.</p>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_g2.svg" alt="Balanza de torsión de Cavendish para la determinación experimental de G" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Esquema de la balanza de torsión empleada por Henry Cavendish para medir la constante de gravitación universal $G$. Chris Burks (Chetvorno), CC0, via Wikimedia Commons</figcaption>
+                </figure>
+
+                <p class="mb-4">Dadas las masas $M$ y $m$ y variando la distancia, Cavendish pudo medir la torsión del cable y con ello la fuerza ejercida entre las masas.</p>
+
+                <!-- Principio de superposición -->
+                <h3 id="superposicion-fuerza" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Principio de superposición: Interacción de un conjunto de masas puntuales</h3>
+                <p class="mb-3">Supongamos varios cuerpos ejerciendo una fuerza gravitatoria sobre otro. Para el cálculo de la fuerza total se sigue el <strong>principio de superposición</strong>, que dice: la fuerza gravitatoria ejercida por varias masas $M_1, M_2, M_3, \dots$ sobre otra $m$ es igual a la suma vectorial de la fuerza que cada masa realizaría de forma individual; matemáticamente:</p>
+
+                <div class="formula-box">
+                    $$\vec F = \vec F_1 + \vec F_2 + \dots + \vec F_n = \sum_{i=1}^n \vec F_i = \sum_{i=1}^n \frac{-G M_i m}{r_i^2} \vec u_{r_i}$$
+                </div>
+
+                <!-- Bloque desplegable: Practicar -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Dibuje en un esquema las fuerzas que actúan sobre un cuerpo de $1000\text{ kg}$, situado en el punto medio entre la Tierra y la Luna, y calcule el valor de la fuerza resultante.</p>
+                        <p class="text-xs text-slate-500"><em>Datos:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$; $M_T = 5,97 \cdot 10^{24}\text{ kg}$; $M_L = 7,35 \cdot 10^{22}\text{ kg}$; distancia Tierra-Luna $d_{TL} = 3,84 \cdot 10^8\text{ m}$.</p>
+                        
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>1. Esquema de fuerzas:</strong> Situamos la Tierra a la izquierda y la Luna a la derecha sobre el eje $X$. En el punto medio ($r = \frac{d_{TL}}{2} = 1,92 \cdot 10^8\text{ m}$), el cuerpo de masa $m = 1000\text{ kg}$ sufre dos fuerzas atractivas opuestas:</p>
+                                <div class="bg-white border border-slate-200 rounded p-2 text-center font-mono text-xs">
+                                    [Tierra ($M_T$)] &longleftarrow $\vec{F}_T$ &mdash; [Masa $m$] &mdash; $\vec{F}_L$ &longrightarrow [Luna ($M_L$)]
+                                </div>
+                                <p><strong>2. Cálculo de los módulos:</strong></p>
+                                <div class="formula-box">
+                                    $$F_T = \frac{G \cdot M_T \cdot m}{r^2} = \frac{6,67 \cdot 10^{-11} \cdot 5,97 \cdot 10^{24} \cdot 1000}{(1,92 \cdot 10^8)^2} \approx 10,80\text{ N}$$
+                                    $$F_L = \frac{G \cdot M_L \cdot m}{r^2} = \frac{6,67 \cdot 10^{-11} \cdot 7,35 \cdot 10^{22} \cdot 1000}{(1,92 \cdot 10^8)^2} \approx 0,13\text{ N}$$
+                                </div>
+                                <p><strong>3. Fuerza resultante:</strong> Aplicando el principio de superposición ($\vec{F}_R = \vec{F}_T + \vec{F}_L$), como tienen la misma dirección y sentidos opuestos:</p>
+                                <div class="formula-box">
+                                    $$\vec{F}_R = (-10,80 + 0,13)\,\vec{i} = -10,67\,\vec{i}\text{ N}$$
+                                </div>
+                                <p>Es decir, una fuerza neta de <strong>$10,67\text{ N}$</strong> dirigida hacia el centro de la Tierra.</p>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+			</section>
+
+
+
+<!-- SECCIÓN 4 -->
+            <section id="sec4" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">4. El campo gravitatorio</h2>
+                
+                <p class="mb-4">La fuerza de la gravedad, descrita por Newton, es la primera fuerza de <strong>acción a distancia</strong>, es decir, que actúa sobre los cuerpos sin que estos tengan que estar necesariamente en contacto. Para explicar este hecho se introduce el concepto de <strong>campo</strong>.</p>
+
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Se dice que en una región del espacio existe un <strong>campo</strong> asociado a una magnitud si a cada punto del espacio podemos asociar un valor de dicha magnitud. Si la magnitud es vectorial dará como resultado un <strong>campo vectorial</strong>; por el contrario, si se trata de una magnitud escalar, producirá un <strong>campo escalar</strong>.</p>
+                </div>
+
+                <p class="mb-4">De este modo toda partícula material, por el hecho de tener masa, crea un <strong>campo gravitatorio</strong>, es decir, una perturbación cuyo efecto es visible si colocamos otra masa de prueba, pues será atraída. El campo gravitatorio es un <strong>campo vectorial y siempre atractivo</strong>.</p>
+
+                <!-- Intensidad del campo gravitatorio -->
+                <h3 id="intensidad-campo" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Intensidad del campo gravitatorio</h3>
+                <p class="mb-3">Definimos la <strong>intensidad del campo gravitatorio ($\vec{g}$)</strong> creado por una masa $M$ en un punto $P$ como la fuerza que actúa sobre la unidad de masa colocada en dicho punto. Matemáticamente:</p>
+
+                <div class="formula-box">
+                    $$\vec g = \frac{\vec F}{m}$$
+                </div>
+
+                <p class="mb-3">El vector intensidad del campo gravitatorio se mide en $\text{N/kg}$ o $\text{m/s}^2$.</p>
+
+                <p class="mb-3">La intensidad del campo gravitatorio creado por una masa puntual $M$ en un punto situado a una distancia $r$ es:</p>
+
+                <div class="formula-box">
+                    $$\boxed{\vec g = - \frac{G M}{r^2} \cdot \vec u_r}$$
+                </div>
+
+                <p class="mb-4">Las unidades de $\vec{g}$ hacen que se le conozca también como <strong>aceleración de la gravedad</strong>.</p>
+
+                <p class="mb-4 bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700">
+                    <strong>Nota:</strong> De aquí podemos deducir que la aceleración, y por tanto la velocidad con que caen distintos objetos, no depende de su masa.
+                </p>
+
+
+<!-- Enlace externo a vídeo de YouTube -->
+                <div class="my-6">
+                    <a href="https://youtube.com/shorts/MG_znWM5ETk?si=G9zP9L0TLqdOB85W" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-amber-50 hover:bg-amber-100 border-l-4 border-amber-400 px-4 py-3 rounded text-sm font-semibold text-slate-800 shadow-sm transition-colors">
+                        <span class="text-2xl" role="img" aria-label="Vídeo">🍿🎬</span>
+                        <span>Ver vídeo</span>
+                    </a>
+                </div>
+
+                <!-- Bloque desplegable: Practicar -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Calcula la intensidad del campo gravitatorio en el punto $(-3, 4)\text{ m}$ creado por una partícula puntual de $3\text{ kg}$ situada en el origen de coordenadas.</p>
+                        <p class="text-xs text-slate-500"><em>Dato:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>1. Vector de posición $\vec{r}$ y su módulo $r$:</strong> Como la masa $M = 3\text{ kg}$ está en el origen $(0,0)$ y el punto en $(-3,4)\text{ m}$:</p>
+                                <div class="formula-box">
+                                    $$\vec{r} = -3\,\vec{i} + 4\,\vec{j}\text{ m}$$
+                                    $$r = |\vec{r}| = \sqrt{(-3)^2 + 4^2} = \sqrt{9 + 16} = 5\text{ m}$$
+                                </div>
+                                <p><strong>2. Vector unitario $\vec{u}_r$:</strong></p>
+                                <div class="formula-box">
+                                    $$\vec{u}_r = \frac{\vec{r}}{r} = \frac{-3\,\vec{i} + 4\,\vec{j}}{5} = -0,6\,\vec{i} + 0,8\,\vec{j}$$
+                                </div>
+                                <p><strong>3. Cálculo del vector intensidad del campo gravitatorio $\vec{g}$:</strong></p>
+                                <div class="formula-box">
+                                    $$\vec{g} = -\frac{G M}{r^2} \cdot \vec{u}_r = -\frac{6,67 \cdot 10^{-11} \cdot 3}{5^2} \cdot (-0,6\,\vec{i} + 0,8\,\vec{j})$$
+                                    $$\vec{g} = -8,004 \cdot 10^{-12} \cdot (-0,6\,\vec{i} + 0,8\,\vec{j}) = (4,80 \cdot 10^{-12}\,\vec{i} - 6,40 \cdot 10^{-12}\,\vec{j})\text{ N/kg}$$
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+
+<!-- Campo creado por una distribución de masas puntuales -->
+                <h3 id="superposicion-campo" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Campo creado por una distribución de masas puntuales. Principio de superposición</h3>
+                <p class="mb-3">La intensidad de campo gravitatorio en un punto del espacio creado por varios cuerpos puntuales se obtiene calculando la intensidad del campo originado por cada uno de ellos de forma separada y sumando vectorialmente dichas intensidades, de acuerdo con el <strong>principio de superposición</strong>.</p>
+                
+                <p class="mb-3">Si se tienen varias masas $M_1, M_2, \dots$ y cada una de ellas crea un campo gravitatorio de intensidad $\vec{g}_1, \vec{g}_2, \dots$ respectivamente, la intensidad del campo gravitatorio creado por todas ellas es:</p>
+
+                <div class="formula-box">
+                    $$\vec g_T = \vec g_1 + \vec g_2 + \dots + \vec g_n = \sum_{i=1}^n \vec g_i = \sum_{i=1}^n \frac{-GM_i}{r_i^2} \vec u_{r_i}$$
+                </div>
+
+                <!-- Bloque desplegable: Practicar 1 -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Campo creado por dos masas iguales</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Calcular la intensidad del campo gravitatorio creado en el punto $P(0,5)\text{ m}$ por dos masas iguales de $8\text{ kg}$ situadas en los puntos $A(-4,0)\text{ m}$ y $B(4,0)\text{ m}$.</p>
+                        <p class="text-xs text-slate-500"><em>Dato:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>1. Vectores de posición desde cada masa hasta $P(0,5)$:</strong></p>
+                                <div class="formula-box">
+                                    $$\vec{r}_1 = \vec{r}_P - \vec{r}_A = (0 - (-4))\,\vec{i} + (5 - 0)\,\vec{j} = 4\,\vec{i} + 5\,\vec{j}\text{ m}$$
+                                    $$\vec{r}_2 = \vec{r}_P - \vec{r}_B = (0 - 4)\,\vec{i} + (5 - 0)\,\vec{j} = -4\,\vec{i} + 5\,\vec{j}\text{ m}$$
+                                </div>
+                                <p>Ambas distancias al punto $P$ son idénticas:</p>
+                                <div class="formula-box">
+                                    $$r_1 = r_2 = \sqrt{4^2 + 5^2} = \sqrt{41}\text{ m}$$
+                                </div>
+                                <p><strong>2. Cálculo de $\vec{g}_1$ y $\vec{g}_2$ (usando $\vec{g}_i = -\frac{G M_i}{r_i^3}\vec{r}_i$):</strong></p>
+                                <div class="formula-box">
+                                    $$\vec{g}_1 = -\frac{6,67 \cdot 10^{-11} \cdot 8}{(\sqrt{41})^3} (4\,\vec{i} + 5\,\vec{j}) = (-8,13 \cdot 10^{-12}\,\vec{i} - 1,02 \cdot 10^{-11}\,\vec{j})\text{ N/kg}$$
+                                    $$\vec{g}_2 = -\frac{6,67 \cdot 10^{-11} \cdot 8}{(\sqrt{41})^3} (-4\,\vec{i} + 5\,\vec{j}) = (8,13 \cdot 10^{-12}\,\vec{i} - 1,02 \cdot 10^{-11}\,\vec{j})\text{ N/kg}$$
+                                </div>
+                                <p><strong>3. Campo gravitatorio total ($\vec{g}_T = \vec{g}_1 + \vec{g}_2$):</strong> Por simetría, las componentes horizontales ($\vec{i}$) se anulan entre sí y se suman las verticales ($\vec{j}$):</p>
+                                <div class="formula-box">
+                                    $$\vec{g}_T = -2,03 \cdot 10^{-11}\,\vec{j}\text{ N/kg}$$
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                <!-- Bloque desplegable: Practicar 2 -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Campo creado por tres masas en el origen</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Calcular el valor del campo gravitatorio que crean en el punto $P(0,0)\text{ m}$ tres masas: masa $A$ de $0,5\text{ kg}$ situada en $A(-2,-1)\text{ m}$, masa $B$ de $2\text{ kg}$ situada en $B(2,0)\text{ m}$, y masa $C$ de $3\text{ kg}$ situada en $C(2,3)\text{ m}$.</p>
+                        <p class="text-xs text-slate-500"><em>Dato:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>1. Vectores de posición desde cada masa hasta $P(0,0)$:</strong></p>
+                                <div class="formula-box">
+                                    $$\vec{r}_A = \vec{r}_P - \vec{r}_A = 2\,\vec{i} + \vec{j}\text{ m} \implies r_A = \sqrt{2^2 + 1^2} = \sqrt{5}\text{ m}$$
+                                    $$\vec{r}_B = \vec{r}_P - \vec{r}_B = -2\,\vec{i}\text{ m} \implies r_B = 2\text{ m}$$
+                                    $$\vec{r}_C = \vec{r}_P - \vec{r}_C = -2\,\vec{i} - 3\,\vec{j}\text{ m} \implies r_C = \sqrt{(-2)^2 + (-3)^2} = \sqrt{13}\text{ m}$$
+                                </div>
+                                <p><strong>2. Campo creado por cada masa en $P(0,0)$:</strong></p>
+                                <div class="formula-box">
+                                    $$\vec{g}_A = -\frac{6,67 \cdot 10^{-11} \cdot 0,5}{(\sqrt{5})^3} (2\,\vec{i} + \vec{j}) = (-5,97 \cdot 10^{-12}\,\vec{i} - 2,98 \cdot 10^{-12}\,\vec{j})\text{ N/kg}$$
+                                    $$\vec{g}_B = -\frac{6,67 \cdot 10^{-11} \cdot 2}{2^3} (-2\,\vec{i}) = 3,34 \cdot 10^{-11}\,\vec{i}\text{ N/kg}$$
+                                    $$\vec{g}_C = -\frac{6,67 \cdot 10^{-11} \cdot 3}{(\sqrt{13})^3} (-2\,\vec{i} - 3\,\vec{j}) = (8,54 \cdot 10^{-12}\,\vec{i} + 1,28 \cdot 10^{-11}\,\vec{j})\text{ N/kg}$$
+                                </div>
+                                <p><strong>3. Suma vectorial ($\vec{g}_T = \vec{g}_A + \vec{g}_B + \vec{g}_C$):</strong></p>
+                                <div class="formula-box">
+                                    $$g_{Tx} = (-5,97 + 33,35 + 8,54) \cdot 10^{-12} = 3,59 \cdot 10^{-11}\text{ N/kg}$$
+                                    $$g_{Ty} = (-2,98 + 0 + 12,81) \cdot 10^{-12} = 9,83 \cdot 10^{-12}\text{ N/kg}$$
+                                    $$\vec{g}_T = (3,59 \cdot 10^{-11}\,\vec{i} + 9,83 \cdot 10^{-12}\,\vec{j})\text{ N/kg}$$
+                                </div>
+                                <p><strong>Módulo del campo resultante:</strong> $|\vec{g}_T| = \sqrt{(3,59 \cdot 10^{-11})^2 + (9,83 \cdot 10^{-12})^2} = 3,72 \cdot 10^{-11}\text{ N/kg}$.</p>
+                            </div>
+                        </details>
+                    </div>
+                </details>    
+			</section>
+
+            <!-- SECCIÓN 5 -->
+            <section id="sec5" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">5. Trabajo realizado por la fuerza gravitatoria</h2>
+                
+                <p class="mb-3">La definición de trabajo que hemos usado hasta ahora ha sido $W = \vec{F} \cdot \vec{r} = F \cdot r \cdot \cos\alpha$, que es válida cuando la fuerza se mantiene constante. Cuando la fuerza no es constante durante el recorrido, el trabajo debe ser calculado con la expresión:</p>
+
+                <div class="formula-box">
+                    $$W_{i \rightarrow f} = \int_i^f \vec{F} \cdot d\vec{r}$$
+                </div>
+
+                <p class="mb-3">Por tanto, el trabajo realizado por la fuerza gravitatoria al desplazar un cuerpo desde la posición $i$ hasta la posición $f$ es:</p>
+
+                <div class="formula-box">
+                    $$W_{i \rightarrow f} = \int_i^f \vec{F} \cdot d\vec{r} = \int_i^f \left( -\frac{GMm}{r^2} \vec{u}_r \right) \cdot d\vec{r} = GMm \int_i^f \left( - \frac{1}{r^2} \right) \cdot dr = GMm \left. \frac{1}{r} \right|_i^f = GMm \left( \frac{1}{r_f} - \frac{1}{r_i} \right)$$
+                </div>
+
+                <p class="text-xs text-slate-500 mb-3"><em>(Recordamos que la unidad del SI del trabajo es el Julio ($\text{J}$).)</em></p>
+
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">➕ Saber más: Justificación diferencial ($\vec{u}_r \cdot d\vec{r} = dr$)</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-2">
+                        <p>En el paso anterior hemos tenido en cuenta que:</p>
+                        <div class="formula-box">
+                            $$\left. \begin{aligned} d(\vec{r} \cdot \vec{r}) &= d(r^2) = 2 r\, dr \\ d(\vec{r} \cdot \vec{r}) &= d\vec{r} \cdot \vec{r} + \vec{r} \cdot d\vec{r} = 2 \vec{r} \cdot d\vec{r} \end{aligned} \right\} \Longrightarrow 2 r\, dr = 2 \vec{r} \cdot d\vec{r} \longrightarrow dr = \frac{\vec{r}}{r} \cdot d\vec{r} = \vec{u}_r \cdot d\vec{r}$$
+                        </div>
+                    </div>
+                </details>
+
+                <p class="mt-4 mb-3">De la expresión se deduce que:</p>
+                <ul class="list-disc pl-6 space-y-1.5 text-slate-700 mb-4">
+                    <li>El trabajo realizado en desplazar una masa entre dos puntos no depende del camino seguido, sino únicamente de los puntos final e inicial ($\Rightarrow$ <strong>La fuerza gravitatoria es conservativa</strong>).</li>
+                    <li>El trabajo a lo largo de una <strong>trayectoria cerrada es cero</strong>.</li>
+                    <li>Si $r_f > r_i \rightarrow$ el trabajo que realiza la fuerza gravitatoria es <strong>negativo</strong> cuando se aleja (dicho trabajo debe realizarlo una fuerza externa para que se produzca ese desplazamiento).</li>
+                    <li>Si $r_f < r_i \rightarrow$ el trabajo que realiza la fuerza gravitatoria es <strong>positivo</strong> cuando se acerca (para realizar dicho desplazamiento el trabajo lo realiza la fuerza gravitatoria).</li>
+                </ul>
+
+                <!-- Bloque desplegable: Practicar -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Trabajo gravitatorio y punto de campo nulo</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Un objeto de masa $M_1 = 100\text{ kg}$ está situado en $A(6,0)\text{ m}$ y otro de masa $M_2 = 300\text{ kg}$ está situado en $B(-6,0)\text{ m}$. Calcula:</p>
+                        <ol class="list-[lower-alpha] pl-6 space-y-1">
+                            <li>El trabajo gravitatorio cuando $M_1$ se traslada desde $A$ hasta $C(-6,6)\text{ m}$.</li>
+                            <li>El punto en que $\vec{g} = \vec{0}$.</li>
+                        </ol>
+                        <p class="text-xs text-slate-500"><em>Dato:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>a) Trabajo gravitatorio al trasladar $M_1$ desde $A$ hasta $C$:</strong></p>
+                                <p>La masa $M_2$ permanece fija en $B(-6,0)\text{ m}$ creando el campo. Calculamos las distancias inicial ($r_i = d_{BA}$) y final ($r_f = d_{BC}$) de $M_1$ respecto a $M_2$:</p>
+                                <div class="formula-box">
+                                    $$r_i = \sqrt{(6 - (-6))^2 + (0 - 0)^2} = 12\text{ m}$$
+                                    $$r_f = \sqrt{(-6 - (-6))^2 + (6 - 0)^2} = 6\text{ m}$$
+                                </div>
+                                <p>Aplicamos la expresión del trabajo de la fuerza gravitatoria:</p>
+                                <div class="formula-box">
+                                    $$W_{A \rightarrow C} = G M_2 M_1 \left( \frac{1}{r_f} - \frac{1}{r_i} \right) = 6,67 \cdot 10^{-11} \cdot 300 \cdot 100 \left( \frac{1}{6} - \frac{1}{12} \right) = 1,67 \cdot 10^{-7}\text{ J}$$
+                                </div>
+                                <p class="text-xs text-slate-600">El trabajo es positivo porque $M_1$ se acerca a $M_2$ ($r_f < r_i$).</p>
+
+                                <p class="pt-2"><strong>b) Punto en que $\vec{g} = \vec{0}$ (con $M_1$ en su posición inicial $A(6,0)$):</strong></p>
+                                <p>El punto de campo nulo debe situarse sobre el segmento que une $B(-6,0)$ y $A(6,0)$ (longitud total $d = 12\text{ m}$), donde los vectores $\vec{g}_1$ y $\vec{g}_2$ tienen sentidos opuestos. Si llamamos $x$ a la distancia desde $B(-6,0)$ hacia la derecha, la distancia hasta $A(6,0)$ será $(12 - x)$:</p>
+                                <div class="formula-box">
+                                    $$|\vec{g}_2| = |\vec{g}_1| \implies \frac{G M_2}{x^2} = \frac{G M_1}{(12 - x)^2} \implies \frac{300}{x^2} = \frac{100}{(12 - x)^2} \implies 3(12 - x)^2 = x^2$$
+                                </div>
+                                <p>Tomando raíces cuadradas (con $0 < x < 12$):</p>
+                                <div class="formula-box">
+                                    $$\sqrt{3}(12 - x) = x \implies 12\sqrt{3} = x(1 + \sqrt{3}) \implies x = \frac{12\sqrt{3}}{1 + \sqrt{3}} \approx 7,61\text{ m}$$
+                                </div>
+                                <p>Como $B$ está en $x_B = -6\text{ m}$, la coordenada del punto es $x_P = -6 + 7,61 = 1,61\text{ m}$. Por tanto, el punto es <strong>$P(1,61; 0)\text{ m}$</strong>.</p>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                <!-- Subapartados siguientes de la Sección 5 -->
+                <!-- Energía potencial gravitatoria -->
+                <h3 id="energia-potencial" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Energía potencial gravitatoria</h3>
+                <p class="mb-3">Una fuerza es conservativa si el trabajo realizado para desplazar un cuerpo entre dos puntos solo depende del punto inicial y del final, pero no del camino seguido.</p>
+                
+                <p class="mb-3">Por el resultado obtenido en el apartado anterior deducimos que la fuerza gravitatoria es conservativa; por ejemplo, al elevar un cuerpo una altura $h$ invertimos una cantidad de energía que después nos es devuelta por el campo íntegramente al dejarlo caer desde la altura $h$, es decir, al realizar un camino cerrado el trabajo es cero, pues el punto inicial y final es el mismo (solo depende de los puntos final e inicial).</p>
+
+                <p class="mb-3">Siempre que una fuerza sea conservativa se le puede asociar una magnitud llamada <strong>energía potencial ($U$)</strong>, que cumple:</p>
+
+                <div class="formula-box">
+                    $$W_{i \rightarrow f} = - \Delta U = - (U_f - U_i) = GMm \left ( \frac{1}{r_f} - \frac{1}{r_i} \right)$$
+                </div>
+
+                <p class="mb-3">De donde se deduce que:</p>
+
+                <div class="formula-box">
+                    $$U = - \frac{GMm}{r} + \text{cte}$$
+                </div>
+
+                <p class="mb-3">La constante que aparece de manera natural durante el proceso de integración puede hacerse cero si suponemos que en el infinito la energía potencial será cero:</p>
+
+                <div class="formula-box">
+                    $$U_{\infty} = - \frac{GMm}{\infty} + \text{cte} = 0 \Rightarrow \text{cte} = 0$$
+                </div>
+
+                <p class="mb-3">Físicamente, la energía potencial coincide con el trabajo que tiene que realizar la fuerza gravitatoria para llevar desde un punto hasta el infinito a una masa $m$:</p>
+
+                <div class="formula-box">
+                    $$W_{i \rightarrow \infty} = - \Delta U = - (U_\infty - U_i) = GMm \left( \frac{1}{\infty} - \frac{1}{r_i} \right) = - \frac{GMm}{r_i}$$
+                </div>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-2">Energía mecánica de una masa $m$ en presencia de un campo gravitatorio</h4>
+                <p class="mb-3">A partir de la definición de energía potencial podemos deducir que la energía mecánica de un cuerpo en el seno de un campo gravitatorio es:</p>
+                <div class="formula-box">
+                    $$E_M = E_c + U = \frac{1}{2} m v^2 - \frac{GMm}{r}$$
+                </div>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-2">Energía potencial de un sistema de partículas</h4>
+                <p class="mb-3">La energía potencial gravitatoria de un conjunto de masas será la suma de cada una de las energías aportadas al sistema por cada par de masas:</p>
+                <div class="formula-box">
+                    $$E_T = \sum_i U_i = \frac{-GM_1 M_2}{r_{1,2}} + \frac{-GM_1 M_3}{r_{1,3}} + \frac{-GM_2 M_3}{r_{2,3}} + \dots$$
+                </div>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-2">Aproximación a $U = m g_0 h$</h4>
+                <p class="mb-3">En cursos anteriores hemos usado la expresión $U = m g_0 h$ para calcular la energía potencial gravitatoria. Esta última solo es válida para cuerpos que se encuentran cerca de la superficie terrestre. Supongamos que queremos levantar un cuerpo hasta una altura $h$. La variación de energía potencial que experimenta es:</p>
+                <div class="formula-box">
+                    $$\Delta U = U(h) - U(\text{suelo}) = \frac{-GMm}{R_T + h} + \frac{GMm}{R_T} = GMm \left ( \frac{1}{R_T} - \frac{1}{R_T + h} \right ) = GMm \left ( \frac{-R_T + R_T + h}{R_T(R_T + h)} \right) \simeq \frac{GMm}{R_T^2} h = g_0 m h$$
+                </div>
+
+                <!-- Conservación de la energía mecánica -->
+                <h3 id="conservacion-energia" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Conservación de la energía mecánica en un campo gravitatorio</h3>
+                <p class="mb-3">Se dice que una fuerza es conservativa cuando el trabajo realizado por una fuerza solo depende de los puntos inicial y final y no de la trayectoria seguida. En tales condiciones la fuerza cumple el <strong>principio de conservación de la energía mecánica</strong>, que matemáticamente se expresa como:</p>
+
+                <div class="formula-box">
+                    $$\frac{1}{2} m v_i^2 - \frac{GMm}{r_i} = \frac{1}{2} m v_f^2 - \frac{GMm}{r_f}$$
+                </div>
+
+                <!-- Potencial gravitatorio -->
+                <h3 id="potencial-gravitatorio" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Potencial gravitatorio</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Se define el <strong>potencial del campo gravitatorio</strong> creado por una masa $M$ en un punto como la energía potencial gravitatoria cuando en dicho punto se coloca una masa de prueba de $1\text{ kg}$, o bien la energía potencial gravitatoria por unidad de masa colocada en el punto en cuestión. Matemáticamente:</p>
+                </div>
+
+                <div class="formula-box">
+                    $$\boxed{V = \frac{U}{m} = - \frac{GM}{r}}$$
+                </div>
+
+                <p class="mb-4">En el SI las unidades del potencial son $\text{J/kg}$.</p>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-2">Potencial de un sistema de partículas</h4>
+                <p class="mb-3">Si se tiene una distribución discreta de masas $M_1, M_2, \dots$ puntuales y cada una de ellas crea un potencial $V_1, V_2, \dots$ en un punto $P$, el potencial total en $P$ es igual a la suma escalar de los potenciales individuales:</p>
+                <div class="formula-box">
+                    $$V_T = V_1 + V_2 + \dots = - \sum_{i} \frac{GM_i}{r_i}$$
+                </div>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-2">Relación entre $W$ y $V$</h4>
+                <p class="mb-3">Puesto que trabajo y energía potencial gravitatoria están relacionadas y el potencial se define a partir de la energía potencial gravitatoria, podemos relacionar trabajo y potencial del siguiente modo:</p>
+                <div class="formula-box">
+                    $$V = \frac{U}{m} \longrightarrow \Delta V = \frac{\Delta U}{m} \Longrightarrow \boxed{W_{i \rightarrow f}} = - \Delta U = - m \Delta V = \boxed{- m (V_f - V_i)}$$
+                </div>
+
+                <!-- Representación del campo gravitatorio -->
+                <h3 id="representacion-campo" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Representación del campo gravitatorio</h3>
+                <p class="mb-3">Como el campo gravitatorio es un campo de fuerzas vectorial, se puede representar en el espacio por un conjunto de flechas que representan el vector intensidad del campo gravitatorio para cada punto del espacio. Cada línea indica el camino que seguiría una masa al colocarla en cada punto.</p>
+                
+                <p class="mb-2">Las <strong>líneas de campo</strong> cumplen las siguientes propiedades:</p>
+                <ul class="list-disc pl-6 space-y-1.5 text-slate-700 mb-4">
+                    <li>Su densidad es proporcional al módulo del vector intensidad de campo.</li>
+                    <li>Su sentido es el de la fuerza que actuaría si se colocara una masa de prueba.</li>
+                    <li>Su dirección es tangente en cada punto al vector intensidad de campo.</li>
+                </ul>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im1.png" alt="Líneas de campo gravitatorio de una masa puntual" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Representación de las líneas de campo gravitatorio creadas por una masa puntual (radiales y dirigidas hacia la masa).</figcaption>
+                </figure>
+
+                <p class="mb-3">Los puntos de un campo gravitatorio que tienen el mismo potencial forman una <strong>superficie equipotencial</strong>. Puede demostrarse que las superficies equipotenciales y las líneas de campo son perpendiculares:</p>
+                
+                <p class="mb-3">Si una masa se mueve en el seno de un campo gravitatorio siguiendo una superficie equipotencial, el trabajo realizado por la fuerza gravitatoria será cero, pues:</p>
+
+                <div class="formula-box">
+                    $$W_{i \rightarrow f} = - \Delta U = - m \Delta V = - m \overbrace{(V_f - V_i)}^{= 0} = 0$$
+                </div>
+
+                <p class="mb-4 bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700">
+                    Pero no olvidemos que $W = \int \vec{F} \cdot d\vec{r} = 0 \Longrightarrow$ Si el trabajo es $0$, entonces la <strong>fuerza gravitatoria (y las líneas de campo) y las superficies equipotenciales son perpendiculares</strong>.
+                </p>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im2.png" alt="Superficies equipotenciales y líneas de campo gravitatorio" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Superficies equipotenciales (esferas concéntricas) perpendiculares a las líneas de campo gravitatorio.</figcaption>
+                </figure>
+            </section>
+
+            <!-- SECCIÓN 6 -->
+<!-- SECCIÓN 6 -->
+            <section id="sec6" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">6. El campo gravitatorio terrestre (esfera maciza)</h2>
+                
+                <p class="mb-4">Es la zona del espacio donde se manifiesta la fuerza gravitatoria de la Tierra. La Tierra no es una masa puntual, por lo que podemos definir la gravedad <strong>dentro</strong> y <strong>fuera</strong> de la Tierra.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 my-5">
+                    <div class="concept-card !my-0">
+                        <h4 class="font-bold text-sky-900 mb-2">Campo gravitatorio fuera de la Tierra ($r > R_T$)</h4>
+                        <p class="text-sm text-slate-700 mb-2">Para una distancia $r > R_T$ se puede considerar que la Tierra es puntual; así el campo gravitatorio es:</p>
+                        <div class="formula-box !my-2">
+                            $$g = \frac{GM_T}{r^2}$$
+                            $$\text{Vectorialmente: } \vec{g} = -\frac{GM_T}{r^2}\vec{u}_r$$
+                        </div>
+                    </div>
+                    <div class="concept-card !my-0">
+                        <h4 class="font-bold text-sky-900 mb-2">Campo gravitatorio dentro de la Tierra ($r < R_T$)</h4>
+                        <p class="text-sm text-slate-700 mb-2">Para una distancia $r < R_T$, según se puede ver en el Anexo II, se obtiene:</p>
+                        <div class="formula-box !my-2">
+                            $$g = \frac{4\pi G \rho}{3} r$$
+                            $$\text{Vectorialmente: } \vec{g} = -\frac{4\pi G \rho}{3} r \vec{u}_r$$
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Imagen t1_im3.png -->
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im3.png" alt="Variación de la intensidad del campo gravitatorio terrestre dentro y fuera de la Tierra" class="mx-auto rounded-lg shadow-sm max-h-60">
+                    <figcaption class="text-xs text-slate-500 mt-2">Representación gráfica de la intensidad del campo gravitatorio terrestre $g(r)$ en el interior ($r < R_T$, crecimiento lineal) y en el exterior ($r > R_T$, decrecimiento inversamente proporcional a $r^2$).</figcaption>
+                </figure>
+
+                <!-- La fuerza peso -->
+                <h3 id="fuerza-peso" class="text-xl font-semibold text-slate-800 mt-8 mb-3">La fuerza peso</h3>
+                <p class="mb-3">El <strong>peso</strong> es la fuerza gravitatoria que ejerce la Tierra sobre los cuerpos. El peso es un vector que siempre va dirigido al centro de la Tierra. Es responsable de la caída con aceleración $9,8\text{ m/s}^2$ en las inmediaciones de su superficie.</p>
+                <p class="mb-4">Si nos alejamos de la Tierra el peso de un cuerpo cambiará; concretamente será menor cuanto más lejos estemos.</p>
+
+                <!-- Gravedad en la superficie terrestre -->
+                <h3 id="gravedad-superficie" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Gravedad en la superficie terrestre</h3>
+                <p class="mb-3">Un cuerpo en la superficie terrestre se encuentra sometido a la fuerza de la gravedad $F_g$; calculemos la aceleración con que cae aplicando la segunda ley de Newton:</p>
+
+                <div class="formula-box">
+                    $$F_g = \text{Peso} \Rightarrow m g_0 = \frac{G M_T m}{R_T^2} \longrightarrow g_0 = \frac{G M_T}{R_T^2} = \frac{6,67 \cdot 10^{-11} \cdot 5,98 \cdot 10^{24}}{(6370 \cdot 10^3)^2} = 9,8\text{ m/s}^2$$
+                </div>
+
+                <p class="mb-4">Podríamos haber usado esta expresión para medir la masa de la Tierra, donde $m$ es la masa del cuerpo, $M_T$ es la masa de la Tierra, $R_T$ el radio terrestre y $g_0$ la aceleración de la gravedad en la superficie.</p>
+
+                <!-- Gravedad a una altura h sobre la superficie -->
+                <h3 id="gravedad-altura" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Gravedad a una altura $h$ sobre la superficie</h3>
+                <p class="mb-3">Sea $g$ la aceleración de la gravedad a una altura $h$ sobre la superficie terrestre y $g_0$ la aceleración en la superficie terrestre:</p>
+
+                <div class="formula-box">
+                    $$g = \frac{G M_T}{(R_T + h)^2} \quad \text{y} \quad g_0 = \frac{G M_T}{R_T^2}$$
+                </div>
+
+                <p class="mb-3">Dividiendo ambas expresiones:</p>
+
+                <div class="formula-box">
+                    $$\boxed{g = g_0 \left(\frac{R_T}{R_T + h}\right)^2}$$
+                </div>
+
+                <p class="mb-4">De donde se obtiene que $g < g_0$.</p>
+            </section>
+
+            <!-- SECCIÓN 7 -->
+            <!-- SECCIÓN 7 -->
+            <section id="sec7" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">7. Aplicaciones de la ley de gravitación</h2>
+
+                <!-- Cálculo de la masa de un planeta -->
+                <h3 id="masa-planeta" class="text-xl font-semibold text-slate-800 mt-6 mb-3">Cálculo de la masa de un planeta</h3>
+                <p class="mb-3">Es posible usar la ley de la gravitación universal para conocer la masa de un planeta si se conoce el periodo orbital y el radio de un satélite que orbita en torno a él.</p>
+                <p class="mb-3">Supongamos una órbita circular; entonces la fuerza de la gravedad es la fuerza centrípeta:</p>
+
+                <div class="formula-box">
+                    $$F_c = F_g \implies \frac{\cancel{m} v^2}{r} = \frac{G M \cancel{m}}{r^2} \xrightarrow{v = \frac{2\pi r}{T}} \left(\frac{2\pi r}{T}\right)^2 = \frac{GM}{r} \implies \text{despejando} \implies \boxed{M = \frac{4\pi^2 r^3}{G T^2}}$$
+                </div>
+
+                <!-- Bloque desplegable: Practicar (Masa de Júpiter) -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Estimación de la masa de Júpiter</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Estimar la masa de Júpiter sabiendo que el satélite Europa gira alrededor del planeta describiendo una órbita de radio $671\,000\text{ km}$ y que su periodo es de $3\text{ días}$, $13\text{ horas}$ y $13\text{ minutos}$.</p>
+                        <p class="text-xs text-slate-500"><em>Dato:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>1. Cambio de unidades al Sistema Internacional (SI):</strong></p>
+                                <div class="formula-box">
+                                    $$r = 671\,000\text{ km} = 6,71 \cdot 10^8\text{ m}$$
+                                    $$T = (3 \cdot 86\,400) + (13 \cdot 3\,600) + (13 \cdot 60) = 259\,200 + 46\,800 + 780 = 306\,780\text{ s}$$
+                                </div>
+                                <p><strong>2. Cálculo de la masa de Júpiter ($M_J$):</strong></p>
+                                <div class="formula-box">
+                                    $$M_J = \frac{4\pi^2 r^3}{G T^2} = \frac{4\pi^2 (6,71 \cdot 10^8)^3}{6,67 \cdot 10^{-11} \cdot (306\,780)^2} \approx 1,9 \cdot 10^{27}\text{ kg}$$
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                <!-- Deducción de la tercera ley de Kepler -->
+                <h3 id="deduccion-kepler" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Deducción de la tercera ley de Kepler</h3>
+                <p class="mb-3">Supongamos un satélite orbitando en torno a un planeta en una órbita circular; como ya hemos visto, la fuerza centrípeta responsable de este tipo de movimiento es la gravedad:</p>
+
+                <div class="formula-box">
+                    $$\frac{\cancel{m} v^2}{r} = \frac{G M \cancel{m}}{r^2} \xrightarrow{v = \frac{2\pi r}{T}} \left(\frac{2\pi r}{T}\right)^2 = \frac{GM}{r} \implies \text{despejando} \implies \boxed{\frac{T^2}{r^3} = \frac{4\pi^2}{GM} = k}$$
+                </div>
+
+                <p class="mb-4 text-sm text-slate-700 bg-amber-50 border-l-4 border-amber-400 p-3 rounded">
+                    Hemos obtenido la <strong>$3^\text{a}$ ley de Kepler</strong>.
+                </p>
+
+                <!-- La dinámica de los planetas -->
+                <h3 id="dinamica-planetas" class="text-xl font-semibold text-slate-800 mt-8 mb-3">La dinámica de los planetas</h3>
+                <p class="mb-3">Todo cuerpo que se encuentra girando en torno a un punto debe estar sometido a una <strong>fuerza centrípeta ($F_c$)</strong>. En el caso de un satélite, es la gravedad la centrípeta:</p>
+
+                <div class="formula-box">
+                    $$F_c = m \cdot a_c = m \frac{v^2}{r}$$
+                </div>
+
+                <p class="mb-3">La velocidad puede calcularse como $v = \frac{2\pi r}{T}$, de donde:</p>
+
+                <div class="formula-box">
+                    $$F_c = \frac{4\pi^2 m r}{T^2}$$
+                </div>
+
+                <!-- Velocidad orbital -->
+                <h3 id="velocidad-orbital" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Velocidad orbital</h3>
+                <p class="mb-3">Supongamos un satélite o cuerpo orbitando en torno a un planeta en una órbita circular. La fuerza centrípeta necesaria para realizar este movimiento es la fuerza de la gravedad:</p>
+
+                <div class="formula-box">
+                    $$\frac{\cancel{m} v^2}{r} = \frac{G M \cancel{m}}{r^2} \longrightarrow \boxed{v = \sqrt{\frac{GM}{r}}}$$
+                </div>
+
+                <p class="mb-3">Podemos observar que la <strong>velocidad orbital no depende de la masa del cuerpo orbitante</strong> y que es menor cuanto más alejado está el satélite.</p>
+                <p class="mb-3">Podemos obtener el periodo de revolución del cuerpo orbitante:</p>
+
+                <div class="formula-box">
+                    $$T = \frac{2\pi r}{v} = 2\pi \sqrt{\frac{r^3}{GM}}$$
+                </div>
+
+                <p class="mb-4 text-sm text-slate-700 bg-amber-50 border-l-4 border-amber-400 p-3 rounded">
+                    Para mantener dicho cuerpo en órbita <strong>no es necesario aplicar energía continuamente</strong>.
+                </p>
+
+                <!-- Bloque desplegable: Practicar (Meteosat) -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Órbita del satélite Meteosat</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Ejemplo:</strong> El satélite Meteosat gira alrededor de la Tierra en una órbita circular a una altura de $800\text{ km}$. Calcula la velocidad a la que orbita y el periodo.</p>
+                        <p class="text-xs text-slate-500"><em>Datos:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$; $M_T = 5,98 \cdot 10^{24}\text{ kg}$; $R_T = 6370\text{ km}$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p><strong>1. Radio orbital ($r$):</strong></p>
+                                <div class="formula-box">
+                                    $$r = R_T + h = (6370 + 800)\text{ km} = 7170\text{ km} = 7,17 \cdot 10^6\text{ m}$$
+                                </div>
+                                <p><strong>2. Velocidad orbital ($v$):</strong></p>
+                                <div class="formula-box">
+                                    $$v = \sqrt{\frac{G M_T}{r}} = \sqrt{\frac{6,67 \cdot 10^{-11} \cdot 5,98 \cdot 10^{24}}{7,17 \cdot 10^6}} \approx 7458,4\text{ m/s}$$
+                                </div>
+                                <p><strong>3. Periodo orbital ($T$):</strong></p>
+                                <div class="formula-box">
+                                    $$T = \frac{2\pi r}{v} = \frac{2\pi \cdot 7,17 \cdot 10^6}{7458,4} \approx 6040,3\text{ s} \approx 1,68\text{ horas}$$
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                <!-- Satélites geoestacionarios -->
+                <h3 id="satelites-geoestacionarios" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Satélites geoestacionarios</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Son aquellos satélites cuyo <strong>período de revolución es $23,98\text{ h}$</strong> (igual al periodo de rotación terrestre en el plano ecuatorial), por lo que se mantienen encima del mismo punto sobre la Tierra.</p>
+                </div>
+                <p class="mb-3">Sabemos que $T = 2\pi \sqrt{\frac{r^3}{GM}}$; si despejamos $r$ y sustituimos el periodo en segundos se tiene que el radio de la órbita del satélite geoestacionario es $r = 4,22 \cdot 10^7\text{ m}$, y la altura sobre la superficie terrestre será:</p>
+                <div class="formula-box">
+                    $$h = r - R_T = 3,58 \cdot 10^7\text{ m} = 35\,800\text{ km}$$
+                </div>
+
+                <!-- Energía de un satélite en su órbita -->
+                <h3 id="energia-satelite" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Energía de un satélite en su órbita</h3>
+                <p class="mb-3">Supongamos un satélite de masa $m$ orbitando en torno a la Tierra ($M$) a una distancia $r$ del centro de la misma y con velocidad $v$. Su energía mecánica es:</p>
+
+                <div class="formula-box">
+                    $$E_M = E_c + U = -\frac{GMm}{r} + \frac{1}{2} m v^2$$
+                </div>
+
+                <p class="mb-3">Si además su órbita es circular, su velocidad es $v = \sqrt{\frac{GM}{r}}$ y su energía cinética es $E_c = \frac{1}{2} m \frac{GM}{r} = \frac{GMm}{2r}$. De este modo, la energía mecánica de un satélite en órbita circular es:</p>
+
+                <div class="formula-box">
+                    $$\boxed{E_M = E_c + U = -\frac{GMm}{r} + \frac{GMm}{2r} = -\frac{GMm}{2r}}$$
+                </div>
+
+                <!-- Velocidad de puesta en órbita -->
+                <h3 id="velocidad-puesta-orbita" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Velocidad de puesta en órbita</h3>
+                <p class="mb-3">Calculemos la velocidad que hay que comunicar a un cohete, $v_L$, desde la superficie terrestre para colocarlo en una órbita circular de radio $r$. Aplicando la conservación de la energía mecánica:</p>
+
+                <div class="formula-box">
+                    $$E_{M_i} = E_{M_f} \Rightarrow \frac{1}{2} m v_L^2 - \frac{GMm}{R_T} = -\frac{GMm}{2r} \Rightarrow \text{despejando } v_L \Rightarrow \boxed{v_L = \sqrt{2GM \left( \frac{1}{R_T} - \frac{1}{2r} \right)}}$$
+                </div>
+
+                <p class="mb-3 text-sm text-slate-600">Donde $M$ es la masa de la Tierra, $R_T$ su radio y $r$ el radio de la órbita.</p>
+                <p class="mb-3">Si ahora necesitamos calcular el trabajo desarrollado por una fuerza no conservativa para poner en órbita el satélite, podríamos bien aplicar el principio de la energía $W = \Delta E_M$ o bien calcular la energía cinética que esta tiene que comunicar al satélite para ponerlo en órbita:</p>
+
+                <div class="formula-box">
+                    $$W = E_{c_i} = \frac{1}{2} m v_L^2 = GMm \left( \frac{1}{R_T} - \frac{1}{2r} \right)$$
+                </div>
+
+                <!-- Energía para pasar de una órbita a otra -->
+                <h3 id="cambio-orbita" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Energía para pasar de una órbita a otra</h3>
+                <p class="mb-3">Supongamos un satélite de masa $m$ orbitando, con una órbita de radio $r_i$, en torno a un cuerpo de masa $M$. La energía que hay que comunicar a dicho satélite para colocarlo en una órbita de radio $r_f$ será la diferencia de las energías mecánicas de las dos órbitas:</p>
+
+                <div class="formula-box">
+                    $$\boxed{W = \Delta E_M = E_{M_f} - E_{M_i} = -\frac{GMm}{2} \left( \frac{1}{r_f} - \frac{1}{r_i} \right)}$$
+                </div>
+
+                <p class="mb-4 text-sm text-slate-700 bg-amber-50 border-l-4 border-amber-400 p-3 rounded">
+                    <strong>¿Por qué no puede calcularse el trabajo como $-\Delta U$?</strong> Porque para cambiar de órbita es necesaria la acción de una fuerza externa (propulsores) que <strong>no es conservativa</strong>, variando tanto la energía potencial como la cinética.
+                </p>
+
+                <!-- Velocidad de escape -->
+                <h3 id="velocidad-escape" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Velocidad de escape</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Se define la <strong>velocidad de escape ($v_e$)</strong> como la mínima velocidad con la que tiene que partir un satélite de un planeta para que escape completamente a los efectos de su campo gravitatorio, es decir, llegue hasta el infinito, donde los efectos de la gravedad son estrictamente cero, y con velocidad cero.</p>
+                </div>
+
+                <!-- Imagen t1_im4.png -->
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im4.png" alt="Trayectoria y velocidad de escape en un campo gravitatorio" class="mx-auto rounded-lg shadow-sm max-h-60">
+                    <figcaption class="text-xs text-slate-500 mt-2">Representación conceptual de la velocidad de escape necesaria para abandonar la atracción gravitatoria de un planeta.</figcaption>
+                </figure>
+
+                <ul class="list-disc pl-6 space-y-1.5 text-slate-700 mb-3">
+                    <li>En el infinito la energía potencial es cero, pues: $U_{\infty} = -\frac{GMm}{r \to \infty} = 0$.</li>
+                    <li>En el infinito la energía cinética es cero, pues buscamos la <strong>mínima velocidad</strong>; una velocidad superior a la velocidad de escape haría que llegase al infinito con cierta velocidad residual.</li>
+                </ul>
+
+                <p class="mb-3">Puesto que durante todo el trayecto se conserva la energía mecánica del satélite, podemos aplicarle el principio de conservación de la energía, tomando como punto inicial la salida de su movimiento y como final la llegada al infinito:</p>
+
+                <div class="formula-box">
+                    $$E_{M_i} = U_i + E_{c_i} = -\frac{GMm}{R} + \frac{1}{2} m v_e^2$$
+                    $$E_{M_f} = U_{\infty} + E_{c_\infty} = 0$$
+                    $$\text{Aplicando } E_{M_i} = E_{M_f} \implies -\frac{GMm}{R} + \frac{1}{2} m v_e^2 = 0 \implies \boxed{v_e = \sqrt{\frac{2GM}{R}} = \sqrt{2gR}}$$
+                </div>
+
+                <p class="mb-3">Para el caso de la Tierra:</p>
+                <div class="formula-box">
+                    $$v_{e,\text{Tierra}} = \sqrt{\frac{2GM_T}{R_T}} = \sqrt{2 g_0 R_T} = \sqrt{2 \cdot 9,8 \cdot 6370 \cdot 10^3} = 11\,173\text{ m/s} \approx 11,2\text{ km/s}$$
+                </div>
+
+                <!-- Bloque desplegable: Practicar 1 (Velocidad de escape) -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Velocidad de escape de un cuerpo de 50 kg</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Calcula la velocidad de escape de un cuerpo de $50\text{ kg}$ situado en la superficie de la Tierra.</p>
+                        <p class="text-xs text-slate-500"><em>Datos:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$; $M_T = 5,98 \cdot 10^{24}\text{ kg}$; $R_T = 6370\text{ km}$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p>Como hemos deducido a partir de la conservación de la energía mecánica, la masa $m = 50\text{ kg}$ del cuerpo se cancela en la ecuación, por lo que la velocidad de escape <strong>no depende de la masa del objeto</strong>:</p>
+                                <div class="formula-box">
+                                    $$v_e = \sqrt{\frac{2 G M_T}{R_T}} = \sqrt{\frac{2 \cdot 6,67 \cdot 10^{-11} \cdot 5,98 \cdot 10^{24}}{6,37 \cdot 10^6}} \approx 11\,190\text{ m/s} \approx 11,2\text{ km/s}$$
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                <!-- Bloque desplegable: Practicar 2 (Radio de Schwarzschild de la Tierra) -->
+                <details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">Practicar: Radio de la Tierra para que $v_e = c$ (Agujero negro)</summary>
+                    <div class="mt-3 text-sm text-slate-700 space-y-3">
+                        <p><strong>Enunciado:</strong> Calcula el radio que tendría que tener la Tierra para que la velocidad de escape en su superficie sea igual a la velocidad de la luz en el vacío ($c = 3 \cdot 10^8\text{ m/s}$).</p>
+                        <p class="text-xs text-slate-500"><em>Datos:</em> $G = 6,67 \cdot 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$; $M_T = 5,98 \cdot 10^{24}\text{ kg}$; $c = 3 \cdot 10^8\text{ m/s}$.</p>
+
+                        <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                            <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                            <div class="mt-2 text-slate-700 space-y-2">
+                                <p>Partimos de la expresión de la velocidad de escape e igualamos $v_e = c$ para despejar el radio crítico (conocido como <em>radio de Schwarzschild</em>):</p>
+                                <div class="formula-box">
+                                    $$v_e = c = \sqrt{\frac{2 G M_T}{R_S}} \implies c^2 = \frac{2 G M_T}{R_S} \implies R_S = \frac{2 G M_T}{c^2}$$
+                                    $$R_S = \frac{2 \cdot 6,67 \cdot 10^{-11} \cdot 5,98 \cdot 10^{24}}{(3 \cdot 10^8)^2} \approx 8,86 \cdot 10^{-3}\text{ m} \approx 8,86\text{ mm}$$
+                                </div>
+                                <p>Toda la masa de la Tierra tendría que comprimirse en una esfera de menos de $9\text{ mm}$ de radio para convertirse en un agujero negro.</p>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                <!-- Clasificación de satélites en función de la altura de la órbita -->
+                <h3 id="clasificacion-satelites" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Clasificación de satélites en función de la altura de la órbita</h3>
+                <p class="mb-4">Los satélites artificiales se pueden clasificar según su altura sobre la superficie terrestre en:</p>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden text-sm">
+                        <thead class="bg-sky-900 text-white">
+                            <tr>
+                                <th class="py-2.5 px-4 text-left font-semibold">Tipo</th>
+                                <th class="py-2.5 px-4 text-left font-semibold">Altura</th>
+                                <th class="py-2.5 px-4 text-left font-semibold">Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-2.5 px-4 font-bold text-sky-900">LEO (Low Earth Orbit)</td>
+                                <td class="py-2.5 px-4">De $200\text{ km}$ a $1\,500\text{ km}$</td>
+                                <td class="py-2.5 px-4">Estación Espacial Internacional (ISS)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-2.5 px-4 font-bold text-sky-900">MEO (Medium Earth Orbit)</td>
+                                <td class="py-2.5 px-4">De $1\,500\text{ km}$ a $36\,000\text{ km}$</td>
+                                <td class="py-2.5 px-4">Telefonía, televisión, experimentación, GPS, GLONASS, Galileo</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-2.5 px-4 font-bold text-sky-900">GEO (Geostationary Orbit)</td>
+                                <td class="py-2.5 px-4">$36\,000\text{ km}$</td>
+                                <td class="py-2.5 px-4">Meteosat o satélites de comunicaciones</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+<!-- SIMULADOR DE ÓRBITAS LEO / MEO / GEO -->
+<div class="rounded-2xl bg-slate-900 text-white p-5 sm:p-6 shadow-lg">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">🛰️ Simulador Espacial: Clasificación de Órbitas (LEO, MEO, GEO)</span>
+                            
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button id="btnGeo" class="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-xs font-semibold transition">GEO: Meteosat (35.800 km)</button>
+                            <button id="btnMeo" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold transition">MEO: GPS (20.200 km)</button>
+                            <button id="btnLeo" class="px-3 py-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-xs font-semibold transition">LEO: ISS (400 km)</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                        <div class="lg:col-span-2 h-64 sm:h-72 bg-slate-950 rounded-xl border border-slate-800 relative overflow-hidden">
+                            <canvas id="satCanvas" class="w-full h-full block"></canvas>
+                        </div>
+                        <div class="space-y-4 bg-slate-800/70 p-4 rounded-xl border border-slate-700 text-sm">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Altura sobre la Tierra (<mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 121.3%; position: relative;" tabindex="0" ctxtmenu_counter="319"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math></mjx-assistive-mml></mjx-container>): <strong id="satAltLabel" class="text-white">4500 km</strong></label>
+                                <input type="range" id="satAltSlider" min="200" max="40000" step="100" value="400" class="w-full accent-emerald-500">
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between py-1 border-b border-slate-700">
+                                    <span class="text-slate-400">Tipo de Órbita:</span>
+                                    <span id="satTypeBadge" class="font-bold text-indigo-400">MEO (Medium Earth Orbit)</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-700">
+                                    <span class="text-slate-400">Velocidad orbital (<mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 121.3%; position: relative;" tabindex="0" ctxtmenu_counter="320"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></mjx-assistive-mml></mjx-container>):</span>
+                                    <span id="satVelVal" class="font-mono font-bold text-white">6.06 km/s</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-700">
+                                    <span class="text-slate-400">Periodo orbital (<mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 121.3%; position: relative;" tabindex="0" ctxtmenu_counter="321"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D447 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi></math></mjx-assistive-mml></mjx-container>):</span>
+                                    <span id="satPeriodVal" class="font-mono font-bold text-white">3.13 h</span>
+                                </div>
+                                <div class="flex justify-between py-1">
+                                    <span class="text-slate-400">Gravedad (<mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 121.3%; position: relative;" tabindex="0" ctxtmenu_counter="322"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi></math></mjx-assistive-mml></mjx-container>):</span>
+                                    <span id="satGVal" class="font-mono font-bold text-emerald-400">3.38 m/s²</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+           <!-- SECCIÓN 8 -->
+            <section id="sec8" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">8. Caos determinista</h2>
+                
+                <p class="mb-4">Hemos visto cómo para dos cuerpos, la física newtoniana nos permite conocer la fuerza gravitatoria que los atrae y calcular la velocidad orbital, periodo... Para tres cuerpos aplicamos las mismas leyes, pero no podemos resolver matemáticamente las ecuaciones que surgen más que introduciendo aproximaciones muy fuertes aunque bastante reales (uno de los cuerpos tiene muchísima más masa que los otros, uno de los cuerpos se mueve mucho más cerca de uno que del otro,...). Actualmente los ordenadores permiten obtener aproximaciones casi con el grado de precisión que se desee.</p>
+
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Un conjunto de <strong>3 o más cuerpos ligados gravitatoriamente</strong> se dice que son un <strong>sistema caótico</strong>. Queremos indicar con ello que, aunque se aplican y cumplen las leyes de la gravitación que determinan la velocidad, posición, periodo, etc., de cada cuerpo en cada instante, en realidad estos parámetros dependen fuertemente de las condiciones iniciales, lo que hace imposible en la práctica predecirlos.</p>
+                </div>
+
+                <p class="mb-4 bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700">
+                    Una pequeñísima variación en las condiciones iniciales tiene unos efectos enormes en el movimiento de los cuerpos.
+                </p>
+
+                <!-- Simulación Interactiva: Problema restringido de los 3 cuerpos (Sol 1, Sol 2 y Planeta) -->
+                <div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+                    <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+                        <h4 class="font-bold text-amber-400">🌌 Simulación Interactiva: Caos determinista (Sistema binario y planeta)</h4>
+                        <button id="resetChaosBtn" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold px-3 py-1.5 rounded transition-colors">
+                            🔄 Reiniciar trayectorias
+                        </button>
+                    </div>
+                    <canvas id="chaos3BodyCanvas" width="700" height="300"></canvas>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Dos planetas idénticos parten casi del mismo punto (separados apenas $0,5\text{ px}$) alrededor de dos estrellas fijas (<strong>Sol 1</strong> y <strong>Sol 2</strong>). Observa cómo sus órbitas divergen de forma impredecible.</p>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 9 -->
+            <section id="sec9" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">9. La materia oscura</h2>
+                
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">Se denomina <strong>materia oscura</strong> a un tipo de materia que corresponde aproximadamente al <strong>$80\%$ de la materia del universo</strong> (alrededor del $27\%$ del contenido total de materia-energía), y que no es ni energía oscura ni materia ordinaria. De hecho, no interactúa en ninguna forma con la radiación electromagnética, siendo completamente transparente en todo el espectro electromagnético, lo que hace que actualmente sea imposible de detectar directamente.</p>
+                </div>
+
+                <p class="mb-4">Su existencia se deduce a partir de sus <strong>efectos gravitacionales</strong> en la materia visible, tales como las estrellas o las galaxias, así como en las anisotropías del fondo cósmico de microondas presente en el universo.</p>
+
+                <p class="mb-4">La materia oscura fue propuesta por <strong>Fritz Zwicky en 1933</strong> ante la evidencia de una «masa no visible», que influía en las velocidades orbitales de las galaxias en los cúmulos galácticos (teorema del Virial). Otros efectos donde se hace patente la materia oscura es en fenómenos de <strong>lentes gravitatorias</strong> o en la <strong>curva de rotación de las estrellas de una galaxia</strong>.</p>
+
+                <!-- Gráfico comparativo: Curva de rotación galáctica -->
+                <div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+                    <h4 class="font-bold text-sky-400 mb-3">📊 Gráfica: Curva de rotación de una galaxia espiral</h4>
+                    <canvas id="darkMatterCanvas" width="700" height="260"></canvas>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Según la mecánica newtoniana con solo materia visible ($v \propto 1/\sqrt{r}$), las estrellas exteriores deberían girar más lento. Sin embargo, se observa una velocidad casi constante debido al halo de <strong>materia oscura</strong>.</p>
+                </div>
+
+                <p class="mb-4">Como ya hemos dicho, la composición de la materia oscura se desconoce. Puede incluir neutrinos ordinarios y pesados, partículas elementales exóticas (<strong>WIMPs</strong> y los <strong>axiones</strong>), cuerpos astronómicos como las estrellas enanas, los planetas (colectivamente llamados <strong>MACHO</strong>) y las nubes de gases no luminosos (halos galácticos). Las pruebas actuales favorecen los modelos en que el componente primario de la materia oscura son las nuevas partículas elementales llamadas colectivamente <strong>materia oscura no bariónica</strong>, es decir, materia no ordinaria.</p>
+            </section>
+
+            <!-- SECCIÓN 10 -->
+            <section id="sec10" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">10. El tejido espaciotemporal</h2>
+                
+                <p class="mb-4">La <strong>teoría general de la relatividad</strong> o relatividad general es una teoría del campo gravitatorio y de los sistemas de referencia generales, publicada por <strong>Albert Einstein</strong>. En ella la gravedad deja de ser una fuerza fundamental de la naturaleza y pasa a ser la <strong>deformación del tejido espaciotemporal</strong>.</p>
+
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">El espacio-tiempo es como una malla que se extiende por los dominios del universo. Dicha malla, como si de una sábana se tratara, al colocarle una masa encima se deforma produciendo un hundimiento. Dicho hundimiento representa los efectos de la gravitación; por tanto, <strong>la gravedad no es más que la consecuencia de la curvatura del espacio-tiempo</strong>.</p>
+                </div>
+
+                <!-- Visualización Interactiva: Deformación de la malla del espacio-tiempo -->
+                <div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+                    <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+                        <h4 class="font-bold text-emerald-400">🕸️ Visualización Interactiva: Curvatura del espacio-tiempo</h4>
+                        <div class="flex items-center gap-3 text-xs">
+                            <label for="spacetimeMass">Masa central ($M$):</label>
+                            <input type="range" id="spacetimeMass" min="15" max="95" value="60" class="accent-emerald-400">
+                        </div>
+                    </div>
+                    <canvas id="spacetimeCanvas" width="700" height="300"></canvas>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Aumenta la masa central para observar cómo se hunde la malla del espacio-tiempo y cómo un cuerpo menor sigue la geodésica curvada a su alrededor.</p>
+                </div>
+            </section>
+
+
+<!-- EJERCICIOS DE CLASE -->
+            <section id="ejercicios" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-100 pb-2 mb-6">Ejercicios de Clase</h2>
+                
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <h3 class="font-bold text-indigo-800 text-base mb-2 border-b pb-1">Leyes de Kepler y gravitación universal</h3>
+                        <ol class="list-decimal pl-5 space-y-3">
+                            <li>Dos planetas de masas iguales orbitan alrededor de una estrella de masa mucho mayor. El planeta 1 describe una órbita circular de radio $r_{1}=10^{8}\text{ km}$ con un periodo de rotación $T_{1}=2\text{ años}$, mientras que el planeta 2 describe una órbita elíptica cuya distancia más próxima es $r_{1}=10^{8}\text{ km}$ y la más alejada es $r_{2}=1,8\cdot 10^{8}\text{ km}$. ¿Cuál es el periodo de rotación del planeta 2? ¿Puede pertenecer a dicho sistema planetario un cuerpo cuya distancia fuese $r=10^{5}\text{ km}$ y período $T=2,5\text{ años}$? <span class="text-indigo-700 font-medium">Sol: a) $3,3\text{ años}$; b) no.</span></li>
+                            <li>Si por alguna causa la Tierra redujese su radio a la mitad manteniendo su masa, razone cómo se modificarían: a) La intensidad del campo gravitatorio en su superficie. b) Su órbita alrededor del Sol. <span class="text-indigo-700 font-medium">Sol: a) $4g_{0}$; b) no cambia.</span></li>
+                            <li>Una mujer cuyo peso en la Tierra es $700\text{ N}$ se traslada a una altura de dos radios terrestres por encima de la superficie de la Tierra. ¿Cuál será su peso a dicha altura? <span class="text-indigo-700 font-medium">Sol: $78\text{ N}$.</span></li>
+                            <li>Un satélite de masa $350\text{ kg}$ describe órbitas circulares alrededor de la Tierra a una altura de $630\text{ km}$. a) ¿Cuánto vale la intensidad del campo gravitatorio creado por la Tierra a esta altura? b) ¿Cuánto vale la aceleración centrípeta del satélite? c) ¿Cuánto vale la energía mecánica del satélite? d) Su velocidad orbital. e) La energía necesaria para que, partiendo de esa órbita, se coloque en otra órbita circular a una altura de $10\,000\text{ km}$. f) En este proceso, ¿cuánto cambia su momento angular? Datos: $G$, $M_{T}$, $R_{T}$. <span class="text-indigo-700 font-medium">Sol: a) $8,14\text{ N/kg}$; b) $g$; c) $-10^{10}\text{ J}$; d) $7549\text{ m/s}$; e) $4\cdot 10^{9}\text{ J}$.</span></li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-indigo-800 text-base mb-2 border-b pb-1">El campo gravitatorio</h3>
+                        <ol class="list-decimal pl-5 space-y-3" start="5">
+                            <li>Suponga que la masa de la Tierra se duplicara: Calcule razonadamente el nuevo periodo orbital de la Luna suponiendo que su radio orbital permaneciera constante. Si, además de duplicarse la masa terrestre, se duplicara su radio, ¿cuál sería el valor de $g$ en la superficie terrestre? Datos: $G$, $M_{T}$, $R_{T}$ y $r_{\text{órbita lunar}}=3,84\cdot 10^{8}\text{ m}$. <span class="text-indigo-700 font-medium">Sol: $T_{0}/\sqrt{2}$ (o $T_0/2$ según enunciado); $g_{0}/2$ (o $g_0/4$).</span></li>
+                            <li>Si la masa de Marte es $0,11$ veces la masa de la Tierra y su radio es $0,53$ veces el radio de la Tierra, obtener la aceleración de la gravedad en la superficie de Marte. Dato: $g_{0}(\text{Tierra})=9,8\text{ m/s}^{2}$. <span class="text-indigo-700 font-medium">Sol: $3,84\text{ m/s}^{2}$.</span></li>
+                            <li>La masa de la Luna es igual a $0,01255$ veces la de la Tierra y su radio es igual a $0,273$ veces el de la Tierra. ¿Cuál es la aceleración de un cuerpo que cae libremente cerca de la superficie de la Luna? <span class="text-indigo-700 font-medium">Sol: $1,65\text{ m/s}^{2}$.</span></li>
+                            <li>Dos cuerpos, de $10\text{ kg}$ de masa, se encuentran en dos vértices de un triángulo equilátero, de $0,5\text{ m}$ de lado. a) Calcule el campo gravitatorio que estas dos masas generan en el tercer vértice del triángulo. b) Calcule el trabajo que realiza la fuerza gravitatoria de las dos masas en traer otro cuerpo de $10\text{ kg}$ desde el infinito hasta el tercer vértice del triángulo. c) El trabajo que realiza la fuerza gravitatoria para llevar la tercera masa desde el vértice hasta el punto medio de las otras dos masas. Datos: $G$. <span class="text-indigo-700 font-medium">Sol: a) $(0, -4,62\cdot 10^{-9})\text{ m/s}^{2}$; b) $2,67\cdot 10^{-8}\text{ J}$; c) $2,67\cdot 10^{-8}\text{ J}$.</span></li>
+                            <li>Se tienen tres masas de $5\text{ kg}$, $3\text{ kg}$ y $2\text{ kg}$ cuyas posiciones son respectivamente $(0,0)$, $(0,1)$ y $(1,1)$, que son los vértices de un cuadrado de lado $1\text{ m}$. Calcular: a) La intensidad de campo gravitatorio en el vértice libre y el ángulo que forma con el eje $x$. b) La energía potencial gravitatoria y el potencial gravitatorio de una masa de $1\text{ kg}$ que se colocara en dicho vértice. c) El trabajo que realiza el campo para llevar la masa desde dicho punto hasta el centro del cuadrado, ¿será espontáneo el movimiento? <span class="text-indigo-700 font-medium">Sol: a) $4,56\cdot 10^{-10}\text{ m/s}^{2}$ y $25,96^\circ$; b) $-6,088\cdot 10^{-10}\text{ J}$ y $-6,088\cdot 10^{-10}\text{ J/kg}$; c) $3,4\cdot 10^{-10}\text{ J}$, espontáneo.</span></li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-indigo-800 text-base mb-2 border-b pb-1">Energía potencial y potencial gravitatorio</h3>
+                        <ol class="list-decimal pl-5 space-y-3" start="10">
+                            <li>Disponemos de dos masas esféricas cuyos diámetros son $8$ y $2\text{ cm}$, respectivamente. Considerando únicamente la interacción gravitatoria entre estos dos cuerpos, calcula: a) La relación entre sus masas $m_{1}/m_{2}$ sabiendo que si ponemos ambos cuerpos en contacto el campo gravitatorio en el punto donde se tocan es nulo. b) El valor de cada masa sabiendo que el trabajo necesario para separar los cuerpos, desde la posición de contacto hasta otra donde sus centros distan $20\text{ cm}$, es: $W=1,6\cdot 10^{-11}\text{ J}$. <span class="text-indigo-700 font-medium">Sol: a) $m_{1}/m_{2}=16$; b) $m_{2}=0,031\text{ kg}$; $m_{1}=0,51\text{ kg}$.</span></li>
+                            <li>Dibuje en un esquema las líneas de fuerza del campo gravitatorio creado por una masa puntual $M$. Sean $A$ y $B$ dos puntos situados en la misma línea de fuerza del campo, siendo $B$ el punto más cercano a $M$. a) Si una masa $m$ está situada en $A$ y se traslada a $B$, ¿aumenta o disminuye su energía potencial? ¿Por qué? b) Si una masa $m$ está situada en $A$ y se traslada a otro punto $C$, situado a la misma distancia de $M$ que $A$, pero en otra línea de fuerza, ¿aumenta o disminuye la energía potencial? Razone su respuesta.</li>
+                            <li>Un meteorito de $400\text{ kg}$ de masa que se dirige directo, en caída libre, hacia la Tierra tiene una velocidad de $20\text{ m/s}$ a una altura sobre la superficie terrestre $h=500\text{ km}$. Determina: a) La energía mecánica del meteorito a dicha altura. b) La velocidad con la que impactará sobre la superficie terrestre despreciando la fricción con la atmósfera. c) El peso del meteorito a dicha altura $h$. Datos: $G$, $M_{T}$, $R_{T}$. <span class="text-indigo-700 font-medium">Sol: a) $-2,3\cdot 10^{10}\text{ J}$; b) $3012\text{ m/s}$ (o $3211\text{ m/s}$); c) $3383\text{ N}$.</span></li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-indigo-800 text-base mb-2 border-b pb-1">Velocidad de escape</h3>
+                        <ol class="list-decimal pl-5 space-y-3" start="13">
+                            <li>La masa de Marte es $9$ veces menor que la de la Tierra y su diámetro es $0,5$ veces el diámetro terrestre. a) Determine la velocidad de escape en Marte. b) ¿Cuál sería la altura máxima alcanzada por un proyectil lanzado verticalmente hacia arriba, desde la superficie de Marte, con una velocidad de $720\text{ km/h}$? Datos: $g_{0}$, $R_{T}$. <span class="text-indigo-700 font-medium">Sol: a) $5,3\text{ km/s}$; b) $4511\text{ m}$.</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ANEXO I -->
+            <section id="anexo1" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-100 pb-2 mb-6">Anexo I: Ejercicios para reforzar</h2>
+                
+                <div class="space-y-4 text-sm">
+                    <h3 class="font-bold text-indigo-800 text-base mb-2 border-b pb-1">Cuestiones y Problemas</h3>
+                    <ol class="list-decimal pl-5 space-y-3">
+                        <li>Diga si la siguiente frase es cierta o falsa y razone la respuesta: a) La intensidad en un punto del campo gravitatorio terrestre es tanto mayor cuanto mayor es la masa que se coloque en dicho punto. b) Si en un punto del espacio la intensidad del campo gravitatorio creado por varias masas es nulo, también lo será el potencial gravitatorio.</li>
+                        <li>El campo gravitatorio creado por dos masas, $m_{1}$ y $m_{2}$, que podemos considerar puntuales y separadas una distancia $d$, se anula a $d/3$ de la masa $m_{1}$. ¿Cuánto vale la relación entre las masas $m_{1}/m_{2}$? <span class="text-indigo-700 font-medium">Sol: $m_{2}/m_{1}=4$ (es decir, $m_1/m_2 = 1/4$).</span></li>
+                        <li>a) Comenta si es verdadera o falsa la siguiente afirmación: «Si la Luna gira alrededor de la Tierra siguiendo un movimiento circular uniforme, no tiene aceleración». b) Un objeto pesa $600\text{ N}$ en la Tierra. ¿Cuál sería su peso en la Luna? Suponer que las masas y los radios de la Luna y la Tierra tienen la siguiente relación: $M_{T}/M_{L}=100$ y $R_{T}/R_{L}=4$. <span class="text-indigo-700 font-medium">Sol: b) $96\text{ N}$.</span></li>
+                        <li>a) Enuncia y comenta la Ley de Gravitación Universal. A partir de dicha ley establece el concepto de energía potencial gravitatoria. b) Un satélite de $m=100\text{ kg}$ describe una órbita circular, sobre el ecuador terrestre, a una distancia tal que su periodo orbital coincide con el de rotación de la Tierra (satélite geoestacionario). Calcula el radio de la órbita, la energía mínima necesaria para situarlo en dicha órbita y el momento angular del satélite respecto del centro de la Tierra. Datos: $G$, $R_{T}$, $M_{T}$. <span class="text-indigo-700 font-medium">Sol: b) $4,2\cdot 10^{7}\text{ m}$; $5,8\cdot 10^{9}\text{ J}$ (o $5,3\cdot 10^{9}\text{ J}$).</span></li>
+                        <li>a) Explique qué se entiende por velocidad de escape y deduzca razonadamente su expresión. b) Razone qué energía habría que comunicar a un objeto de masa $m$, situado a una altura $h$ sobre la superficie de la Tierra, para que se alejara indefinidamente de ella.</li>
+                        <li>Explique qué se entiende por velocidad orbital y deduzca su expresión para un satélite que describe una órbita circular alrededor de la Tierra.</li>
+                        <li>Un cuerpo de masa $m$ se eleva desde el suelo hasta una altura $h$ de dos formas diferentes: directamente y mediante un plano inclinado. Razone que el trabajo de la fuerza peso es igual en ambos casos.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- ANEXO II -->
+            <section id="anexo2" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-100 pb-2 mb-4">Anexo II: Momento angular</h2>
+                
+                <p class="mb-3">Recordamos que el <strong>momento angular</strong> de una partícula de masa $m$ en movimiento ($\vec{v}$) respecto a un punto $O$ se define como:</p>
+
+                <div class="formula-box">
+                    $$\vec{L} = \vec{r} \times \vec{p} = m \vec{r} \times \vec{v}$$
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im5.png" alt="Vector momento angular perpendicular al plano de la órbita definido por r y v" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">El vector momento angular $\vec{L}$ es perpendicular al plano orbital definido por el vector de posición $\vec{r}$ y la velocidad $\vec{v}$.</figcaption>
+                </figure>
+
+                <p class="mb-3">Deduzcamos los casos en los que $\vec{L}$ permanece constante derivando respecto al tiempo:</p>
+
+                <div class="formula-box">
+                    $$\frac{d\vec{L}}{dt} = \frac{d}{dt}(m\vec{r} \times \vec{v}) = m\frac{d\vec{r}}{dt} \times \vec{v} + m\vec{r} \times \vec{a} \Rightarrow \frac{d\vec{L}}{dt} = \vec{r} \times m\vec{a} = \vec{r} \times \vec{F} = \vec{M} = \vec{0}$$
+                </div>
+
+                <p class="mb-3">El primer término ($m\vec{v} \times \vec{v}$) desaparece pues el producto vectorial de dos vectores paralelos es cero. El término que queda ($\vec{r} \times \vec{F}$) representa el momento de la fuerza que actúa sobre el planeta, que al multiplicarse vectorialmente por el radio vector que une el Sol y el planeta es cero, pues no olvidemos que se trata de una <strong>fuerza central</strong> paralela en todo momento al vector de posición.</p>
+
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700 mb-2">De este cálculo deducimos que el momento de la fuerza gravitatoria $\vec{M}$ es cero; por tanto, <strong>el momento angular permanece constante en todos los puntos de la órbita planetaria</strong>, ya sea elíptica o circular.</p>
+                    <p class="text-sm text-slate-700">De la conservación del momento angular se deduce que <strong>la órbita del planeta es plana</strong>, pues el vector momento angular $\vec{L}$ mantiene constante su dirección perpendicular al plano definido por $\vec{r}$ y $\vec{v}$.</p>
+                </div>
+
+                <h3 class="text-lg font-semibold text-slate-800 mt-6 mb-3">Demostración de la segunda ley de Kepler</h3>
+                <p class="mb-3">La conservación del momento angular también permite demostrar la segunda ley de Kepler. El área barrida $dA$ en un diferencial de tiempo $dt$ es la mitad del área del paralelogramo definido por $\vec{r}$ y $\vec{v}\,dt$ (recordando que el módulo del producto vectorial coincide con el área del paralelogramo):</p>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im6.png" alt="Área barrida por el radio vector de la Tierra alrededor del Sol en un tiempo dt" class="mx-auto rounded-lg shadow-sm max-h-40">
+                    <figcaption class="text-xs text-slate-500 mt-2">Área elemental $dA$ barrida por el radio vector $\vec{r}$ en un intervalo $dt$, igual a la mitad del área del paralelogramo formado por $\vec{r}$ y $\vec{v}\,dt$.</figcaption>
+                </figure>
+
+                <div class="formula-box">
+                    $$dA = \frac{1}{2} |\vec{r} \times \vec{v}\,dt| = \frac{L}{2m}\,dt \Longrightarrow \frac{dA}{dt} = v_{\text{areolar}} = \frac{L}{2m} = \text{cte}$$
+                </div>
+
+                <p class="mb-4">Como $L$ es constante, la <strong>velocidad areolar es constante</strong>, es decir, el planeta barre áreas iguales en tiempos iguales.</p>
+            </section>
+
+            <!-- ANEXO III -->
+            <section id="anexo3" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-100 pb-2 mb-4">Anexo III: El teorema de Gauss</h2>
+                
+                <p class="mb-3">Para distribuciones continuas de materia usamos el <strong>teorema de Gauss</strong> aplicado al campo gravitatorio. El flujo del campo gravitatorio ($\Phi$) a través de una superficie cerrada $S$ se calcula como:</p>
+
+                <div class="formula-box">
+                    $$\Phi = \oint_{S} \vec{g} \cdot d\vec{S}$$
+                </div>
+
+                <p class="mb-3">Para el caso de una masa $M$ puntual rodeada por una superficie esférica de radio $r$ se obtiene:</p>
+
+                <div class="formula-box">
+                    $$\Phi = \oint_{S} \vec{g} \cdot d\vec{S} = -\oint_{S} g \cdot dS = -g S = -g \cdot 4\pi r^{2} = -\frac{GM}{r^{2}} \cdot 4\pi r^{2} = -4\pi G M_{\text{encerrada}}$$
+                </div>
+
+                <p class="text-xs text-slate-500 mb-4">Donde $M_{\text{encerrada}}$ es la masa encerrada por la superficie gaussiana $S$.</p>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t1_im7.png" alt="Superficies gaussianas esféricas para r menor que R y r mayor que R" class="mx-auto rounded-lg shadow-sm max-h-60">
+                    <figcaption class="text-xs text-slate-500 mt-2">Superficies gaussianas esféricas concéntricas para calcular el campo gravitatorio en el interior ($r < R$) y en el exterior ($r > R$) de una esfera maciza.</figcaption>
+                </figure>
+
+                <div class="grid md:grid-cols-2 gap-4 my-5">
+                    <div class="concept-card !my-0">
+                        <h4 class="font-bold text-sky-900 mb-2">Exterior de la esfera ($r > R$)</h4>
+                        <p class="text-sm text-slate-700 mb-2">Para una masa esférica de radio $R$ y un punto con $r > R$, se obtiene el mismo resultado que para una masa puntual, pues la masa encerrada es el total de la masa $M$:</p>
+                        <div class="formula-box !my-2">
+                            $$\Phi = -4\pi r^{2} g = -4\pi G M_{\text{encerrada}} = -4\pi G M$$
+                            $$\text{Despejando } g: \quad \boxed{g = \frac{GM}{r^{2}}}$$
+                        </div>
+                    </div>
+                    <div class="concept-card !my-0">
+                        <h4 class="font-bold text-sky-900 mb-2">Interior de la esfera ($r < R$)</h4>
+                        <p class="text-sm text-slate-700 mb-2">Para un radio $r < R$ menor que el radio de la masa esférica homogénea de densidad $\rho$, la masa encerrada es $M_{\text{enc}} = \rho \cdot \frac{4}{3}\pi r^3$:</p>
+                        <div class="formula-box !my-2">
+                            $$\Phi = -4\pi r^{2} g = -4\pi G M_{\text{encerrada}} = -4\pi G \left(\rho \frac{4}{3}\pi r^{3}\right)$$
+                            $$\text{Despejando } g: \quad \boxed{g = \frac{4}{3}\pi \rho G r}$$
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+        </main>
+    </div>
+
+    <!-- Scripts para simulaciones interactivas -->
+
+<script>
+        // ANIMACIÓN: SEGUNDA LEY DE KEPLER
+        (function() {
+            const canvas = document.getElementById('kepler2Canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const e = 0.75; // Excentricidad fija para visualizar claramente el fenómeno
+            let meanAnomaly = 0;
+
+            // Resolución de la ecuación de Kepler: M = E - e * sin(E)
+            function solveKepler(M, ecc) {
+                let E = M;
+                for (let i = 0; i < 6; i++) {
+                    E = E - (E - ecc * Math.sin(E) - M) / (1 - ecc * Math.cos(E));
+                }
+                return E;
+            }
+
+            function getOrbitPoint(M, a, b, cx, cy, ecc) {
+                const E = solveKepler(M, ecc);
+                const x = cx + a * Math.cos(E);
+                const y = cy + b * Math.sin(E);
+                return { x, y };
+            }
+
+            function drawSector(Mstart, Mend, a, b, cx, cy, sunX, sunY, ecc, fillColor, strokeColor) {
+                const steps = 25;
+                ctx.beginPath();
+                ctx.moveTo(sunX, sunY);
+                for (let i = 0; i <= steps; i++) {
+                    const m = Mstart + (Mend - Mstart) * (i / steps);
+                    const pt = getOrbitPoint(m, a, b, cx, cy, ecc);
+                    ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = fillColor;
+                ctx.fill();
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+
+            function drawKepler2() {
+                const w = canvas.width;
+                const h = canvas.height;
+
+                const cx = w / 2;
+                const cy = h / 2;
+                const a = 180;
+                const b = a * Math.sqrt(1 - e * e);
+                const c = a * e;
+
+                // Sol en el foco derecho (perihelio a la derecha, afelio a la izquierda)
+                const sunX = cx + c;
+                const sunY = cy;
+
+                ctx.clearRect(0, 0, w, h);
+
+                // Eje mayor de referencia
+                ctx.strokeStyle = '#1e293b';
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath();
+                ctx.moveTo(cx - a - 25, cy);
+                ctx.lineTo(cx + a + 25, cy);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Órbita elíptica
+                ctx.strokeStyle = '#475569';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.ellipse(cx, cy, a, b, 0, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Sectores fijos de igual intervalo de tiempo (deltaM constante)
+                const deltaM = 0.42;
+                drawSector(-deltaM / 2, deltaM / 2, a, b, cx, cy, sunX, sunY, e, 'rgba(251, 191, 36, 0.22)', 'rgba(251, 191, 36, 0.75)');
+                drawSector(Math.PI - deltaM / 2, Math.PI + deltaM / 2, a, b, cx, cy, sunX, sunY, e, 'rgba(56, 189, 248, 0.22)', 'rgba(56, 189, 248, 0.75)');
+
+                // Etiquetas Perihelio y Afelio
+                ctx.font = '12px sans-serif';
+                ctx.fillStyle = '#fbbf24';
+                ctx.fillText('Perihelio (v máx)', cx + a + 8, cy - 8);
+                ctx.fillText('Área A₁', sunX + (a - c) * 0.42, cy - 22);
+
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillText('Afelio\n(v mín)', cx - a - 78, cy - 8);
+                ctx.fillText('Área A₂ = A₁', cx - a * 0.65, cy - 16);
+
+                // Segundo foco (vacío)
+                ctx.fillStyle = '#64748b';
+                ctx.beginPath();
+                ctx.arc(cx - c, cy, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Sol en el foco principal
+                const grad = ctx.createRadialGradient(sunX, sunY, 3, sunX, sunY, 20);
+                grad.addColorStop(0, '#fef08a');
+                grad.addColorStop(0.5, '#f59e0b');
+                grad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 20, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#fbbf24';
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Posición actual del planeta
+                const planet = getOrbitPoint(meanAnomaly, a, b, cx, cy, e);
+
+                // Radio vector Sol-Planeta
+                ctx.strokeStyle = 'rgba(248, 250, 252, 0.6)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(sunX, sunY);
+                ctx.lineTo(planet.x, planet.y);
+                ctx.stroke();
+
+                // Planeta
+                ctx.fillStyle = '#34d399';
+                ctx.beginPath();
+                ctx.arc(planet.x, planet.y, 7, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#ecfdf5';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                meanAnomaly = (meanAnomaly + 0.025) % (Math.PI * 2);
+                requestAnimationFrame(drawKepler2);
+            }
+
+            drawKepler2();
+        })();
+
+        // 1. SIMULACIÓN DE CAOS DETERMINISTA (DOS SOLES FIJOS Y DOS PLANETAS CON CONDICIONES INICIALES CASI IDÉNTICAS)
+        (function() {
+            const canvas = document.getElementById('chaos3BodyCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const resetBtn = document.getElementById('resetChaosBtn');
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const sun1 = { x: w * 0.34, y: h * 0.5, gm: 4200 };
+            const sun2 = { x: w * 0.66, y: h * 0.5, gm: 4200 };
+
+            let p1, p2, trail1, trail2;
+
+            function initChaos() {
+                p1 = { x: w * 0.5, y: h * 0.24, vx: 3.15, vy: 0.45 };
+                // Diferencia minúscula en la posición inicial (0.5 px)
+                p2 = { x: w * 0.5 + 0.5, y: h * 0.24, vx: 3.15, vy: 0.45 };
+                trail1 = [];
+                trail2 = [];
+            }
+
+            function stepBody(p) {
+                const dt = 0.25;
+                for (let s = 0; s < 4; s++) {
+                    const dx1 = sun1.x - p.x;
+                    const dy1 = sun1.y - p.y;
+                    const r1Sq = Math.max(dx1 * dx1 + dy1 * dy1, 220);
+                    const r1 = Math.sqrt(r1Sq);
+
+                    const dx2 = sun2.x - p.x;
+                    const dy2 = sun2.y - p.y;
+                    const r2Sq = Math.max(dx2 * dx2 + dy2 * dy2, 220);
+                    const r2 = Math.sqrt(r2Sq);
+
+                    const ax = (sun1.gm * dx1) / (r1Sq * r1) + (sun2.gm * dx2) / (r2Sq * r2);
+                    const ay = (sun1.gm * dy1) / (r1Sq * r1) + (sun2.gm * dy2) / (r2Sq * r2);
+
+                    p.vx += ax * dt;
+                    p.vy += ay * dt;
+                    p.x += p.vx * dt;
+                    p.y += p.vy * dt;
+                }
+            }
+
+            function drawTrail(trail, color) {
+                if (trail.length < 2) return;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1.6;
+                ctx.beginPath();
+                ctx.moveTo(trail[0].x, trail[0].y);
+                for (let i = 1; i < trail.length; i++) {
+                    ctx.lineTo(trail[i].x, trail[i].y);
+                }
+                ctx.stroke();
+            }
+
+            function drawChaos() {
+                ctx.clearRect(0, 0, w, h);
+
+                stepBody(p1);
+                stepBody(p2);
+
+                trail1.push({ x: p1.x, y: p1.y });
+                trail2.push({ x: p2.x, y: p2.y });
+                if (trail1.length > 450) trail1.shift();
+                if (trail2.length > 450) trail2.shift();
+
+                // Reinicio automático si algún cuerpo escapa muy lejos
+                if (p1.x < -150 || p1.x > w + 150 || p1.y < -150 || p1.y > h + 150) {
+                    initChaos();
+                }
+
+                drawTrail(trail1, 'rgba(56, 189, 248, 0.75)');
+                drawTrail(trail2, 'rgba(244, 63, 94, 0.75)');
+
+                // Dibujar Sol 1 y Sol 2
+                [ { s: sun1, label: 'Sol 1' }, { s: sun2, label: 'Sol 2' } ].forEach(item => {
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.beginPath();
+                    ctx.arc(item.s.x, item.s.y, 11, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#fef3c7';
+                    ctx.font = '12px sans-serif';
+                    ctx.fillText(item.label, item.s.x - 14, item.s.y - 16);
+                });
+
+                // Dibujar planetas
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(p1.x, p1.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#f43f5e';
+                ctx.beginPath();
+                ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Leyenda
+                ctx.font = '11px sans-serif';
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillText('● Trayectoria A (x₀)', 16, 22);
+                ctx.fillStyle = '#f43f5e';
+                ctx.fillText('● Trayectoria B (x₀ + 0,5 px)', 16, 38);
+
+                requestAnimationFrame(drawChaos);
+            }
+
+            resetBtn.addEventListener('click', initChaos);
+            initChaos();
+            drawChaos();
+        })();
+
+        // 2. GRÁFICA DE CURVA DE ROTACIÓN GALÁCTICA (MATERIA OSCURA)
+        (function() {
+            const canvas = document.getElementById('darkMatterCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            const padL = 65, padR = 30, padT = 30, padB = 45;
+            const plotW = w - padL - padR;
+            const plotH = h - padT - padB;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Ejes
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(padL, padT);
+            ctx.lineTo(padL, padT + plotH);
+            ctx.lineTo(padL + plotW, padT + plotH);
+            ctx.stroke();
+
+            // Etiquetas de ejes
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Distancia al centro galáctico (r)', padL + plotW / 2 - 80, h - 12);
+            ctx.save();
+            ctx.translate(18, padT + plotH / 2 + 55);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Velocidad orbital (v)', 0, 0);
+            ctx.restore();
+
+            // Curva A: Predicción teórica solo con materia visible
+            ctx.strokeStyle = '#fbbf24';
+            ctx.lineWidth = 2.5;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            for (let i = 0; i <= plotW; i += 3) {
+                const r = (i / plotW) * 10; // 0 a 10
+                const vVis = r < 1.5 ? (r / 1.5) * 0.72 : 0.72 * Math.sqrt(1.5 / r);
+                const x = padL + i;
+                const y = padT + plotH - vVis * plotH;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Curva B: Observación real (con materia oscura)
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i <= plotW; i += 3) {
+                const r = (i / plotW) * 10;
+                const vObs = 0.82 * (1 - Math.exp(-r / 0.85)) + 0.04 * Math.sin(r * 1.4) * Math.exp(-r * 0.25);
+                const x = padL + i;
+                const y = padT + plotH - vObs * plotH;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Leyenda
+            ctx.font = '12px sans-serif';
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillText('━━ Velocidad observada (con halo de materia oscura)', padL + 220, padT + 25);
+            ctx.fillStyle = '#fbbf24';
+            ctx.fillText('╌╌ Predicción solo con materia visible', padL + 220, padT + 48);
+        })();
+
+
+
+        // 3. VISUALIZACIÓN DE CURVATURA DEL ESPACIO-TIEMPO
+        (function() {
+            const canvas = document.getElementById('spacetimeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const massInput = document.getElementById('spacetimeMass');
+            let orbitAngle = 0;
+
+            function project(x, y, z, cx, cy) {
+                // Proyección isométrica inclinada
+                const px = cx + (x - y) * 0.85;
+                const py = cy + (x + y) * 0.36 + z;
+                return { x: px, y: py };
+            }
+
+            function drawSpacetime() {
+                const w = canvas.width;
+                const h = canvas.height;
+                const cx = w / 2;
+                const cy = h * 0.42;
+                const wellDepth = parseFloat(massInput.value);
+
+                ctx.clearRect(0, 0, w, h);
+
+                const size = 180;
+                const step = 20;
+
+                function getZ(x, y) {
+                    const r2 = x * x + y * y;
+                    return wellDepth * Math.exp(-r2 / 3800);
+                }
+
+                // Líneas de la malla en X
+                ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
+                ctx.lineWidth = 1;
+                for (let y = -size; y <= size; y += step) {
+                    ctx.beginPath();
+                    for (let x = -size; x <= size; x += 6) {
+                        const pt = project(x, y, getZ(x, y), cx, cy);
+                        if (x === -size) ctx.moveTo(pt.x, pt.y);
+                        else ctx.lineTo(pt.x, pt.y);
+                    }
+                    ctx.stroke();
+                }
+
+                // Líneas de la malla en Y
+                for (let x = -size; x <= size; x += step) {
+                    ctx.beginPath();
+                    for (let y = -size; y <= size; y += 6) {
+                        const pt = project(x, y, getZ(x, y), cx, cy);
+                        if (y === -size) ctx.moveTo(pt.x, pt.y);
+                        else ctx.lineTo(pt.x, pt.y);
+                    }
+                    ctx.stroke();
+                }
+
+                // Masa central hundiendo el tejido
+                const centerPt = project(0, 0, getZ(0, 0) * 0.72, cx, cy);
+                const radius = 10 + wellDepth * 0.14;
+                const grad = ctx.createRadialGradient(centerPt.x - 4, centerPt.y - 4, 2, centerPt.x, centerPt.y, radius);
+                grad.addColorStop(0, '#fef08a');
+                grad.addColorStop(0.6, '#f97316');
+                grad.addColorStop(1, '#9a3412');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(centerPt.x, centerPt.y, radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Planeta menor orbitando sobre la deformación
+                const orbitR = 105;
+                const ox = orbitR * Math.cos(orbitAngle);
+                const oy = orbitR * Math.sin(orbitAngle);
+                const planetPt = project(ox, oy, getZ(ox, oy) - 4, cx, cy);
+
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(planetPt.x, planetPt.y, 5.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                orbitAngle += 0.015 + wellDepth * 0.0003;
+                requestAnimationFrame(drawSpacetime);
+            }
+
+            drawSpacetime();
+        })();
+
+  		// ==========================================
+        // 6. SIMULADOR DE SATÉLITES (LEO, MEO, GEO)
+        // ==========================================
+      (function() {
+        const satCanvas = document.getElementById('satCanvas');
+        const sCtx = satCanvas.getContext('2d');
+        const satAltSlider = document.getElementById('satAltSlider');
+		const btnLeo = document.getElementById('btnLeo');
+		const btnMeo = document.getElementById('btnMeo');
+		const btnGeo = document.getElementById('btnGeo');
+
+        let satAngle = 0;
+        let earthRot = 0;
+
+        function resizeCanvas(canvas) {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }		
+
+        function setOrbitPreset(alt) {
+            satAltSlider.value = alt;
+            updateSatStats();
+        }
+
+        function updateSatStats() {
+            const hKm = parseFloat(satAltSlider.value);
+            const RT = 6370; // km
+            const rM = (RT + hKm) * 1000;
+            const GM = 6.67e-11 * 5.98e24;
+            const v = Math.sqrt(GM / rM) / 1000; // km/s
+            const T = (2 * Math.PI * rM / (v * 1000)) / 3600; // horas
+            const g = (GM / (rM * rM));
+
+            document.getElementById('satAltLabel').textContent = `${hKm.toLocaleString()} km`;
+            document.getElementById('satVelVal').textContent = `${v.toFixed(2)} km/s`;
+            document.getElementById('satPeriodVal').textContent = `${T.toFixed(2)} h`;
+            document.getElementById('satGVal').textContent = `${g.toFixed(2)} m/s²`;
+
+            const badge = document.getElementById('satTypeBadge');
+            if (hKm <= 1500) {
+                badge.textContent = 'LEO (Low Earth Orbit)';
+                badge.className = 'font-bold text-cyan-400';
+            } else if (hKm < 35000) {
+                badge.textContent = 'MEO (Medium Earth Orbit)';
+                badge.className = 'font-bold text-indigo-400';
+            } else {
+                badge.textContent = 'GEO (Órbita Geoestacionaria)';
+                badge.className = 'font-bold text-amber-400';
+            }
+        }
+
+        function animateSatellite() {
+            if (satCanvas.width !== satCanvas.parentElement.clientWidth) {
+                resizeCanvas(satCanvas);
+            }
+            const w = satCanvas.width;
+            const h = satCanvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+            const maxR = Math.min(w, h) * 0.44;
+            const earthR = maxR * 0.22;
+
+            const hKm = parseFloat(satAltSlider.value);
+            const orbitR = earthR + ((hKm / 40000) * (maxR - earthR));
+
+            // Velocidad angular relativa (en GEO coincide con rotación terrestre)
+            const T_hours = parseFloat(document.getElementById('satPeriodVal').textContent);
+            const earthOmega = 0.006;
+            const satOmega = earthOmega * (23.93 / T_hours);
+
+            earthRot += earthOmega;
+            satAngle += satOmega;
+
+            sCtx.clearRect(0, 0, w, h);
+
+            // Órbita
+            sCtx.beginPath();
+            sCtx.arc(cx, cy, orbitR, 0, Math.PI * 2);
+            sCtx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+            sCtx.setLineDash([4, 4]);
+            sCtx.stroke();
+            sCtx.setLineDash([]);
+
+            // Tierra
+            sCtx.beginPath();
+            sCtx.arc(cx, cy, earthR, 0, Math.PI * 2);
+            sCtx.fillStyle = '#1d4ed8';
+            sCtx.fill();
+
+            // Marca de referencia en la superficie terrestre (para ver sincronía GEO)
+            const refX = cx + earthR * Math.cos(earthRot);
+            const refY = cy + earthR * Math.sin(earthRot);
+            sCtx.beginPath();
+            sCtx.arc(refX, refY, 3.5, 0, Math.PI * 2);
+            sCtx.fillStyle = '#34d399';
+            sCtx.fill();
+
+            // Satélite
+            const sx = cx + orbitR * Math.cos(satAngle);
+            const sy = cy + orbitR * Math.sin(satAngle);
+
+            // Línea visual punto tierra - satélite
+            sCtx.beginPath();
+            sCtx.moveTo(cx, cy);
+            sCtx.lineTo(sx, sy);
+            sCtx.strokeStyle = 'rgba(255,255,255,0.12)';
+            sCtx.stroke();
+
+            sCtx.beginPath();
+            sCtx.arc(sx, sy, 5, 0, Math.PI * 2);
+            sCtx.fillStyle = '#fbbf24';
+            sCtx.fill();
+
+            requestAnimationFrame(animateSatellite);
+
+
+	
+        }
+        	satAltSlider.addEventListener('input', updateSatStats);
+			
+			btnLeo.addEventListener('click', () => setOrbitPreset(400));
+			btnMeo.addEventListener('click', () => setOrbitPreset(20200));
+			btnGeo.addEventListener('click', () => setOrbitPreset(35786));
+
+            updateSatStats();
+            animateSatellite();
+        })();
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
