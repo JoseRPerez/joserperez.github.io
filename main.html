@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Física para 2º Bachillerato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 60px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5, #00d2ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8899aa;
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: #00d2ff;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 210, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: linear-gradient(180deg, #00d2ff, #3a7bd5);
+            border-radius: 3px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #e94560;
+            margin: 30px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed rgba(233, 69, 96, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3::before {
+            content: '⚛';
+            font-size: 1.2rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 12px 20px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        ul li:hover {
+            background: rgba(0, 210, 255, 0.08);
+            border-left-color: #00d2ff;
+            transform: translateX(8px);
+        }
+
+        ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        ul li a:hover {
+            color: #00d2ff;
+        }
+
+        ul li a::after {
+            content: ' →';
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        ul li a:hover::after {
+            opacity: 1;
+        }
+
+        .anexos {
+            margin-top: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 25px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Curso de Física para 2º Bachillerato</h1>
+        <p class="subtitle">Índice de contenido</p>
+
+        <h2>Temas</h2>
+        <ul>
+            <li><a href="#tema1">Tema 1: Repaso de Mecánica</a></li>
+            <li><a href="#tema2">Tema 2: Movimiento armónico simple y ondas armónicas</a></li>
+            <li><a href="#tema3">Tema 3: Propiedades de las ondas</a></li>
+            <li><a href="gravedad/main.html">Tema 4: Gravitación</a></li>
+            <li><a href="#tema5">Tema 5: Electrostática</a></li>
+            <li><a href="#tema6">Tema 6: Magnetismo</a></li>
+            <li><a href="#tema7">Tema 7: Inducción electromagnética</a></li>
+            <li><a href="#tema8">Tema 8: Óptica</a></li>
+            <li><a href="#tema9">Tema 9: Física cuántica</a></li>
+            <li><a href="#tema10">Tema 10: Física nuclear</a></li>
+            <li><a href="#tema11">Tema 11: Relatividad</a></li>
+        </ul>
+
+        <div class="anexos">
+            <h3>Anexos</h3>
+            <ul>
+                <li><a href="#anexo1">Anexo I: Campos</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
