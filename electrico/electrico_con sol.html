@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Campo Eléctrico - Física</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax 3 configurado para $ y $$ -->
+    <script>
+      MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .formula-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #0284c7;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+            overflow-x: auto;
+        }
+        .concept-card {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .media-placeholder {
+            border: 2px dashed #94a3b8;
+            background-color: #f1f5f9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            transition: all 0.2s;
+        }
+        .media-placeholder:hover {
+            border-color: #0284c7;
+            background-color: #e0f2fe;
+        }
+        canvas {
+            background: #0f172a;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 700px;
+            display: block;
+            margin: 0 auto;
+        }
+        @media print {
+            aside, input, button { display: none !important; }
+            main { width: 100% !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Cabecera Principal -->
+    <header class="bg-gradient-to-r from-sky-900 to-indigo-900 text-white py-10 px-6 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-sky-300 text-sm font-semibold uppercase tracking-wider mb-2">Curso de Física para 2º Bachillerato</div>
+            <h1 class="text-3xl md:text-5xl font-bold mb-3">El Campo Eléctrico</h1>
+            <p class="text-sky-100 text-lg max-w-2xl">Interacción electrostática, intensidad de campo, energía potencial, potencial eléctrico, teorema de Gauss y dinámica de cargas.</p>
+            <div class="mt-4 text-xs text-sky-300">
+                Autor original: José Rodríguez Pérez · Licencia CC BY-NC-SA 4.0 · Versión Web Interactiva
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal con Navegación Lateral -->
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Índice Lateral (Sticky en escritorio) -->
+        <aside class="lg:w-1/4">
+            <nav class="sticky top-6 bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="font-bold text-slate-900 uppercase text-xs tracking-wider mb-3 border-b pb-2">Índice de Contenidos</h2>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#sec1" class="text-sky-700 hover:text-sky-900 font-medium block">1. Introducción</a></li>
+                    <li><a href="#sec2" class="text-sky-700 hover:text-sky-900 font-medium block">2. Fuerzas entre cargas en reposo; ley de Coulomb</a></li>
+                    <li><a href="#sec3" class="text-sky-700 hover:text-sky-900 font-medium block">3. Interacción de un conjunto de cargas puntuales; superposición</a></li>
+                    <li><a href="#sec4" class="text-sky-700 hover:text-sky-900 font-medium block">4. Intensidad del campo eléctrico de una carga puntual</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#sec4-1" class="hover:text-sky-700">Relación entre el campo y la fuerza eléctrica</a></li>
+                            <li><a href="#sec4-2" class="hover:text-sky-700">Campo electrostático de un conjunto de cargas puntuales</a></li>
+                            <li><a href="#sec4-3" class="hover:text-sky-700">Líneas de campo o líneas de fuerza del campo eléctrico</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec5" class="text-sky-700 hover:text-sky-900 font-medium block">5. Energía potencial electrostática de una carga en presencia de otra. Superposición.</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#sec5-1" class="hover:text-sky-700">Significado físico de la energía potencial eléctrica en un punto</a></li>
+                            <li><a href="#sec5-2" class="hover:text-sky-700">Significado físico de la variación de la energía potencial eléctrica</a></li>
+                            <li><a href="#sec5-3" class="hover:text-sky-700">Principio de superposición</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec6" class="text-sky-700 hover:text-sky-900 font-medium block">6. El potencial electrostático de una carga puntual y de un conjunto de cargas puntuales.</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#sec6-1" class="hover:text-sky-700">Relación entre potencial eléctrico y energía potencial eléctrica</a></li>
+                            <li><a href="#sec6-2" class="hover:text-sky-700">Superficies equipotenciales</a></li>
+                            <li><a href="#sec6-3" class="hover:text-sky-700">Principio de superposición para V</a></li>
+                            <li><a href="#sec6-4" class="hover:text-sky-700">Relación entre el trabajo y el potencial eléctrico</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec7" class="text-sky-700 hover:text-sky-900 font-medium block">7. Teorema de Gauss para el campo eléctrico</a>
+                        <ul class="pl-3 mt-1 space-y-1 text-slate-600 text-xs">
+                            <li><a href="#sec7-1" class="hover:text-sky-700">Definición de flujo</a></li>
+                            <li><a href="#sec7-2" class="hover:text-sky-700">Teorema de Gauss</a></li>
+                            <li><a href="#sec7-3" class="hover:text-sky-700">Relación entre campo y potencial electrostáticos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#sec8" class="text-sky-700 hover:text-sky-900 font-medium block">8. Movimiento de una partícula cargada en el seno de un campo eléctrico</a></li>
+
+<li><a href="#ejercicios" class="text-indigo-700 hover:text-indigo-900 font-bold block pt-2 border-t">Ejercicios de Clase</a></li>
+                    <li><a href="#anexo" class="text-indigo-700 hover:text-indigo-900 font-bold block">Anexo I: Para practicar</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido de los Apuntes -->
+        <main class="lg:w-3/4 space-y-12">
+
+            <!-- SECCIÓN 1 -->
+            <section id="sec1" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">1. Introducción</h2>
+                <p class="mb-4">La electricidad, en una forma u otra, se encuentra en casi todo lo que nos rodea: se encuentra en los relámpagos que se producen durante las tormentas, en la chispa que salta bajo los pies cuando los arrastras sobre una alfombra y en la fuerza que mantiene unidos los átomos en forma de moléculas. Está formada de partículas cargadas en movimiento.</p>
+                
+                <p class="mb-4">Las cargas eléctricas elementales son el <strong>electrón</strong> y el <strong>protón</strong>, que tienen la propiedad de atraerse o repelerse entre sí.</p>
+
+                <div class="concept-card">
+                    <h3 class="font-bold text-sky-900 mb-2">Carga neta y cuantización de la carga</h3>
+                    <p class="text-sm text-slate-700 mb-2">Se llama <strong>carga neta</strong> a la desigualdad entre el número de protones y de electrones:</p>
+                    <ul class="list-disc pl-6 space-y-1 text-sm text-slate-700 mb-3">
+                        <li>Un objeto adquiere <strong>carga positiva ($+$)</strong> si presenta déficit de electrones.</li>
+                        <li>Un objeto adquiere <strong>carga negativa ($-$)</strong> si presenta exceso de electrones.</li>
+                    </ul>
+                    <p class="text-sm text-slate-700">Por tanto, la carga de todos los cuerpos es un número entero de veces la carga del electrón (positiva si faltan electrones y negativa en caso contrario). Hay una unidad mínima de carga que es la del electrón (o la del protón).</p>
+                </div>
+
+                <div class="formula-box">
+                    <p class="text-sm text-slate-700">La unidad de carga en el Sistema Internacional (S.I.) es el <strong>culombio ($\text{C}$)</strong>, siendo el valor elemental de la carga:</p>
+                    $$e = 1,6 \cdot 10^{-19}\text{ C}$$
+                    <p class="text-xs text-slate-600 mt-1">Así, un culombio equivale a la carga de $6,25 \cdot 10^{18}$ electrones.</p>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2 -->
+            <section id="sec2" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">2. Fuerzas entre cargas en reposo; ley de Coulomb</h2>
+                
+                <div class="concept-card">
+                    <h3 class="font-bold text-sky-900 mb-1">Enunciado de la Ley de Coulomb</h3>
+                    <p class="text-sm text-slate-700">La fuerza con que se atraen o se repelen dos cargas puntuales (igual en módulo para ambas) es directamente proporcional al producto de las cargas e inversamente proporcional al cuadrado de la distancia entre ellas; su dirección es la de la recta que las une y su sentido es de atracción o repulsión según las cargas sean de distinto o del mismo signo.</p>
+                </div>
+
+                <div class="formula-box">
+                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Expresión escalar y vectorial</p>
+                    $$F = \frac{K q_1 q_2}{r^2} \qquad ; \qquad \vec{F} = \frac{K q_1 q_2}{r^2}\vec{u}_r$$
+                    <p class="text-xs text-slate-600 mt-2">Donde $q_1$ y $q_2$ representan el valor de las cargas y $r$ la distancia que las separa.</p>
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im1.png" alt="Fuerzas de atracción y repulsión según la ley de Coulomb" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 1: Interacción electrostática entre cargas puntuales (ley de Coulomb).</figcaption>
+                </figure>
+
+                <h3 class="text-xl font-semibold text-slate-800 mt-6 mb-3">Propiedades de la fuerza eléctrica (comparación con la fuerza gravitatoria)</h3>
+                <p class="mb-3">Las propiedades de esta fuerza pueden deducirse por comparación con la fuerza gravitatoria:</p>
+
+                <ul class="list-disc pl-6 space-y-2 mb-4">
+                    <li>Es una <strong>fuerza central</strong>.</li>
+                    <li>Depende de las cargas y de la distancia que existe entre ellas.</li>
+                    <li>Es una <strong>fuerza conservativa</strong>.</li>
+                    <li><strong>Dependencia del movimiento:</strong> La fuerza gravitatoria no se ve afectada por la velocidad, es decir, las masas se atraen igual independientemente de que se muevan unas respecto a otras. Sin embargo, cuando dos cargas están en movimiento relativo, aparece además una <strong>fuerza magnética</strong> que estudiaremos más adelante.</li>
+                    <li><strong>Carácter atractivo o repulsivo:</strong> A diferencia de la gravedad (siempre atractiva), la interacción eléctrica puede consistir en una atracción o en una repulsión.</li>
+                    <li><strong>Influencia del medio:</strong> Mientras que $G$ es una constante universal, el valor de la constante $K$ depende del medio: es máximo en el vacío o el aire ($K = 9 \cdot 10^9\text{ N}\cdot\text{m}^2\cdot\text{C}^{-2}$) y bastante menor en cualquier otro medio, por lo que puede decirse que los medios materiales disminuyen la intensidad de la interacción eléctrica entre las cargas. A diferencia de lo que ocurre con las masas, que se atraen con la misma intensidad cualquiera que sea el medio en que se encuentren, las cargas se atraen o repelen con muy distinta intensidad en el seno de diferentes medios.</li>
+                    <li><strong>Intensidad relativa:</strong> El valor de la constante de Coulomb $K$ es muy superior al valor de la constante $G$ de la gravitación universal, por lo que las interacciones eléctricas son mucho más intensas que las gravitatorias y son importantes entre partículas tan pequeñas como protones y electrones.</li>
+                    <li><strong>Alcance infinito:</strong> La fuerza electrostática tiene alcance infinito; las partículas cargadas interaccionan eléctricamente aunque estén muy lejos.</li>
+                </ul>
+
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700 mt-4">
+                    <strong>Dominios de las interacciones:</strong> El dominio de la interacción gravitatoria es el Universo y los cuerpos macroscópicos, que por lo general no tienen carga neta. El dominio de la interacción eléctrica es el <strong>interior de la materia</strong>: es la responsable de la existencia de los átomos y de las uniones entre ellos formando moléculas, líquidos y sólidos, explicando también la reactividad de las sustancias (los átomos, como conjuntos de cargas, tienden a disminuir su energía potencial eléctrica cambiando las uniones entre ellos).
+                </div>
+            </section>
+
+           <!-- SECCIÓN 3 -->
+            <section id="sec3" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">3. Interacción de un conjunto de cargas puntuales; superposición</h2>
+                
+                <div class="concept-card">
+                    <h3 class="font-bold text-sky-900 mb-1">Principio de superposición para la fuerza eléctrica</h3>
+                    <p class="text-sm text-slate-700">De igual manera a como hicimos con el campo gravitatorio, podemos decir que la fuerza que sufre una carga eléctrica en presencia de otras es la suma de las que cada una de estas ejerce sobre ella como si en cada interacción la pareja de cargas estuviera sola; o bien, la fuerza total sobre dicha carga es la suma vectorial de las fuerzas que ejerce cada carga por separado.</p>
+                </div>
+
+                <div class="formula-box">
+                    $$\vec{F}_T = \sum_i \vec{F}_i$$
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im2.png" alt="Principio de superposición de fuerzas eléctricas entre cargas puntuales" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 2: Suma vectorial de las fuerzas ejercidas por un sistema de cargas puntuales sobre una carga $q$.</figcaption>
+                </figure>
+            </section>
+
+            <!-- SECCIÓN 4 -->
+            <section id="sec4" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">4. Intensidad del campo eléctrico de una carga puntual</h2>
+                
+                <div class="concept-card">
+                    <h3 class="font-bold text-sky-900 mb-1">Definición de intensidad de campo eléctrico ($\vec{E}$)</h3>
+                    <p class="text-sm text-slate-700">De igual manera a como se hizo en el tema anterior, podemos definir la <strong>intensidad del campo eléctrico</strong>, $\vec{E}$, creado por una carga puntual $Q$ en un punto $P$ que dista $r$ de $Q$, como la fuerza que sufriría una carga de prueba ($+1\text{ C}$) situada en dicho punto.</p>
+                </div>
+
+                <div class="formula-box">
+                    $$\vec{E} = \frac{KQ}{r^2}\vec{u}_r$$
+                    <p class="text-xs text-slate-600 mt-2">Donde $\vec{u}_r$ es un vector unitario en la dirección de la recta que une $Q$ con $P$ y con sentido hacia fuera o hacia dentro, según la carga $Q$ creadora del campo sea positiva ($+$) o negativa ($-$) respectivamente. Para recordarlo nos fijamos en que el sentido de $\vec{E}$ será el del movimiento de una carga positiva que sufriera la acción de $\vec{E}$.</p>
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im3.png" alt="Vector intensidad de campo eléctrico creado por una carga puntual positiva y negativa" class="mx-auto rounded-lg shadow-sm max-h-40">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 3: Dirección y sentido del vector intensidad de campo eléctrico $\vec{E}$ creado por una carga puntual según su signo.</figcaption>
+                </figure>
+
+                <p class="mb-3">El concepto es totalmente análogo a la intensidad del campo gravitatorio: la presencia de la carga $Q$ modifica el espacio que la rodea de modo que otra carga en esa región nota la perturbación y sufre la fuerza de Coulomb.</p>
+                <p class="mb-4 text-sm text-slate-700">Las unidades del campo eléctrico en el Sistema Internacional (S.I.) son $\text{N/C}$, y también se utiliza $\text{V/m}$.</p>
+
+                <!-- SUBAPARTADO 4.1 -->
+                <h3 id="sec4-1" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Relación entre el campo y la fuerza eléctrica</h3>
+                <p class="mb-3">Si en un cierto punto del seno de un campo eléctrico se sitúa una carga $q$ distinta de la de prueba ($1\text{ C}$), sufriría una fuerza:</p>
+                <div class="formula-box">
+                    $$\vec{F} = q\vec{E}$$
+                    <p class="text-xs text-slate-600 mt-2">En esta relación hemos de tomar $q$ con su signo, pues las cargas positivas sufren una fuerza eléctrica en la dirección y sentido del campo, pero las negativas sufren una fuerza eléctrica en sentido contrario.</p>
+                </div>
+
+                <!-- SUBAPARTADO 4.2 -->
+                <h3 id="sec4-2" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Campo electrostático de un conjunto de cargas puntuales</h3>
+                <p class="mb-3">El <strong>principio de superposición</strong> aplicado al campo eléctrico creado por un conjunto de cargas puntuales en un punto $P$ establece que es la suma vectorial de los campos creados por cada una de ellas como si estuviera sola.</p>
+                <div class="formula-box">
+                    $$\vec{E}(P) = \sum_i \vec{E}_i(P) = \frac{Kq_1}{r_{1P}^2}\vec{u}_{r1} + \frac{Kq_2}{r_{2P}^2}\vec{u}_{r2} + \dots$$
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im4.png" alt="Superposición de campos eléctricos creados por varias cargas puntuales" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 4: Campo eléctrico resultante en un punto $P$ debido a un conjunto de cargas puntuales.</figcaption>
+                </figure>
+
+                <!-- SUBAPARTADO 4.3 -->
+                <h3 id="sec4-3" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Líneas de campo o líneas de fuerza del campo eléctrico</h3>
+                <p class="mb-3">Son líneas imaginarias coincidentes con la trayectoria que seguiría la carga de prueba ($+1\text{ C}$) abandonada en reposo en cada punto del campo. Desde un punto de vista matemático se definen como líneas tangentes al vector intensidad de campo en cada punto. Son muy útiles porque permiten visualizar las zonas en que el campo eléctrico es más intenso (líneas más apretadas) y los efectos que tendría sobre una carga positiva en reposo.</p>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im5.png" alt="Líneas de campo eléctrico en cargas positivas y negativas" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 5: Representación de las líneas de fuerza en torno a una carga positiva y a una carga negativa.</figcaption>
+                </figure>
+
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700 mt-4">
+                    <strong>Fuentes y sumideros:</strong> Las líneas de fuerza salen de las cargas positivas (se dice que son los <em>"manantiales"</em> o <em>"fuentes"</em> del campo) y se dirigen hacia las negativas (a las que se denomina <em>"sumideros"</em> del campo).
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im6.png" alt="Líneas de campo eléctrico en cargas positivas y negativas" class="mx-auto rounded-lg shadow-sm max-h-40">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 6: En azul campo tipo fuente y en rojo tipo sumidero.</figcaption>
+                </figure>
+
+            </section>
+
+            <!-- SECCIÓN 5 -->
+            <section id="sec5" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">5. Energía potencial electrostática de una carga en presencia de otra. Superposición.</h2>
+                <p class="mb-3">La fuerza eléctrica es una <strong>fuerza conservativa</strong>; por tanto, puede definirse la función energía potencial, $U(r)$, del mismo modo a como hicimos en el tema anterior con la fuerza gravitatoria. Así, el trabajo de la fuerza eléctrica será igual a la disminución de la energía potencial eléctrica (la fuerza eléctrica siempre tratará de hacer disminuir la energía potencial eléctrica). Matemáticamente se calcula:</p>
+                
+                <div class="formula-box">
+                    $$W_{i\rightarrow f} = -\Delta U = \int_i^f \vec{F}\cdot d\vec{r} = \int_i^f \frac{KQq}{r^2}\cdot dr = \left.-\frac{KQq}{r}\right|_i^f = \frac{KQq}{r_i} - \frac{KQq}{r_f} = -(U_f - U_i)$$
+                    <p class="text-xs text-slate-600 mt-2">De donde se deduce que:</p>
+                    $$U(r) = \frac{KQq}{r} + \text{cte}$$
+                    <p class="text-xs text-slate-500 mt-1">(Nótese que si las cargas son de signos opuestos, la fuerza es atractiva y la expresión de la energía potencial es equivalente a la obtenida en el tema de gravitación).</p>
+                </div>
+
+                <p class="mb-3">La energía potencial eléctrica, como las demás, está indeterminada porque la constante que aparece en su expresión puede tomar cualquier valor. Para hablar de energía potencial eléctrica en términos absolutos es pues necesario elegir un origen de $U$. Para hacer que la constante sea $0$, se conviene en que la energía potencial eléctrica de dos cargas es nula cuando estén separadas una distancia que tiende a infinito:</p>
+
+                <div class="formula-box">
+                    $$U(r \rightarrow \infty) = \frac{KQq}{r \rightarrow \infty} + \text{cte} = 0 \implies \text{cte} = 0$$
+                    <p class="text-xs text-slate-600 mt-2">Por tanto, la energía potencial eléctrica queda definida como:</p>
+                    $$U(r) = \frac{KQq}{r}$$
+                </div>
+
+                <p class="mb-4 text-sm text-slate-700">En esta expresión las cargas $Q$ y $q$ han de tomarse <strong>con su signo</strong>, resultando pues una energía potencial positiva cuando las cargas sean del mismo signo y negativa en caso contrario.</p>
+
+				
+				<!-- SIMULADOR 1: ENERGÍA POTENCIAL Y ESPONTANEIDAD -->
+				<div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+				    <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+				        <h4 class="font-bold text-sky-400">⚡ Simulación Interactiva: Energía Potencial $U(r)$ y Espontaneidad</h4>
+				        <div class="flex flex-wrap items-center gap-3 text-xs">
+				            <button id="sim1ToggleSign" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-3 py-1 rounded transition">Signo de $q$: + (Repulsión)</button>
+				            <label for="sim1Dist">Distancia $r$:</label>
+				            <input type="range" id="sim1Dist" min="60" max="260" value="140" class="accent-sky-400">
+				            <button id="sim1Release" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-3 py-1 rounded transition">▶ Soltar carga $q$</button>
+				        </div>
+				    </div>
+				    <canvas id="energyPotCanvas" width="700" height="250"></canvas>
+				    <p class="text-xs text-slate-400 mt-2 text-center">Ajusta la distancia inicial $r$, cambia el signo de $q$ y pulsa <strong>Soltar carga</strong> para observar cómo el sistema evoluciona espontáneamente disminuyendo siempre su energía potencial $U(r)$.</p>
+				</div>
+
+<details class="my-4 bg-sky-50/70 border border-sky-200 rounded-lg p-4">
+                    <summary class="font-semibold text-sky-900 cursor-pointer">➕ Saber más: Gráficas de la energía potencial eléctrica $U(r)$ según el signo de las cargas</summary>
+                    <div class="mt-3 text-sm text-slate-700">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="border border-slate-200 rounded-lg p-4 bg-white text-center">
+                                <h4 class="font-bold text-sky-900 mb-2">Cargas de igual signo</h4>
+                                <img src="imagenes/t2_im7.png" alt="Gráfica de energía potencial eléctrica U(r) para cargas de igual signo" class="mx-auto rounded-lg shadow-sm max-h-60 mb-2">
+                                <p class="text-xs text-slate-600">La acción del campo hará que las cargas de igual signo se alejen para así disminuir la energía potencial (fuerza repulsiva).</p>
+                            </div>
+                            <div class="border border-slate-200 rounded-lg p-4 bg-white text-center">
+                                <h4 class="font-bold text-sky-900 mb-2">Cargas de distinto signo</h4>
+                                <img src="imagenes/t2_im8.png" alt="Gráfica de energía potencial eléctrica U(r) para cargas de distinto signo" class="mx-auto rounded-lg shadow-sm max-h-60 mb-2">
+                                <p class="text-xs text-slate-600">La acción del campo hará que las cargas de diferente signo se acerquen para así disminuir la energía potencial (fuerza atractiva).</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+				
+
+                <!-- SUBAPARTADO 5.1 -->
+                <h3 id="sec5-1" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Significado físico de la energía potencial eléctrica en un punto</h3>
+                <p class="mb-3">Calculemos el trabajo que realiza la fuerza eléctrica al desplazar una carga desde una posición inicial $i$ hasta el infinito:</p>
+                <div class="formula-box">
+                    $$W_{i\rightarrow\infty} = \int_i^\infty \vec{F}\cdot d\vec{r} = -(U_\infty - U_i) = U_i$$
+                </div>
+                <p class="mb-3">La energía potencial eléctrica de dos cargas separadas una distancia $r$ es pues la energía que transfiere la fuerza eléctrica cuando se alejan hasta el infinito, o bien la energía que debe transferir una fuerza exterior igual que la eléctrica pero de sentido contrario para acercarlas desde el infinito hasta la distancia final $r$ a la que se encuentran.</p>
+                <ul class="list-disc pl-6 space-y-2 mb-4 text-sm text-slate-700">
+                    <li><strong>Si $U > 0$ (cargas de igual signo):</strong> La energía potencial representa el trabajo que hace la fuerza eléctrica para llevar la carga hasta el infinito, o también la energía que pierde el sistema formado por las dos cargas cuando se separan hasta el infinito. También coincide con la energía que hay que aportar para traerlas desde el infinito hasta la distancia $r$ (mediante una fuerza exterior igual a la eléctrica).</li>
+                    <li><strong>Si $U < 0$ (cargas de distinto signo):</strong> La energía potencial representa el trabajo que realiza una fuerza externa para alejar la carga hasta el infinito, o el trabajo que realiza la fuerza eléctrica para traer la carga desde el infinito hasta la distancia $r$; también (en valor absoluto) la energía mínima necesaria para separarlas hasta el infinito o la energía que pierden cuando se acercan desde el infinito hasta la distancia $r$ (si no hay rozamientos, esta energía potencial se convierte íntegramente en energía cinética).</li>
+                </ul>
+
+                <!-- SUBAPARTADO 5.2 -->
+                <h3 id="sec5-2" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Significado físico de la variación de la energía potencial eléctrica</h3>
+                <p class="mb-3">La variación de energía potencial, como hemos visto en el punto anterior, representa la energía que gana o pierde el sistema cuando las cargas se alejan o acercan, o el trabajo que hay que realizar para acercarlas o alejarlas. Su expresión en general es:</p>
+                <div class="formula-box">
+                    $$\Delta U = \frac{KQq}{r_f} - \frac{KQq}{r_i} = KQq\left(\frac{1}{r_f} - \frac{1}{r_i}\right)$$
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 mb-4 text-sm">
+                    <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                        <h4 class="font-bold text-sky-900 mb-2">Cargas del mismo signo</h4>
+                        <p class="text-slate-700 mb-2">Cuando se acercan aumenta la energía potencial y cuando se alejan disminuye:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                            <li>Si $r_f < r_i$ (acercamiento): $\Delta U > 0$</li>
+                            <li>Si $r_f > r_i$ (alejamiento): $\Delta U < 0$</li>
+                        </ul>
+                        <p class="text-xs text-slate-600 mt-2">La fuerza eléctrica va en el sentido de hacer disminuir la energía potencial eléctrica de las cargas. Para hacer que $U$ aumente es necesaria la participación de una fuerza exterior.</p>
+                    </div>
+                    <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                        <h4 class="font-bold text-sky-900 mb-2">Cargas de distinto signo</h4>
+                        <p class="text-slate-700 mb-2">Cuando se acercan disminuye la energía potencial y cuando se alejan aumenta:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                            <li>Si $r_f < r_i$ (acercamiento): $\Delta U < 0$</li>
+                            <li>Si $r_f > r_i$ (alejamiento): $\Delta U > 0$</li>
+                        </ul>
+                        <p class="text-xs text-slate-600 mt-2">Recuerda que lo espontáneo (para el campo) es reducir la energía del sistema; por tanto, dos cargas eléctricas de signo opuesto tratarán de acercarse reduciendo su energía potencial. La acción de una fuerza externa producirá un aumento de la energía potencial electrostática.</p>
+                    </div>
+                </div>
+
+                <!-- SUBAPARTADO 5.3 -->
+                <h3 id="sec5-3" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Principio de superposición</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">El <strong>principio de superposición</strong> aplicado al cálculo de la energía potencial eléctrica de un sistema de $N$ cargas puntuales establece que la energía potencial eléctrica total del sistema es la suma de la energía potencial de todos los pares posibles de cargas puntuales existentes, calculando la energía potencial de cada par como si las demás cargas no estuvieran presentes.</p>
+                </div>
+                <div class="formula-box">
+                    $$U_T = \sum U(i,j) = \sum \frac{Kq_i q_j}{r_{i,j}} \quad \text{con } i \neq j$$
+                </div>
+            </section>
+
+            <!-- SECCIÓN 6 -->
+            <section id="sec6" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">6. El potencial electrostático de una carga puntual y de un conjunto de cargas puntuales.</h2>
+                
+                <div class="concept-card">
+                    <h3 class="font-bold text-sky-900 mb-1">Definición de potencial eléctrico ($V$)</h3>
+                    <p class="text-sm text-slate-700">Se define el <strong>potencial eléctrico</strong> en un punto como la energía potencial que adquiere la carga de prueba ($+1\text{ C}$) cuando se sitúa en ese punto por la presencia de otra u otras cargas creadoras de un campo eléctrico.</p>
+                </div>
+
+                <p class="mb-3">Si la carga creadora del campo es una carga puntual $Q$, el potencial a una distancia $r$ de ella es:</p>
+                <div class="formula-box">
+                    $$V(r) = \frac{KQ}{r}$$
+                    <p class="text-xs text-slate-600 mt-2">Donde hay que tomar $Q$ <strong>con su signo</strong>, por lo que podemos tener potenciales $V$ positivos o negativos. Así, el potencial $V$ creado por una carga positiva va desde $0$ (a distancias muy lejanas a $Q$) hasta $+\infty$ (para puntos muy próximos a ella), y para una carga negativa va desde $0$ (a distancias muy lejanas a $Q$) hasta $-\infty$ (para puntos muy próximos a ella).</p>
+                </div>
+
+                <!-- SUBAPARTADO 6.1 -->
+                <h3 id="sec6-1" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Relación entre potencial eléctrico y energía potencial eléctrica</h3>
+                <p class="mb-3">Si en un punto del campo eléctrico se sitúa una carga $q$, ésta adquiere una energía potencial eléctrica que es:</p>
+                <div class="formula-box">
+                    $$U(r) = \frac{KQq}{r} \implies \boxed{U(r) = qV(r)}$$
+                    <p class="text-xs text-slate-600 mt-2">Las unidades del potencial eléctrico en el S.I. son el $\text{J/C} = \text{Voltio (V)}$.</p>
+                </div>
+
+                <ul class="list-disc pl-6 space-y-2 mb-4 text-sm text-slate-700">
+                    <li><strong>Significado de $V$ en un punto:</strong> $V(r)$ es la energía necesaria (aplicando una fuerza exterior igual pero de sentido contrario a la eléctrica) para traer $+1\text{ C}$ desde el infinito hasta la distancia $r$ de la carga $Q$ que crea el campo. Coincide con la energía potencial electrostática del sistema formado por $Q$ y por $+1\text{ C}$ separados una distancia $r$.</li>
+                    <li><strong>Significado de $\Delta V$ entre dos puntos de un campo eléctrico:</strong> Es la energía que una fuerza exterior (igual pero de sentido contrario a la eléctrica) ha de transferir para trasladar $+1\text{ C}$ desde la posición inicial a la final.</li>
+                </ul>
+
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700 mt-4">
+                    <strong>Sentido del campo y variación del potencial:</strong> Una carga positiva genera un campo tipo fuente y $V$ disminuye con la distancia; por tanto, $\vec{E}$ apunta hacia valores de $V$ menores. Una carga negativa genera un campo tipo sumidero y $V$ aumenta con la distancia; por tanto, $\vec{E}$ también apunta hacia valores de $V$ menores. En resumen, <strong>$\vec{E}$ siempre apunta hacia potenciales menores</strong>.
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im9.png" alt="Sentido de la intensidad de campo y variación del potencial" class="mx-auto rounded-lg shadow-sm max-h-40">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 9: Relación entre E y V.</figcaption>
+                </figure>
+
+
+                <!-- SUBAPARTADO 6.2 -->
+                <h3 id="sec6-2" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Superficies equipotenciales</h3>
+                <p class="mb-3">Una <strong>superficie equipotencial</strong> es el lugar geométrico de los puntos del espacio en los que el potencial eléctrico toma el mismo valor. Para una carga puntual aislada, las superficies equipotenciales son esferas concéntricas con la carga. Para dos cargas puntuales, estas superficies adoptan la forma que se muestra en la siguiente figura:</p>
+
+
+<!-- SIMULADOR 2: LÍNEAS DE CAMPO Y SUPERFICIES EQUIPOTENCIALES -->
+                <div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+                    <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+                        <h4 class="font-bold text-emerald-400">🧭 Simulación Interactiva: Líneas de Campo y Equipotenciales</h4>
+                        <div class="flex flex-wrap items-center gap-2 text-xs">
+							<button id="sim2ModeSingle" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded">Carga +</button>
+                            <button id="sim2ModeSingle2" class="bg-slate-700 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded">Carga -</button>
+                            <button id="sim2ModeDipole" class="bg-slate-700 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded">Dipolo (+ / -)</button>
+                            <button id="sim2ModeSame" class="bg-slate-700 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded">Iguales (+ / +)</button>
+                        </div>
+                    </div>
+                    <canvas id="fieldEquiCanvas" width="700" height="300"></canvas>
+                    <p class="text-xs text-slate-400 mt-2 text-center"><strong>Arrastra las cargas</strong> con el ratón o mueve el cursor sobre el espacio para medir el vector $\vec{E}$ (siempre perpendicular a las equipotenciales y apuntando hacia potenciales $V$ menores).</p>
+                </div>
+
+                <!-- SUBAPARTADO 6.3 -->
+                <h3 id="sec6-3" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Principio de superposición para V</h3>
+                <p class="mb-3">El potencial creado por un conjunto de cargas puntuales en un punto $P$ es la <strong>suma algebraica</strong> de los creados por cada una de ellas por separado:</p>
+                <div class="formula-box">
+                    $$V_T(P) = \sum_i V_i(P)$$
+                    <p class="text-xs text-slate-600 mt-2">Por tanto, la energía potencial que adquiere una carga $q$ colocada en dicho punto es:</p>
+                    $$U(P) = qV_T$$
+                </div>
+                <p class="text-xs text-indigo-700 font-semibold mb-4">📝 Ejercicios recomendados: 5, 13</p>
+
+                <!-- SUBAPARTADO 6.4 -->
+                <h3 id="sec6-4" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Relación entre el trabajo y el potencial eléctrico</h3>
+                <p class="mb-3">Puesto que el trabajo de la fuerza eléctrica está relacionado con la variación de energía potencial y ésta a su vez con el potencial, podemos establecer una relación sencilla entre el trabajo y el potencial:</p>
+                <div class="formula-box">
+                    $$W = -\Delta U = -q\Delta V = -q(V_f - V_i) \implies \boxed{\Delta U = q\Delta V}$$
+                </div>
+                <ul class="list-disc pl-6 space-y-2 mb-4 text-sm text-slate-700">
+                    <li><strong>Si $W > 0$:</strong> La fuerza eléctrica va en el sentido del desplazamiento, por lo que no es necesaria otra fuerza externa para que dicho desplazamiento se produzca.</li>
+                    <li><strong>Si $W < 0$:</strong> La fuerza eléctrica va en sentido contrario al desplazamiento, por lo que será necesaria una fuerza externa para llevar la carga de uno a otro punto.</li>
+                </ul>
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700">
+                    <strong>Movimiento espontáneo de cargas:</strong> Mientras que una carga positiva se mueve espontáneamente hacia potenciales menores ($\Delta V < 0$), <strong>una carga negativa se moverá, por acción del campo, aumentando el potencial eléctrico</strong> ($\Delta V > 0$).
+                </div>
+            </section>
+
+            <!-- SECCIÓN 7 -->
+            <section id="sec7" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">7. Teorema de Gauss para el campo eléctrico</h2>
+
+                <!-- SUBAPARTADO 7.1 -->
+                <h3 id="sec7-1" class="text-xl font-semibold text-slate-800 mt-4 mb-3">Definición de flujo</h3>
+                <p class="mb-3">Se define el <strong>flujo elemental del campo eléctrico</strong> como el número de líneas de campo que atraviesan una superficie elemental $dS$.</p>
+                <p class="mb-3">El flujo elemental que atraviesa una superficie también elemental $dS$ (plana por lo pequeña que es) dependerá de la densidad de líneas, del tamaño de la superficie, pero también de su orientación respecto al campo. Así, asignamos a la superficie un vector superficie $d\vec{S}$ cuyo módulo coincide con el valor del área de la superficie, de dirección perpendicular a ella y sentido hacia fuera. Para el campo eléctrico:</p>
+
+                <div class="formula-box">
+                    $$d\Phi = E \cdot dS \cdot \cos\alpha = \vec{E}\cdot d\vec{S}$$
+                    <p class="text-xs text-slate-600 mt-2">El flujo a través de una superficie finita $S$ será por tanto:</p>
+                    $$\Phi = \int_S \vec{E}\cdot d\vec{S}$$
+                    <p class="text-xs text-slate-600 mt-1">El flujo eléctrico en el S.I. se mide en $\text{N}\cdot\text{C}^{-1}\cdot\text{m}^2$.</p>
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im12.png" alt="Orientación del vector superficie dS respecto al campo eléctrico E" class="mx-auto rounded-lg shadow-sm max-h-96">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 9: Dependencia del flujo eléctrico con el ángulo $\alpha$ entre $\vec{E}$ y $d\vec{S}$: a) El flujo es cero ($\alpha = 90^\circ$); d) El flujo es máximo ($\alpha = 0^\circ$).</figcaption>
+                </figure>
+
+                <p class="mb-2 font-semibold text-slate-800">Significado del signo del flujo en una superficie cerrada:</p>
+                <ul class="list-disc pl-6 space-y-1 mb-4 text-sm text-slate-700">
+                    <li>Si $\Phi > 0$ (positivo), indica que las líneas atraviesan la superficie hacia fuera: es <strong>flujo saliente</strong>.</li>
+                    <li>Si $\Phi < 0$ (negativo), indica lo contrario: es <strong>flujo entrante</strong>.</li>
+                </ul>
+
+                <!-- SUBAPARTADO 7.2 -->
+                <h3 id="sec7-2" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Teorema de Gauss</h3>
+                <div class="concept-card">
+                    <p class="text-sm text-slate-700">El <strong>teorema de Gauss</strong> —uno de los más importantes de la Física puesto que permite el cálculo del campo gravitatorio y eléctrico para distribuciones continuas de masa o carga con gran simetría (hilos, láminas, esferas huecas o macizas, cilindros...)— establece que el valor del flujo del campo eléctrico que atraviesa una superficie cerrada cualquiera $S$ depende únicamente de la carga neta encerrada por dicha superficie.</p>
+                </div>
+
+                <div class="formula-box">
+                    $$\Phi = \oint_S \vec{E}\cdot d\vec{S} = 4\pi K Q_{\text{encerrada}}$$
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im13.png" alt="Superficie gaussiana esférica rodeando una carga puntual positiva" class="mx-auto rounded-lg shadow-sm max-h-80">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 10: Superficie gaussiana esférica concéntrica con una carga puntual $+Q$, donde $\vec{E}$ y $d\vec{S}$ forman un ángulo de $0^\circ$.</figcaption>
+                </figure>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-3">Cálculo del campo eléctrico creado por una esfera conductora hueca</h4>
+                <p class="mb-3 text-sm text-slate-700">La carga en una esfera conductora hueca se distribuye uniformemente en su superficie externa de radio $R_{\text{esfera}}$:</p>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im14.png" alt="Esfera conductora hueca cargada y superficie gaussiana exterior" class="mx-auto rounded-lg shadow-sm max-h-80">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 11: Aplicación del teorema de Gauss a una esfera conductora hueca de radio $R$ y carga total $Q$.</figcaption>
+                </figure>
+
+                <div class="grid md:grid-cols-2 gap-4 my-4">
+                    <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                        <h5 class="font-bold text-sky-900 mb-2">1. Campo en el interior ($r < R_{\text{esfera}}$)</h5>
+                        <p class="text-xs text-slate-700 mb-2">Para puntos interiores trazamos una superficie gaussiana esférica concéntrica con la conductora de radio $r < R_{\text{esfera}}$. Esta gaussiana no encierra carga alguna ($Q_{\text{encerrada}} = 0$), por lo que el flujo en el interior es nulo y consecuentemente el campo también lo es:</p>
+                        <div class="text-xs bg-white p-2 rounded border overflow-x-auto">
+                            $$\Phi = \oint_S \vec{E}\cdot d\vec{S} = E \cdot S = 0 \implies E = 0$$
+                        </div>
+                        <p class="text-xs text-slate-600 mt-2">Por tanto, el campo eléctrico es nulo en el interior de una <strong>jaula de Faraday</strong>.</p>
+                    </div>
+                    <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                        <h5 class="font-bold text-sky-900 mb-2">2. Campo en el exterior ($r > R_{\text{esfera}}$)</h5>
+                        <p class="text-xs text-slate-700 mb-2">Tomando una superficie gaussiana esférica de radio $r > R_{\text{esfera}}$ concéntrica con ella, dado que $\vec{E}$ y $d\vec{S}$ son paralelos ($\alpha = 0^\circ$) y $E$ es constante en toda la esfera:</p>
+                        <div class="text-xs bg-white p-2 rounded border overflow-x-auto">
+                            $$\Phi = \oint_S \vec{E}\cdot d\vec{S} = E \cdot (4\pi r^2)$$
+                            $$E \cdot (4\pi r^2) = 4\pi K Q_{\text{encerrada}} \implies E = \frac{KQ_{\text{encerrada}}}{r^2}$$
+                        </div>
+                        <p class="text-xs text-slate-600 mt-2">Coincide con el de una carga puntual $Q_{\text{encerrada}}$ colocada en su centro. Por tanto, las esferas cargadas pueden considerarse como cargas puntuales para distancias mayores a su radio.</p>
+                    </div>
+                </div>
+				
+
+                <!-- SUBAPARTADO 7.3 -->
+                <h3 id="sec7-3" class="text-xl font-semibold text-slate-800 mt-8 mb-3">Relación entre campo y potencial electrostáticos</h3>
+                <p class="mb-3">Supongamos que una carga $Q$ crea un campo eléctrico y en su seno se coloca una carga $q$ de prueba. La fuerza eléctrica ejercerá un trabajo sobre $q$ que vale:</p>
+                <div class="formula-box">
+                    $$W = -\Delta U = -q\Delta V \implies \Delta V = -\int \frac{\vec{F}}{q}\cdot d\vec{r} \implies \boxed{\Delta V = -\int \vec{E}\cdot d\vec{r}}$$
+                    <p class="text-xs text-slate-600 mt-2">O en forma diferencial (en una dirección radial $r$):</p>
+                    $$E = -\frac{dV}{dr}$$
+                </div>
+
+                <p class="mb-3 text-sm text-slate-700">La rapidez con que varía el potencial eléctrico con la distancia a la carga creadora del campo en un punto coincide con el módulo del campo eléctrico en ese punto. Desde un punto de vista más cualitativo, podríamos decir que cuando las superficies equipotenciales están muy apretadas (varían mucho en poca distancia) en una región es porque el campo eléctrico es muy intenso en esa región. El signo negativo ($-$) que aparece en la expresión anterior tiene en cuenta que las cargas positivas crean potenciales cada vez menores con la distancia (cuando nos alejamos $dV < 0$ y $dr > 0$, por lo que su cociente sería negativo y el módulo del campo ha de ser positivo).</p>
+
+                <p class="mb-4 text-sm text-slate-700">Por el mismo motivo que en el campo gravitatorio, podemos decir que las <strong>líneas de campo son perpendiculares a las superficies equipotenciales</strong>, puesto que cuando una carga se desplaza por una superficie equipotencial ($\Delta V = 0$), el campo eléctrico no realiza trabajo alguno sobre ella ($W = -q\Delta V = 0$).</p>
+
+                <h4 class="text-lg font-semibold text-slate-800 mt-6 mb-3">Campo eléctrico en el interior de un condensador plano paralelo</h4>
+                <p class="mb-3 text-sm text-slate-700">En la parte central de un condensador de placas plano-paralelas separadas una distancia $d$, se puede considerar sin demasiado error que el campo eléctrico $\vec{E}$ es uniforme (constante en módulo, dirección y sentido), por lo que la diferencia de potencial entre sus armaduras se obtiene por integración directa de la relación entre campo y potencial eléctricos:</p>
+
+                <div class="formula-box">
+                    $$\Delta V = -\int \vec{E}\cdot d\vec{r} = -E \cdot d \implies |\Delta V| = E \cdot d$$
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im16.png" alt="Campo eléctrico uniforme en el interior de un condensador plano paralelo" class="mx-auto rounded-lg shadow-sm max-h-80">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 12: Campo eléctrico uniforme $\vec{E}$ entre las armaduras $+Q$ y $-Q$ de un condensador plano paralelo separadas una distancia $d$.</figcaption>
+                </figure>
+            </section>
+
+            <!-- SECCIÓN 8 -->
+            <section id="sec8" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-sky-900 border-b-2 border-sky-100 pb-2 mb-4">8. Movimiento de una partícula cargada en el seno de un campo eléctrico</h2>
+                
+                <p class="mb-3">Cuando una partícula de carga $q$ y masa $m$ se introduce en el interior de un campo eléctrico $\vec{E}$, experimenta una fuerza eléctrica $\vec{F} = q\vec{E}$ y su energía potencial eléctrica en un punto de potencial $V$ será $U = qV$.</p>
+
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-3 rounded text-sm text-slate-700 mb-4">
+                    <strong>Sentido del movimiento:</strong> Si la partícula tiene <strong>carga positiva</strong> ($q > 0$), se moverá en el sentido que indican las líneas de campo, mientras que si su <strong>carga es negativa</strong> ($q < 0$), lo hará en contra de las líneas de campo.
+                </div>
+
+                <p class="mb-3">Al estar sometida a la fuerza eléctrica (suponiendo un campo eléctrico uniforme), sufrirá una aceleración constante dada por la segunda ley de Newton:</p>
+                <div class="formula-box">
+                    $$\vec{a} = \frac{\vec{F}}{m} = \frac{q\vec{E}}{m}$$
+                </div>
+
+                <p class="mb-3">Si el campo eléctrico es constante (uniforme), la partícula describe un <strong>Movimiento Rectilíneo Uniformemente Acelerado (MRUA)</strong> en la dirección del campo (o un tiro parabólico si entra con una velocidad inicial perpendicular a las líneas de campo). Las ecuaciones cinemáticas que describen el MRUA son:</p>
+                <div class="formula-box">
+                    $$\begin{cases} x_f = x_i + v_i t + \frac{1}{2}at^2 \\ v_f = v_i + at \end{cases}$$
+                </div>
+
+                <figure class="my-6 text-center">
+                    <img src="imagenes/t2_im17.png" alt="Trayectoria parabólica de una partícula cargada entrando perpendicularmente en un campo eléctrico uniforme" class="mx-auto rounded-lg shadow-sm max-h-64">
+                    <figcaption class="text-xs text-slate-500 mt-2">Figura 13: Desviación de una partícula cargada con velocidad inicial $v_x$ en el seno de un campo eléctrico uniforme entre dos placas cargadas.</figcaption>
+                </figure>
+
+                <div class="concept-card">
+                    <h3 class="font-bold text-sky-900 mb-2">Enfoque energético: Conservación de la energía mecánica</h3>
+                    <p class="text-sm text-slate-700 mb-2">Además, como la fuerza eléctrica es una <strong>fuerza conservativa</strong> (si no actúan otras fuerzas no conservativas), se conserva la energía mecánica del sistema:</p>
+                    <div class="bg-white p-3 rounded border border-sky-100 overflow-x-auto text-sm">
+                        $$\Delta E_M = 0 \implies E_M(\text{inicial}) = E_M(\text{final}) \quad \text{o bien} \quad \Delta K = -\Delta U$$
+                    </div>
+                    <p class="text-xs text-slate-600 mt-2">Teniendo en cuenta que la variación de energía potencial eléctrica es $\Delta U = q\Delta V = q(V_f - V_i)$.</p>
+                </div>
+			
+<!-- SIMULADOR 4: MOVIMIENTO EN UN CONDENSADOR PLANO -->
+                <div class="my-6 bg-slate-900 text-white p-5 rounded-xl shadow-md">
+                    <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+                        <h4 class="font-bold text-rose-400">🎯 Simulación Interactiva: Deflexión en un Condensador Plano</h4>
+                        <div class="flex flex-wrap items-center gap-2 text-xs">
+                            <button id="sim4ParticleBtn" class="bg-rose-600 hover:bg-rose-500 text-white font-semibold px-2.5 py-1 rounded">Electrón (-)</button>
+                            <label for="sim4Field">Campo $E$:</label>
+                            <input type="range" id="sim4Field" min="1" max="10" value="5" class="accent-rose-400 w-20">
+                            <label for="sim4Vx">$v_x$:</label>
+                            <input type="range" id="sim4Vx" min="2" max="8" value="4" class="accent-rose-400 w-20">
+                            <button id="sim4FireBtn" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-2.5 py-1 rounded">▶ Disparar</button>
+                        </div>
+                    </div>
+                    <canvas id="capacitorCanvas" width="700" height="250"></canvas>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Selecciona la partícula (<strong>Electrón</strong>, <strong>Protón</strong> o <strong>Neutrón</strong>), ajusta el campo eléctrico $\vec{E}$ y la velocidad horizontal $v_x$, y pulsa <strong>Disparar</strong>.</p>
+                </div>			
+
+            </section>
+
+
+<!-- EJERCICIOS DE CLASE -->
+            <section id="ejercicios" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-100 pb-2 mb-6">Ejercicios de Clase</h2>
+                
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <h3 class="font-bold text-indigo-800 text-base mb-3 border-b pb-1">Ley de Coulomb</h3>
+                        <ol class="list-decimal pl-5 space-y-4">
+                            <li>
+                                Una partícula de masa $m$ y carga $-10\ \mu\text{C}$ se encuentra en reposo al estar sometida al campo gravitatorio terrestre y a un campo eléctrico uniforme $E = 100\text{ N C}^{-1}$ de la misma dirección. a) Haga un esquema de las fuerzas que actúan sobre la partícula y calcule su masa. b) Analice el movimiento de la partícula si el campo eléctrico aumentara a $120\text{ N C}^{-1}$ y determine su aceleración. Dato: $g = 10\text{ m s}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $0,1\text{ g}$; $2\text{ m/s}^2$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> Para que la partícula esté en reposo, la fuerza eléctrica debe compensar al peso ($\sum \vec{F} = 0$). Como la carga es negativa ($q = -10 \cdot 10^{-6}\text{ C}$) y el peso apunta hacia abajo, la fuerza eléctrica debe apuntar hacia arriba, por lo que el campo eléctrico $\vec{E}$ está dirigido verticalmente hacia abajo:</p>
+                                        <p>$$|F_e| = P \implies |q|E = mg \implies m = \frac{10 \cdot 10^{-6} \cdot 100}{10} = 10^{-4}\text{ kg} = 0,1\text{ g}$$</p>
+                                        <p><strong>b)</strong> Al aumentar el campo a $E' = 120\text{ N C}^{-1}$, la fuerza eléctrica hacia arriba supera al peso y la partícula asciende con un MRUA:</p>
+                                        <p>$$|q|E' - mg = ma \implies a = \frac{10 \cdot 10^{-6} \cdot 120 - 10^{-4} \cdot 10}{10^{-4}} = \frac{1,2 \cdot 10^{-3} - 10^{-3}}{10^{-4}} = 2\text{ m/s}^2\text{ (hacia arriba)}$$</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Una bolita de plástico de $2\text{ g}$ se encuentra suspendida de un hilo de $20\text{ cm}$ de longitud y, al aplicar un campo eléctrico uniforme y horizontal de $1000\text{ N C}^{-1}$, el hilo forma un ángulo de $15^\circ$ con la vertical. a) Dibuje en un esquema el campo eléctrico y todas las fuerzas que actúan sobre la esfera y determine su carga eléctrica. b) Explique cómo cambia la energía potencial de la esfera al aplicar el campo eléctrico. c) Calcule el cambio de energía potencial de la esfera. $g = 10\text{ m s}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $5,4\ \mu\text{C}$; $-2,8 \cdot 10^{-4}\text{ J}$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> En equilibrio actúan el peso ($mg$, vertical hacia abajo), la tensión $T$ del hilo y la fuerza eléctrica ($F_e = qE$, horizontal en el sentido de $\vec{E}$, luego $q > 0$). Descomponiendo la tensión:</p>
+                                        <p>$$T\sin 15^\circ = qE \quad ; \quad T\cos 15^\circ = mg \implies \tan 15^\circ = \frac{qE}{mg}$$</p>
+                                        <p>$$q = \frac{mg\tan 15^\circ}{E} = \frac{2 \cdot 10^{-3} \cdot 10 \cdot \tan 15^\circ}{1000} = 5,36 \cdot 10^{-6}\text{ C} \approx 5,4\ \mu\text{C}$$</p>
+                                        <p><strong>b)</strong> Al desplazarse espontáneamente bajo la acción del campo eléctrico en el sentido de la fuerza eléctrica, el trabajo de dicha fuerza es positivo y su <strong>energía potencial eléctrica disminuye</strong> (mientras que su energía potencial gravitatoria aumenta al elevarse).</p>
+                                        <p><strong>c)</strong> El desplazamiento horizontal es $\Delta x = L\sin 15^\circ = 0,20 \cdot \sin 15^\circ = 0,0518\text{ m}$. La variación de energía potencial eléctrica es:</p>
+                                        <p>$$\Delta U_e = -W_e = -qE\Delta x = -5,36 \cdot 10^{-6} \cdot 1000 \cdot 0,0518 = -2,78 \cdot 10^{-4}\text{ J} \approx -2,8 \cdot 10^{-4}\text{ J}$$</p>
+                                    </div>
+                                </details>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-indigo-800 text-base mb-3 border-b pb-1">Energía y trabajo</h3>
+                        <ol class="list-decimal pl-5 space-y-4" start="3">
+                            <li>
+                                Razone las respuestas a las siguientes preguntas: a) Una carga negativa se mueve en la dirección y sentido de un campo eléctrico uniforme. ¿Aumenta o disminuye el potencial eléctrico en la posición de la carga? ¿Aumenta o disminuye su energía potencial? b) ¿Cómo diferirían las respuestas del apartado anterior si se tratara de una carga positiva? c) Al moverse una partícula cargada en la dirección y sentido de un campo eléctrico, aumenta su energía potencial. ¿Qué signo tiene la carga de la partícula? <span class="text-xs font-semibold text-indigo-700">[Sol: Disminuye/Aumenta; $V$ y $U$ disminuyen; negativa]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> Las líneas de campo siempre apuntan hacia potenciales menores, por lo que el <strong>potencial eléctrico $V$ disminuye</strong> ($\Delta V < 0$). Como $\Delta U = q\Delta V$ y $q < 0$, el producto es positivo ($\Delta U > 0$), luego su <strong>energía potencial aumenta</strong>.</p>
+                                        <p><strong>b)</strong> Si la carga es positiva ($q > 0$), el potencial sigue disminuyendo ($\Delta V < 0$) porque solo depende del campo, pero ahora $\Delta U = q\Delta V < 0$, por lo que <strong>tanto $V$ como $U$ disminuyen</strong>.</p>
+                                        <p><strong>c)</strong> Como se mueve en el sentido del campo, $\Delta V < 0$. Para que $\Delta U = q\Delta V > 0$, la carga $q$ debe ser <strong>negativa</strong>.</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                En una región del espacio existe un campo electrostático generado por una carga puntual negativa, $q$. Dados dos puntos, $A$ más cercano a la carga y $B$ más alejado de la carga, razone si el potencial en $B$ es mayor o menor que en $A$. <span class="text-xs font-semibold text-indigo-700">[Sol: $V(B) > V(A)$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p>El potencial de una carga puntual negativa $q = -|q|$ es $V(r) = -\frac{K|q|}{r}$. Como $r_A < r_B$, en valor absoluto $\frac{K|q|}{r_A} > \frac{K|q|}{r_B}$, pero al ser negativos se cumple que $V(A) < V(B)$, es decir, <strong>$V(B) > V(A)$</strong> (más próximo a $0$).</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Una partícula cargada se mueve espontáneamente hacia puntos en los que el potencial electrostático es mayor. Razone si, de ese comportamiento, puede deducirse el signo de la carga. <span class="text-xs font-semibold text-indigo-700">[Sol: $q < 0$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p>Todo movimiento espontáneo bajo la acción del campo eléctrico implica una disminución de la energía potencial ($\Delta U < 0$, $W > 0$). Si se mueve hacia potenciales mayores, $\Delta V > 0$. Como $\Delta U = q\Delta V < 0$ con $\Delta V > 0$, necesariamente <strong>$q < 0$ (carga negativa)</strong>.</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Justifique razonadamente el signo de la carga de una partícula que se desplaza en la dirección y sentido de un campo eléctrico uniforme, de forma que su energía potencial aumenta. <span class="text-xs font-semibold text-indigo-700">[Sol: $q < 0$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p>Al avanzar en el sentido de $\vec{E}$, el potencial eléctrico disminuye ($\Delta V < 0$). Dado que $\Delta U = q\Delta V$ y el enunciado indica que $\Delta U > 0$, la carga debe ser <strong>negativa ($q < 0$)</strong>.</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Comente las siguientes afirmaciones relativas al campo eléctrico: a) Cuando una carga se mueve sobre una superficie equipotencial no cambia su energía mecánica. b) Dos superficies equipotenciales no pueden cortarse. ¿Se realiza trabajo al trasladar una carga (positiva o negativa) entre dos puntos pertenecientes a una misma superficie equipotencial? <span class="text-xs font-semibold text-indigo-700">[Sol: Verdad; Verdad/No]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a) Verdadero:</strong> Si solo actúa la fuerza eléctrica (que es conservativa), la energía mecánica se conserva ($\Delta E_M = 0$). Además, al ser $\Delta V = 0$, tampoco varía $U$ ni $K$.</p>
+                                        <p><strong>b) Verdadero / No:</strong> Si dos superficies equipotenciales se cortaran, un mismo punto del espacio tendría dos valores distintos de potencial eléctrico, lo cual es físicamente imposible (el potencial es una función unívoca). Al trasladar cualquier carga entre dos puntos de una misma superficie equipotencial ($\Delta V = 0$), el trabajo realizado es nulo: $W = -q\Delta V = 0\text{ J}$.</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                El campo eléctrico en un punto $P$, creado por una carga $q$ situada en el origen, es de $2000\text{ N C}^{-1}$ y el potencial eléctrico en $P$ es de $6000\text{ V}$. a) Determine el valor de $q$ y la distancia del punto $P$ al origen. b) Calcule el trabajo realizado al desplazar otra carga $Q = 1,2 \cdot 10^{-6}\text{ C}$ desde el punto $(3, 0)\text{ m}$ al punto $(0, 3)\text{ m}$. Explique por qué no hay que especificar la trayectoria seguida. Dato: $K = 9 \cdot 10^9\text{ N m}^2\text{ C}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $2\ \mu\text{C}$; $3\text{ m}$; $0\text{ J}$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> Dividiendo las expresiones de $V$ y $E$:</p>
+                                        <p>$$\frac{V}{E} = \frac{Kq/r}{Kq/r^2} = r \implies r = \frac{6000}{2000} = 3\text{ m}$$</p>
+                                        <p>$$q = \frac{V \cdot r}{K} = \frac{6000 \cdot 3}{9 \cdot 10^9} = 2 \cdot 10^{-6}\text{ C} = 2\ \mu\text{C}$$</p>
+                                        <p><strong>b)</strong> Ambos puntos distan $r = 3\text{ m}$ del origen, por lo que pertenecen a la misma superficie equipotencial ($V_A = V_B = 6000\text{ V}$): $W = -Q(V_B - V_A) = 0\text{ J}$. No depende de la trayectoria porque el campo electrostático es <strong>conservativo</strong>.</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Un electrón se mueve con una velocidad de $5 \cdot 10^5\text{ m s}^{-1}$ y penetra en un campo eléctrico de $50\text{ N C}^{-1}$ de igual dirección y sentido que la velocidad. a) Haga un análisis energético del problema razonando si aumenta o disminuye la energía potencial de la partícula en su desplazamiento explicando qué ocurrirá y en qué se convierte la variación de energía potencial. b) Si piensa que el electrón se detiene calcule la distancia que recorre hasta detenerse. c) Calcule el trabajo realizado por la fuerza eléctrica desde que la partícula penetra en la región y se detiene. d) Razone qué ocurriría si la partícula incidente fuera un protón. Datos: $e = 1,6 \cdot 10^{-19}\text{ C}$; $m_e = 9,1 \cdot 10^{-31}\text{ kg}$; $m_p = 1,7 \cdot 10^{-27}\text{ kg}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $14,22\text{ mm}$; $-0,71\text{ eV}$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> Al tener carga negativa, sufre una fuerza $\vec{F} = -e\vec{E}$ opuesta a su velocidad que lo frena. Al avanzar hacia potenciales menores ($\Delta V < 0$), su energía potencial eléctrica <strong>aumenta</strong> ($\Delta U = -e\Delta V > 0$) a costa de disminuir su energía cinética ($\Delta K = -\Delta U$).</p>
+                                        <p><strong>b)</strong> Por conservación de la energía mecánica ($\Delta K = -\Delta U \implies 0 - \frac{1}{2}m_e v_0^2 = -eEd$):</p>
+                                        <p>$$d = \frac{m_e v_0^2}{2eE} = \frac{9,1 \cdot 10^{-31} \cdot (5 \cdot 10^5)^2}{2 \cdot 1,6 \cdot 10^{-19} \cdot 50} = 0,01422\text{ m} = 14,22\text{ mm}$$</p>
+                                        <p><strong>c)</strong> $W = \Delta K = -\frac{1}{2}m_e v_0^2 = -1,1375 \cdot 10^{-19}\text{ J} = -0,71\text{ eV}$.</p>
+                                        <p><strong>d)</strong> Si fuera un protón ($q = +e$), la fuerza eléctrica tendría el mismo sentido que $\vec{E}$ y que su velocidad, por lo que no se detendría: se aceleraría indefinidamente aumentando su energía cinética y disminuyendo su energía potencial eléctrica.</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Una partícula de $5 \cdot 10^{-3}\text{ kg}$ y carga eléctrica $q = -6 \cdot 10^{-6}\text{ C}$ se mueve con una velocidad de $0,2\text{ m s}^{-1}$ en el sentido positivo del eje $X$ y penetra en la región $x > 0$, en la que existe un campo eléctrico uniforme de $500\text{ N C}^{-1}$ dirigido en el sentido positivo del eje $Y$. a) Describa, con ayuda de un esquema, la trayectoria seguida por la partícula y razone si aumenta o disminuye la energía potencial de la partícula en su desplazamiento. b) Calcule el trabajo realizado por el campo eléctrico en el desplazamiento de la partícula desde el punto $(0, 0)\text{ m}$ hasta la posición que ocupa $5\text{ s}$ más tarde. Dato: $g = 10\text{ m s}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $7\text{ J}$ (despreciando gravedad: $1,125 \cdot 10^{-5}\text{ J}$)]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> Describe un <strong>tiro parabólico</strong>: en el eje $X$ mantiene un MRU ($v_x = 0,2\text{ m/s}$) y en el eje $Y$ sufre una aceleración constante hacia abajo ($-Y$) debido a la fuerza eléctrica $F_e = |q|E$ (y al peso $mg$ si se considera vertical). Como se mueve espontáneamente en el sentido de la fuerza eléctrica, su <strong>energía potencial eléctrica disminuye</strong>.</p>
+                                        <p><strong>b)</strong> Despreciando la gravedad frente a la acción del campo eléctrico: $a_y = \frac{|q|E}{m} = \frac{6 \cdot 10^{-6} \cdot 500}{5 \cdot 10^{-3}} = 0,6\text{ m/s}^2$. En $t = 5\text{ s}$ se desplaza $\Delta y = \frac{1}{2}a_y t^2 = 7,5\text{ m}$ hacia $-Y$, por lo que $W_e = F_e \cdot \Delta y = 3 \cdot 10^{-3} \cdot 7,5 = 2,25 \cdot 10^{-2}\text{ J}$ (si además cae bajo $g = 10\text{ m/s}^2$ en $-Y$, $y = -\frac{1}{2}(10 + 0,6) \cdot 25 = -132,5\text{ m}$ y $W_{\text{total}} \approx 6,6\text{ J} \approx 7\text{ J}$).</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Una carga de $3\ \mu\text{C}$ se encuentra en el origen de coordenadas y otra carga de $-3 \cdot 10^{-6}\text{ C}$ está situada en el punto $(1, 1)\text{ m}$. a) Dibuje en un esquema el campo eléctrico en el punto $B(2, 0)\text{ m}$ y calcule su valor. ¿Cuál es el potencial eléctrico en el punto $B$? b) Calcule el trabajo necesario para desplazar una carga de $10 \cdot 10^{-6}\text{ C}$ desde el punto $A(1, 0)\text{ m}$ hasta el punto $B(2, 0)\text{ m}$. Dato: $K = 9 \cdot 10^9\text{ N m}^2\text{ C}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $E_T = 10\,000\text{ N/C}$; $V(B) = -5592\text{ V}$; $W_{\text{ext}} = 0,056\text{ J}$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> Distancias a $B(2,0)$: $r_1 = 2\text{ m}$ y $r_2 = \sqrt{(2-1)^2 + (0-1)^2} = \sqrt{2}\text{ m}$.</p>
+                                        <p>$$\vec{E}_1 = \frac{9 \cdot 10^9 \cdot 3 \cdot 10^{-6}}{4}\vec{i} = 6750\vec{i}\text{ N/C} \quad ; \quad \vec{E}_2 = \frac{9 \cdot 10^9 \cdot 3 \cdot 10^{-6}}{2}\left(\frac{-\vec{i}+\vec{j}}{\sqrt{2}}\right) = -9546\vec{i} + 9546\vec{j}\text{ N/C}$$</p>
+                                        <p>$$\vec{E}_T = -2796\vec{i} + 9546\vec{j}\text{ N/C} \implies |\vec{E}_T| = \sqrt{(-2796)^2 + 9546^2} = 9947\text{ N/C} \approx 10\,000\text{ N/C}$$</p>
+                                        <p>$$V(B) = \frac{9 \cdot 10^9 \cdot 3 \cdot 10^{-6}}{2} + \frac{9 \cdot 10^9 \cdot (-3 \cdot 10^{-6})}{\sqrt{2}} = 13\,500 - 19\,092 = -5592\text{ V}$$</p>
+                                        <p><strong>b)</strong> En $A(1,0)$, $r_{1A} = 1\text{ m}$ y $r_{2A} = 1\text{ m}$, luego $V(A) = 0\text{ V}$. El trabajo realizado por una fuerza externa es $W_{\text{ext}} = \Delta U = q(V_B - V_A) = 10 \cdot 10^{-6} \cdot (-5592 - 0) = -0,056\text{ J}$ ($W_{\text{campo}} = +0,056\text{ J}$).</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Dos cargas puntuales iguales, de $-1,2 \cdot 10^{-6}\text{ C}$ cada una, están situadas en los puntos $A(0, 8)\text{ m}$ y $B(6, 0)\text{ m}$. Una tercera carga, de $-1,5 \cdot 10^{-6}\text{ C}$, se sitúa en el punto $P(3, 4)\text{ m}$. a) Represente en un esquema las fuerzas que se ejercen entre las cargas y calcule la resultante sobre la tercera carga. b) Calcule la energía potencial de dicha carga. Dato: $K = 9 \cdot 10^9\text{ N m}^2\text{ C}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $\vec{F}_T = \vec{0}$; $U_T = 0,0065\text{ J}$]</span>
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> El punto $P(3,4)$ es exactamente el punto medio del segmento $AB$, distante $r_A = r_B = \sqrt{3^2 + 4^2} = 5\text{ m}$ de ambas cargas. Como $q_A = q_B$, las fuerzas de repulsión $\vec{F}_A$ y $\vec{F}_B$ tienen igual módulo y sentidos opuestos: <strong>$\vec{F}_T = \vec{0}\text{ N}$</strong>.</p>
+                                        <p><strong>b)</strong> La energía potencial de la tercera carga debida a las otras dos es:</p>
+                                        <p>$$U_T = U_{AP} + U_{BP} = 2 \cdot \frac{9 \cdot 10^9 \cdot (-1,2 \cdot 10^{-6}) \cdot (-1,5 \cdot 10^{-6})}{5} = 0,00648\text{ J} \approx 0,0065\text{ J}$$</p>
+                                    </div>
+                                </details>
+                            </li>
+                            <li>
+                                Se tienen tres cargas eléctricas en las siguientes posiciones $\vec{r}_1 = (0, 0)$, $\vec{r}_2 = (3, 0)$ y $\vec{r}_3 = (0, 3)$ (en metros). Si el valor de las cargas eléctricas es: $q_1 = -2\ \mu\text{C}$, $q_2 = 2\ \mu\text{C}$, $q_3 = 2\ \mu\text{C}$, calcula: a) El campo eléctrico total en el punto $P(3, 3)$. b) El potencial electrostático en el punto $Q(2, 1)$ y el punto $R(2, 2)$. c) El trabajo en traer una carga $q'$ de $0,5\ \mu\text{C}$ desde el infinito hasta $Q$. d) El trabajo en llevar la carga $q'$ desde $Q$ hasta $R$.
+                                <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                    <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                    <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                        <p><strong>a)</strong> En $P(3,3)$: $r_1 = \sqrt{18}\text{ m}$, $r_2 = 3\text{ m}$, $r_3 = 3\text{ m}$:</p>
+                                        <p>$$\vec{E}_1 = \frac{9 \cdot 10^9 \cdot (-2 \cdot 10^{-6})}{18}\left(\frac{\vec{i}+\vec{j}}{\sqrt{2}}\right) = -707,1\vec{i} - 707,1\vec{j}\text{ N/C}$$</p>
+                                        <p>$$\vec{E}_2 = 2000\vec{j}\text{ N/C} \quad ; \quad \vec{E}_3 = 2000\vec{i}\text{ N/C} \implies \vec{E}_T = 1292,9\vec{i} + 1292,9\vec{j}\text{ N/C}$$</p>
+                                        <p><strong>b)</strong> En $Q(2,1)$: $V(Q) = 9 \cdot 10^9 \cdot 10^{-6}\left(\frac{-2}{\sqrt{5}} + \frac{2}{\sqrt{2}} + \frac{2}{\sqrt{8}}\right) = 11\,042\text{ V}$. En $R(2,2)$: $V(R) = 9 \cdot 10^9 \cdot 10^{-6}\left(\frac{-2}{\sqrt{8}} + \frac{2}{\sqrt{5}} + \frac{2}{\sqrt{5}}\right) = 9736\text{ V}$.</p>
+                                        <p><strong>c)</strong> Trabajo del campo desde $\infty$ hasta $Q$: $W_{\infty \to Q} = -q' V(Q) = -0,5 \cdot 10^{-6} \cdot 11\,042 = -5,52 \cdot 10^{-3}\text{ J}$ ($+5,52 \cdot 10^{-3}\text{ J}$ si lo realiza una fuerza externa).</p>
+                                        <p><strong>d)</strong> Trabajo del campo de $Q$ a $R$: $W_{Q \to R} = -q'(V_R - V_Q) = -0,5 \cdot 10^{-6} \cdot (9736 - 11\,042) = +6,53 \cdot 10^{-4}\text{ J}$.</p>
+                                    </div>
+                                </details>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ANEXO I: PARA PRACTICAR -->
+            <section id="anexo" class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-100 pb-2 mb-6">Anexo I: Para practicar</h2>
+                
+                <div class="space-y-4 text-sm">
+                    <ol class="list-decimal pl-5 space-y-4">
+                        <li>
+                            Una partícula cargada negativamente pasa de un punto $A$, cuyo potencial es $V_A$, a otro $B$, cuyo potencial es $V_B > V_A$. Razone si la partícula gana o pierde energía potencial. <span class="text-xs font-semibold text-indigo-700">[Sol: pierde]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 text-xs">
+                                    Como $\Delta U = q(V_B - V_A)$, siendo $q < 0$ y $V_B - V_A > 0$, resulta $\Delta U < 0$. Por tanto, la partícula <strong>pierde energía potencial</strong> (se mueve espontáneamente hacia potenciales mayores).
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Dos cargas eléctricas puntuales, positivas e iguales están situadas en los puntos $A$ y $B$ de una recta horizontal. Conteste razonadamente a las siguientes cuestiones: a) ¿Puede ser nulo el potencial en algún punto del espacio que rodea a ambas cargas? ¿Y el campo eléctrico? b) Si se separan las cargas a una distancia doble de la inicial, ¿se reduce a la mitad la energía potencial del sistema? <span class="text-xs font-semibold text-indigo-700">[Sol: No (finito) / Sí; Sí]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                    <p><strong>a)</strong> El potencial $V = \frac{Kq}{r_A} + \frac{Kq}{r_B}$ es suma de dos términos estrictamente positivos en cualquier punto finito, por lo que <strong>no se anula</strong> (salvo en el infinito). En cambio, el <strong>campo eléctrico sí se anula</strong> en el punto medio del segmento $AB$, donde $\vec{E}_A$ y $\vec{E}_B$ tienen igual módulo y sentidos opuestos.</p>
+                                    <p><strong>b) Sí:</strong> Como $U = \frac{Kq^2}{r}$, si $r' = 2r$, entonces $U' = \frac{Kq^2}{2r} = \frac{U}{2}$.</p>
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            a) Razone si la energía potencial electrostática de una carga $q$ aumenta o disminuye al pasar de un punto $A$ a otro $B$, siendo el potencial en $A$ menor que en $B$. b) El punto $A$ está más alejado que el $B$ de la carga $Q$ que crea el campo. Razone si la carga $Q$ es positiva o negativa. Repita ahora el ejercicio suponiendo que el potencial en $A$ es mayor que en $B$. <span class="text-xs font-semibold text-indigo-700">[Sol: depende del signo de $q$; $Q < 0$; $Q > 0$]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                    <p><strong>a)</strong> Dado que $\Delta U = q(V_B - V_A)$ y $V_B - V_A > 0$, <strong>depende del signo de $q$</strong>: si $q > 0$, $U$ aumenta; si $q < 0$, $U$ disminuye.</p>
+                                    <p><strong>b)</strong> Si $r_A > r_B$ y $V_A < V_B$ (el potencial crece al acercarse a $Q$), entonces <strong>$Q < 0$</strong>. Si por el contrario $V_A > V_B$ (el potencial decrece al alejarse), entonces <strong>$Q > 0$</strong>.</p>
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            ¿Puede anularse el campo gravitatorio y/o el campo eléctrico en un punto del segmento que une a dos partículas cargadas? Razone la respuesta. <span class="text-xs font-semibold text-indigo-700">[Sol: $\vec{g}$ sí; $\vec{E}$ dependerá del signo relativo de las cargas]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 text-xs">
+                                    El <strong>campo gravitatorio $\vec{g}$ siempre puede anularse</strong> en un punto interior del segmento porque ambas masas crean campos atractivos en sentidos opuestos en esa zona. El <strong>campo eléctrico $\vec{E}$ solo puede anularse</strong> en un punto del segmento si ambas cargas tienen el <strong>mismo signo</strong> (ambas positivas o ambas negativas); si tienen signos opuestos, ambos campos apuntan en el mismo sentido entre ellas y nunca se anulan en el segmento interior.
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Dos cargas puntuales $q$ y $-q$ se encuentran sobre el eje $X$, en $x = a$ y en $x = -a$, respectivamente. Escriba las expresiones del campo electrostático y del potencial electrostático en el origen de coordenadas. <span class="text-xs font-semibold text-indigo-700">[Sol: $\vec{E} = -\frac{2Kq}{a^2}\vec{i}$; $V = 0$]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                    <p>En $(0,0)$ ambos vectores campo apuntan hacia la carga negativa (en $x = -a$, sentido $-\vec{i}$):</p>
+                                    <p>$$\vec{E}(0,0) = -\frac{Kq}{a^2}\vec{i} - \frac{Kq}{a^2}\vec{i} = -\frac{2Kq}{a^2}\vec{i} \qquad ; \qquad V(0,0) = \frac{Kq}{a} + \frac{K(-q)}{a} = 0$$</p>
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Si se conoce el potencial electrostático en un solo punto, ¿se puede determinar el campo eléctrico en dicho punto? Razone la respuesta. <span class="text-xs font-semibold text-indigo-700">[Sol: No]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 text-xs">
+                                    <strong>No.</strong> El campo eléctrico depende de la variación espacial del potencial ($\vec{E} = -\vec{\nabla}V$, o $E = -dV/dr$), no de su valor puntual. Conocer el valor de una función en un único punto no permite conocer su derivada ni su dirección de cambio.
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Una partícula cargada negativamente pasa de un punto $A$, cuyo potencial es $V_A$, a otro $B$, cuyo potencial es $V_B < V_A$. Razone si la partícula gana o pierde energía potencial. <span class="text-xs font-semibold text-indigo-700">[Sol: gana energía potencial ($F_{\text{ext}}$)]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 text-xs">
+                                    Como $\Delta U = q(V_B - V_A)$, al ser $q < 0$ y $V_B - V_A < 0$, el producto es positivo ($\Delta U > 0$). La partícula <strong>gana energía potencial</strong> (requiriendo la acción de una fuerza externa o pérdida de energía cinética).
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Una bolita de $1\text{ g}$, cargada con $+5 \cdot 10^{-6}\text{ C}$, pende de un hilo que forma $60^\circ$ con la vertical en una región en la que existe un campo eléctrico uniforme en dirección horizontal. a) Explique con ayuda de un esquema qué fuerzas actúan sobre la bolita y calcule el valor del campo eléctrico. b) Razone qué cambios experimentaría la situación de la bolita si: i) se duplicara el campo eléctrico; ii) se duplicara la masa de la bolita. <span class="text-xs font-semibold text-indigo-700">[Sol: $3464\text{ N/C}$]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                    <p><strong>a)</strong> Actúan el peso ($mg$), la tensión ($T$) y la fuerza eléctrica ($qE$): $\tan 60^\circ = \frac{qE}{mg} \implies E = \frac{10^{-3} \cdot 10 \cdot \tan 60^\circ}{5 \cdot 10^{-6}} = 3464\text{ N/C}$.</p>
+                                    <p><strong>b)</strong> i) Si se duplica $E$, $\tan\theta' = 2\tan 60^\circ \implies \theta' = 73,9^\circ$ (aumenta el ángulo con la vertical). ii) Si se duplica $m$, $\tan\theta'' = \frac{1}{2}\tan 60^\circ \implies \theta'' = 40,9^\circ$ (disminuye el ángulo con la vertical).</p>
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Dos cargas puntuales de $+2\ \mu\text{C}$, se encuentran situadas sobre el eje $X$ en los puntos $x_1 = -1\text{ m}$ y $x_2 = 1\text{ m}$, respectivamente. a) Calcule el potencial electrostático en el punto $(0, 0,5)\text{ m}$. b) Determine el incremento de energía potencial electrostática al traer una tercera carga de $-3\ \mu\text{C}$ desde el infinito hasta el punto $(0, 0,5)\text{ m}$. <span class="text-xs font-semibold text-indigo-700">[Sol: $32\,200\text{ V}$; $-0,0966\text{ J}$]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                    <p><strong>a)</strong> La distancia desde ambas cargas al punto $(0, 0,5)$ es $r = \sqrt{1^2 + 0,5^2} = \sqrt{1,25} = 1,118\text{ m}$:</p>
+                                    <p>$$V = 2 \cdot \frac{9 \cdot 10^9 \cdot 2 \cdot 10^{-6}}{\sqrt{1,25}} = 32\,200\text{ V}$$</p>
+                                    <p><strong>b)</strong> $\Delta U = q_3(V - 0) = -3 \cdot 10^{-6} \cdot 32\,200 = -0,0966\text{ J}$.</p>
+                                </div>
+                            </details>
+                        </li>
+                        <li>
+                            Dos cargas $q_1 = -2 \cdot 10^{-8}\text{ C}$ y $q_2 = 5 \cdot 10^{-8}\text{ C}$ están fijas en los puntos $x_1 = -0,3\text{ m}$ y $x_2 = 0,3\text{ m}$ del eje $OX$, respectivamente. a) Dibuje las fuerzas que actúan sobre cada carga y determine su valor. b) Calcule el valor de la energía potencial del sistema formado por las dos cargas y haga una representación aproximada de la energía potencial del sistema en función de la distancia entre las cargas. Dato: $K = 9 \cdot 10^9\text{ N m}^2\text{ C}^{-2}$ <span class="text-xs font-semibold text-indigo-700">[Sol: $25\ \mu\text{N}$; $-15\ \mu\text{J}$]</span>
+                            <details class="mt-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3">
+                                <summary class="font-semibold text-indigo-800 cursor-pointer text-xs">👁️ Ver solución paso a paso</summary>
+                                <div class="mt-2 text-slate-700 space-y-1 text-xs">
+                                    <p><strong>a)</strong> La distancia entre ellas es $r = 0,6\text{ m}$. Al ser de signos opuestos, las fuerzas son <strong>atractivas</strong> ($\vec{F}_{21}$ hacia $+\vec{i}$ y $\vec{F}_{12}$ hacia $-\vec{i}$):</p>
+                                    <p>$$F = \frac{9 \cdot 10^9 \cdot 2 \cdot 10^{-8} \cdot 5 \cdot 10^{-8}}{0,6^2} = 2,5 \cdot 10^{-5}\text{ N} = 25\ \mu\text{N}$$</p>
+                                    <p><strong>b)</strong> $U = \frac{K q_1 q_2}{r} = \frac{9 \cdot 10^9 \cdot (-2 \cdot 10^{-8}) \cdot 5 \cdot 10^{-8}}{0,6} = -1,5 \cdot 10^{-5}\text{ J} = -15\ \mu\text{J}$. La gráfica $U(r)$ es una hipérbola negativa creciente hacia $0$ cuando $r \to \infty$ ($U(r) \sim -1/r$).</p>
+                                </div>
+                            </details>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS PARA LAS SIMULACIONES INTERACTIVAS -->
+
+
+    <script>
+    (() => {
+        // ==========================================
+        // 1. SIMULACIÓN DE ENERGÍA POTENCIAL U(r)
+        // ==========================================
+        const c1 = document.getElementById('energyPotCanvas');
+        if (c1) {
+            const ctx1 = c1.getContext('2d');
+            const btnSign = document.getElementById('sim1ToggleSign');
+            const sliderDist = document.getElementById('sim1Dist');
+            const btnRelease = document.getElementById('sim1Release');
+
+            let qSign = 1; // +1 o -1 (Q fija es +1)
+            let rCurrent = parseFloat(sliderDist.value);
+            let vRadial = 0;
+            let isMoving = false;
+
+            btnSign.addEventListener('click', () => {
+                qSign *= -1;
+                isMoving = false;
+                vRadial = 0;
+                rCurrent = parseFloat(sliderDist.value);
+                btnSign.textContent = qSign > 0 ? 'Signo de q: + (Repulsión)' : 'Signo de q: - (Atracción)';
+                btnSign.className = qSign > 0
+                    ? 'bg-sky-600 hover:bg-sky-500 text-white font-semibold px-3 py-1 rounded transition'
+                    : 'bg-rose-600 hover:bg-rose-500 text-white font-semibold px-3 py-1 rounded transition';
+            });
+
+            sliderDist.addEventListener('input', () => {
+                isMoving = false;
+                vRadial = 0;
+                rCurrent = parseFloat(sliderDist.value);
+            });
+
+            btnRelease.addEventListener('click', () => {
+                rCurrent = parseFloat(sliderDist.value);
+                vRadial = 0;
+                isMoving = true;
+            });
+
+            function loopSim1() {
+                const w = c1.width, h = c1.height;
+                ctx1.clearRect(0, 0, w, h);
+
+                // Dinámica al soltar
+                if (isMoving) {
+                    const acc = (qSign * 45000) / (rCurrent * rCurrent);
+                    vRadial += acc * 0.05;
+                    rCurrent += vRadial * 0.05;
+                    if (rCurrent <= 36) { rCurrent = 36; isMoving = false; }
+                    if (rCurrent >= 275) { rCurrent = 275; isMoving = false; }
+                }
+
+                // Panel Izquierdo: Cargas físicas
+                const qFixedX = 65, centerY = h / 2;
+                ctx1.strokeStyle = '#334155';
+                ctx1.setLineDash([4, 4]);
+                ctx1.beginPath();
+                ctx1.moveTo(qFixedX, centerY);
+                ctx1.lineTo(qFixedX + rCurrent, centerY);
+                ctx1.stroke();
+                ctx1.setLineDash([]);
+
+                // Carga fija +Q
+                ctx1.fillStyle = '#ef4444';
+                ctx1.beginPath();
+                ctx1.arc(qFixedX, centerY, 18, 0, Math.PI * 2);
+                ctx1.fill();
+                ctx1.fillStyle = '#fff';
+                ctx1.font = 'bold 14px sans-serif';
+                ctx1.textAlign = 'center';
+                ctx1.textBaseline = 'middle';
+                ctx1.fillText('+Q', qFixedX, centerY);
+
+                // Carga móvil q
+                const qMobX = qFixedX + rCurrent;
+                ctx1.fillStyle = qSign > 0 ? '#ef4444' : '#38bdf8';
+                ctx1.beginPath();
+                ctx1.arc(qMobX, centerY, 13, 0, Math.PI * 2);
+                ctx1.fill();
+                ctx1.fillStyle = '#fff';
+                ctx1.fillText(qSign > 0 ? '+q' : '-q', qMobX, centerY);
+
+                // Vector Fuerza sobre q
+                const fLen = Math.min(55, Math.max(15, 3200 / rCurrent)) * qSign;
+                ctx1.strokeStyle = '#fbbf24';
+                ctx1.lineWidth = 2.5;
+                ctx1.beginPath();
+                ctx1.moveTo(qMobX, centerY - 24);
+                ctx1.lineTo(qMobX + fLen, centerY - 24);
+                ctx1.stroke();
+                ctx1.fillStyle = '#fbbf24';
+                ctx1.font = '11px sans-serif';
+                ctx1.fillText('F eléctrica', qMobX + fLen / 2, centerY - 35);
+
+                // Divisor vertical
+                ctx1.strokeStyle = '#1e293b';
+                ctx1.lineWidth = 2;
+                ctx1.beginPath();
+                ctx1.moveTo(365, 10);
+                ctx1.lineTo(365, h - 10);
+                ctx1.stroke();
+
+                // Panel Derecho: Gráfica U(r)
+                const gx0 = 400, gy0 = h / 2, gw = 270;
+                ctx1.strokeStyle = '#64748b';
+                ctx1.lineWidth = 1.5;
+                ctx1.beginPath();
+                ctx1.moveTo(gx0, 20); ctx1.lineTo(gx0, h - 20); // Eje U
+                ctx1.moveTo(gx0, gy0); ctx1.lineTo(gx0 + gw, gy0); // Eje r
+                ctx1.stroke();
+
+                ctx1.fillStyle = '#94a3b8';
+                ctx1.font = '11px sans-serif';
+                ctx1.fillText('U(r)', gx0 - 16, 22);
+                ctx1.fillText('r', gx0 + gw + 8, gy0);
+
+                // Curva U(r) ~ qSign / r
+                ctx1.strokeStyle = qSign > 0 ? '#f87171' : '#38bdf8';
+                ctx1.lineWidth = 2.5;
+                ctx1.beginPath();
+                for (let rx = 35; rx <= 275; rx += 3) {
+                    const px = gx0 + (rx - 30) * 1.05;
+                    const py = gy0 - qSign * (3200 / rx);
+                    if (rx === 35) ctx1.moveTo(px, py);
+                    else ctx1.lineTo(px, py);
+                }
+                ctx1.stroke();
+
+                // Punto actual en la gráfica
+                const curPx = gx0 + (rCurrent - 30) * 1.05;
+                const curPy = gy0 - qSign * (3200 / rCurrent);
+                ctx1.fillStyle = '#fbbf24';
+                ctx1.beginPath();
+                ctx1.arc(curPx, curPy, 6, 0, Math.PI * 2);
+                ctx1.fill();
+
+                ctx1.fillStyle = '#e2e8f0';
+                ctx1.textAlign = 'left';
+                ctx1.fillText(qSign > 0 ? 'U > 0 (disminuye al alejarse)' : 'U < 0 (disminuye al acercarse)', gx0 + 15, 25);
+
+                requestAnimationFrame(loopSim1);
+            }
+            loopSim1();
+        }
+
+
+
+
+// ==========================================
+        // 2. SIMULACIÓN DE LÍNEAS DE CAMPO Y EQUIPOTENCIALES (CORREGIDA)
+        // ==========================================
+        const c2 = document.getElementById('fieldEquiCanvas');
+        if (c2) {
+            const ctx2 = c2.getContext('2d');
+            const btnDipole = document.getElementById('sim2ModeDipole');
+            const btnSame = document.getElementById('sim2ModeSame');
+            const btnSingle = document.getElementById('sim2ModeSingle');
+            const btnSingle2 = document.getElementById('sim2ModeSingle2');
+
+            let charges = [
+                { x: 240, y: 150, q: 1 },
+                { x: 460, y: 150, q: -1 }
+            ];
+            let draggingIdx = -1;
+            let mousePos = { x: 350, y: 95 };
+
+            function drawFieldArrow(ctx, x, y, angle) {
+                const headLen = 6.5;
+                ctx.save();
+                ctx.fillStyle = '#6ee7b7';
+                ctx.beginPath();
+                ctx.moveTo(x + headLen * Math.cos(angle), y + headLen * Math.sin(angle));
+                ctx.lineTo(x - headLen * Math.cos(angle - Math.PI / 6), y - headLen * Math.sin(angle - Math.PI / 6));
+                ctx.lineTo(x - headLen * Math.cos(angle + Math.PI / 6), y - headLen * Math.sin(angle + Math.PI / 6));
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function setMode(mode) {
+                [btnDipole, btnSame, btnSingle, btnSingle2].forEach(b => {
+                    if (b) b.className = 'bg-slate-700 hover:bg-slate-600 text-white font-semibold px-2.5 py-1 rounded';
+                });
+
+                if (mode === 'dipole') {
+                    charges = [{ x: 240, y: 150, q: 1 }, { x: 460, y: 150, q: -1 }];
+                    if (btnDipole) btnDipole.className = 'bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded';
+                } else if (mode === 'same') {
+                    charges = [{ x: 240, y: 150, q: 1 }, { x: 460, y: 150, q: 1 }];
+                    if (btnSame) btnSame.className = 'bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded';
+                } else if (mode === 'single') {
+                    charges = [{ x: 350, y: 150, q: 1 }];
+                    if (btnSingle) btnSingle.className = 'bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded';
+                } else {
+                    charges = [{ x: 350, y: 150, q: -1 }];
+					if (btnSingle2) btnSingle2.className = 'bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-2.5 py-1 rounded';
+            	}
+			}
+			
+			setMode('single');
+
+            if (btnDipole) btnDipole.addEventListener('click', () => setMode('dipole'));
+            if (btnSame) btnSame.addEventListener('click', () => setMode('same'));
+            if (btnSingle) btnSingle.addEventListener('click', () => setMode('single'));
+            if (btnSingle2) btnSingle2.addEventListener('click', () => setMode('single2'));
+
+            c2.addEventListener('mousedown', (e) => {
+                const rect = c2.getBoundingClientRect();
+                const mx = (e.clientX - rect.left) * (c2.width / rect.width);
+                const my = (e.clientY - rect.top) * (c2.height / rect.height);
+                charges.forEach((ch, idx) => {
+                    if (Math.hypot(mx - ch.x, my - ch.y) < 22) draggingIdx = idx;
+                });
+            });
+            window.addEventListener('mouseup', () => draggingIdx = -1);
+            c2.addEventListener('mousemove', (e) => {
+                const rect = c2.getBoundingClientRect();
+                mousePos.x = (e.clientX - rect.left) * (c2.width / rect.width);
+                mousePos.y = (e.clientY - rect.top) * (c2.height / rect.height);
+                if (draggingIdx >= 0) {
+                    charges[draggingIdx].x = Math.max(30, Math.min(c2.width - 30, mousePos.x));
+                    charges[draggingIdx].y = Math.max(30, Math.min(c2.height - 30, mousePos.y));
+                }
+            });
+
+            function getFieldAndPot(x, y) {
+                let Ex = 0, Ey = 0, V = 0;
+                for (const ch of charges) {
+                    const dx = x - ch.x;
+                    const dy = y - ch.y;
+                    const r2 = Math.max(100, dx * dx + dy * dy);
+                    const r = Math.sqrt(r2);
+                    const E = (ch.q * 8000) / r2;
+                    Ex += E * (dx / r);
+                    Ey += E * (dy / r);
+                    V += (ch.q * 120) / r;
+                }
+                return { Ex, Ey, V };
+            }
+
+            function loopSim2() {
+                const w = c2.width, h = c2.height;
+                ctx2.clearRect(0, 0, w, h);
+
+                // 1. Curvas equipotenciales mediante rejilla de nivel
+                const step = 8;
+                const levels = [-1.8, -1.0, -0.5, 0.5, 1.0, 1.8];
+                for (let x = 0; x < w; x += step) {
+                    for (let y = 0; y < h; y += step) {
+                        const v0 = getFieldAndPot(x, y).V;
+                        const vx = getFieldAndPot(x + step, y).V;
+                        const vy = getFieldAndPot(x, y + step).V;
+                        for (const lv of levels) {
+                            if ((v0 - lv) * (vx - lv) <= 0 || (v0 - lv) * (vy - lv) <= 0) {
+                                ctx2.fillStyle = lv > 0 ? 'rgba(248, 113, 113, 0.35)' : 'rgba(56, 189, 248, 0.35)';
+                                ctx2.fillRect(x, y, 2, 2);
+                            }
+                        }
+                    }
+                }
+
+                // 2. Generación de semillas para las líneas de campo
+                const seeds = [];
+                const numLines = 16;
+                charges.forEach(ch => {
+                    if (ch.q > 0) {
+                        for (let k = 0; k < numLines; k++) {
+                            const a = (2 * Math.PI * k) / numLines;
+                            seeds.push({ x: ch.x + Math.cos(a) * 16, y: ch.y + Math.sin(a) * 16, dir: 1 });
+                        }
+                    } else if (!charges.some(c => c.q > 0)) {
+                        for (let k = 0; k < numLines; k++) {
+                            const a = (2 * Math.PI * k) / numLines;
+                            seeds.push({ x: ch.x + Math.cos(a) * 16, y: ch.y + Math.sin(a) * 16, dir: -1 });
+                        }
+                    }
+                });
+
+                // 3. Trazado continuo de cada línea de campo + flechas direccionales
+                const dt = 3;
+                const maxSteps = 260;
+                for (const s of seeds) {
+                    let px = s.x;
+                    let py = s.y;
+                    const arrowsToDraw = [];
+
+                    ctx2.strokeStyle = 'rgba(167, 243, 208, 0.6)';
+                    ctx2.lineWidth = 1.5;
+                    ctx2.beginPath();
+                    ctx2.moveTo(px, py);
+
+                    for (let i = 0; i < maxSteps; i++) {
+                        const { Ex, Ey } = getFieldAndPot(px, py);
+                        const mag = Math.hypot(Ex, Ey);
+                        if (mag < 0.005) break;
+
+                        const ux = Ex / mag;
+                        const uy = Ey / mag;
+
+                        px += s.dir * ux * dt;
+                        py += s.dir * uy * dt;
+                        ctx2.lineTo(px, py);
+
+                        // Guardar posiciones para dibujar flechas cada 22 pasos (66 px)
+                        if (i > 6 && i % 22 === 0) {
+                            arrowsToDraw.push({ x: px, y: py, angle: Math.atan2(uy, ux) });
+                        }
+
+                        // Detener si sale del lienzo o alcanza una carga de signo opuesto
+                        if (px < -10 || px > w + 10 || py < -10 || py > h + 10) break;
+                        if (s.dir > 0 && charges.some(c => c.q < 0 && Math.hypot(px - c.x, py - c.y) < 15)) break;
+                        if (s.dir < 0 && charges.some(c => c.q > 0 && Math.hypot(px - c.x, py - c.y) < 15)) break;
+                    }
+                    ctx2.stroke();
+
+                    // Dibujar las puntas de flecha sobre la línea ya trazada
+                    for (const arr of arrowsToDraw) {
+                        drawFieldArrow(ctx2, arr.x, arr.y, arr.angle);
+                    }
+                }
+
+                // 4. Dibujar cargas
+                charges.forEach(ch => {
+                    ctx2.fillStyle = ch.q > 0 ? '#ef4444' : '#0284c7';
+                    ctx2.beginPath();
+                    ctx2.arc(ch.x, ch.y, 15, 0, Math.PI * 2);
+                    ctx2.fill();
+                    ctx2.strokeStyle = '#fff';
+                    ctx2.lineWidth = 1.5;
+                    ctx2.stroke();
+                    ctx2.fillStyle = '#fff';
+                    ctx2.font = 'bold 14px sans-serif';
+                    ctx2.textAlign = 'center';
+                    ctx2.textBaseline = 'middle';
+                    ctx2.fillText(ch.q > 0 ? '+q' : '-q', ch.x, ch.y);
+                });
+
+                // 5. Sonda en el ratón: Vector E y valor de V
+                const probe = getFieldAndPot(mousePos.x, mousePos.y);
+                const eMag = Math.hypot(probe.Ex, probe.Ey);
+                if (eMag > 0.05) {
+                    const arrowLen = Math.min(48, eMag * 18);
+                    const ux = probe.Ex / eMag, uy = probe.Ey / eMag;
+                    const tx = mousePos.x + ux * arrowLen, ty = mousePos.y + uy * arrowLen;
+
+                    ctx2.strokeStyle = '#fbbf24';
+                    ctx2.lineWidth = 2.5;
+                    ctx2.beginPath();
+                    ctx2.moveTo(mousePos.x, mousePos.y);
+                    ctx2.lineTo(tx, ty);
+                    ctx2.stroke();
+
+                    // Punta amarilla de la sonda
+                    const pAngle = Math.atan2(uy, ux);
+                    ctx2.fillStyle = '#fbbf24';
+                    ctx2.beginPath();
+                    ctx2.moveTo(tx, ty);
+                    ctx2.lineTo(tx - 7 * Math.cos(pAngle - Math.PI / 6), ty - 7 * Math.sin(pAngle - Math.PI / 6));
+                    ctx2.lineTo(tx - 7 * Math.cos(pAngle + Math.PI / 6), ty - 7 * Math.sin(pAngle + Math.PI / 6));
+                    ctx2.closePath();
+                    ctx2.fill();
+
+                    ctx2.beginPath();
+                    ctx2.arc(mousePos.x, mousePos.y, 3.5, 0, Math.PI * 2);
+                    ctx2.fill();
+                }
+
+                ctx2.fillStyle = 'rgba(15, 23, 42, 0.85)';
+                ctx2.fillRect(10, 10, 210, 26);
+                ctx2.fillStyle = '#e2e8f0';
+                ctx2.font = '12px monospace';
+                ctx2.textAlign = 'left';
+                ctx2.fillText(`Sonda -> V = ${probe.V.toFixed(2)} V`, 18, 23);
+
+                requestAnimationFrame(loopSim2);
+            }
+            loopSim2();
+        }
+       
+
+
+       
+
+       // ==========================================
+        // 4. SIMULACIÓN DE CONDENSADOR PLANO (CON VECTORES v Y Fe)
+        // ==========================================
+        const c4 = document.getElementById('capacitorCanvas');
+        if (c4) {
+            const ctx4 = c4.getContext('2d');
+            const btnPart = document.getElementById('sim4ParticleBtn');
+            const sliderE = document.getElementById('sim4Field');
+            const sliderVx = document.getElementById('sim4Vx');
+            const btnFire = document.getElementById('sim4FireBtn');
+
+            const particles = [
+                { name: 'Electrón (-)', q: -1, m: 1, color: '#38bdf8' },
+                { name: 'Protón (+)', q: 1, m: 3.5, color: '#ef4444' },
+                { name: 'Neutrón (0)', q: 0, m: 3.5, color: '#a3e635' }
+            ];
+            let pIdx = 0;
+            let trail = [];
+            let part = { x: 60, y: 125, vx: 4, vy: 0, active: false, status: 'Listo para disparar' };
+
+            function drawVector(ctx, x1, y1, dx, dy, color, label) {
+                const len = Math.hypot(dx, dy);
+                if (len < 3) return;
+                const x2 = x1 + dx;
+                const y2 = y1 + dy;
+                const angle = Math.atan2(dy, dx);
+                const headLen = 7;
+
+                ctx.save();
+                ctx.strokeStyle = color;
+                ctx.fillStyle = color;
+                ctx.lineWidth = 2;
+
+                // Cuerpo de la flecha
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                // Punta de la flecha
+                ctx.beginPath();
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+                ctx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+                ctx.closePath();
+                ctx.fill();
+
+                // Etiqueta del vector
+                ctx.font = 'bold 11px sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(label, x2 + 6, y2);
+                ctx.restore();
+            }
+
+            btnPart.addEventListener('click', () => {
+                pIdx = (pIdx + 1) % particles.length;
+                btnPart.textContent = particles[pIdx].name;
+                resetPart();
+            });
+
+            function resetPart() {
+                trail = [];
+                part = {
+                    x: 60,
+                    y: c4.height / 2,
+                    vx: parseFloat(sliderVx.value),
+                    vy: 0,
+                    active: true,
+                    status: 'En vuelo...'
+                };
+            }
+            btnFire.addEventListener('click', resetPart);
+
+            function loopSim4() {
+                const w = c4.width, h = c4.height;
+                ctx4.clearRect(0, 0, w, h);
+
+                const plateX1 = 140, plateX2 = 540;
+                const topPlateY = 42, botPlateY = h - 42;
+                const curP = particles[pIdx];
+                const E_val = parseFloat(sliderE.value);
+
+                // Placa superior (+)
+                ctx4.fillStyle = '#ef4444';
+                ctx4.fillRect(plateX1, topPlateY - 8, plateX2 - plateX1, 8);
+                // Placa inferior (-)
+                ctx4.fillStyle = '#0284c7';
+                ctx4.fillRect(plateX1, botPlateY, plateX2 - plateX1, 8);
+
+                // Líneas de campo uniforme E hacia abajo
+                ctx4.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+                ctx4.lineWidth = 1.2;
+                for (let x = plateX1 + 25; x < plateX2; x += 45) {
+                    ctx4.beginPath();
+                    ctx4.moveTo(x, topPlateY + 4);
+                    ctx4.lineTo(x, botPlateY - 4);
+                    ctx4.stroke();
+                    // Punta de flecha hacia abajo
+                    ctx4.beginPath();
+                    ctx4.moveTo(x - 3, botPlateY - 10);
+                    ctx4.lineTo(x, botPlateY - 4);
+                    ctx4.lineTo(x + 3, botPlateY - 10);
+                    ctx4.stroke();
+                }
+                ctx4.fillStyle = '#94a3b8';
+                ctx4.font = '12px sans-serif';
+                ctx4.textAlign = 'left';
+                ctx4.fillText('E uniforme (hacia abajo)', plateX1 + 10, topPlateY + 18);
+
+                const insidePlates = (part.x >= plateX1 && part.x <= plateX2);
+
+                // Física de la partícula
+                if (part.active) {
+                    if (insidePlates) {
+                        const ay = (curP.q * E_val * 0.035) / curP.m;
+                        part.vy += ay;
+                    }
+                    part.x += part.vx;
+                    part.y += part.vy;
+                    trail.push({ x: part.x, y: part.y });
+
+                    // Colisión con placas
+                    if (insidePlates && (part.y <= topPlateY + 6 || part.y >= botPlateY - 6)) {
+                        part.active = false;
+                        part.status = '¡Impacto en la placa!';
+                    } else if (part.x > w - 20 || part.y < 10 || part.y > h - 10) {
+                        part.active = false;
+                        part.status = 'Partícula desviada fuera del condensador';
+                    }
+                }
+
+                // Estela parabólica
+                if (trail.length > 1) {
+                    ctx4.strokeStyle = curP.color;
+                    ctx4.lineWidth = 2.5;
+                    ctx4.beginPath();
+                    ctx4.moveTo(trail[0].x, trail[0].y);
+                    for (let i = 1; i < trail.length; i++) ctx4.lineTo(trail[i].x, trail[i].y);
+                    ctx4.stroke();
+                }
+
+                // Partícula
+                ctx4.fillStyle = curP.color;
+                ctx4.beginPath();
+                ctx4.arc(part.x, part.y, 7, 0, Math.PI * 2);
+                ctx4.fill();
+
+                // Vectores sobre la partícula (v y Fe)
+                if (part.active || trail.length > 0) {
+                    // Vector velocidad v (tangente a la trayectoria)
+                    const vScale = 7;
+                    drawVector(ctx4, part.x, part.y, part.vx * vScale, part.vy * vScale, '#34d399', 'v');
+
+                    // Vector fuerza eléctrica Fe (solo dentro de las placas y si q != 0)
+                    if (insidePlates && curP.q !== 0) {
+                        const fy = curP.q * (16 + E_val * 3.2);
+                        drawVector(ctx4, part.x, part.y, 0, fy, '#fbbf24', 'Fe');
+                    }
+                }
+
+                // Información de estado y leyenda de vectores
+                ctx4.fillStyle = '#e2e8f0';
+                ctx4.font = '12px sans-serif';
+                ctx4.textAlign = 'left';
+                ctx4.fillText(`Estado: ${part.status}`, 18, 22);
+
+                ctx4.fillStyle = '#34d399';
+                ctx4.fillText('➔ v (velocidad)', 470, 22);
+                ctx4.fillStyle = '#fbbf24';
+                ctx4.fillText('➔ Fe = q·E', 585, 22);
+
+                requestAnimationFrame(loopSim4);
+            }
+            loopSim4();
+        }
+    })();
+    </script>
+</body>
+</html>
